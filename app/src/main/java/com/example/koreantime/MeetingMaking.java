@@ -90,29 +90,6 @@ public class MeetingMaking extends AppCompatActivity implements MapView.CurrentL
         mMapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
     }
 
-    public void Marker(String MakerName, double startX, double startY) {
-        mapPoint = MapPoint.mapPointWithGeoCoord(startY, startX);
-        mMapView.setMapCenterPoint(mapPoint, true);
-        //true면 앱 실행 시 애니메이션 효과가 나오고 false면 애니메이션이 나오지않음.
-        MapPOIItem marker = new MapPOIItem();
-        marker.setItemName(MakerName); // 마커 클릭 시 컨테이너에 담길 내용
-        marker.setMapPoint(mapPoint); // 기본으로 제공하는 BluePin 마커 모양.
-        marker.setMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-        marker.setSelectedMarkerType(MapPOIItem.MarkerType.BluePin);
-        mMapView.addPOIItem(marker);
-    }
-
-    public void MapMarker(String MakerName, String detail, double startX, double startY) {
-        mapPoint = MapPoint.mapPointWithGeoCoord(startY, startX);
-        mMapView.setMapCenterPoint(mapPoint, true); //true면 앱 실행 시 애니메이션 효과가 나오고 false면 애니메이션이 나오지않음.
-        MapPOIItem marker = new MapPOIItem();
-        marker.setItemName(MakerName + "(" + detail + ")"); // 마커 클릭 시 컨테이너에 담길 내용
-        marker.setMapPoint(mapPoint); // 기본으로 제공하는 BluePin 마커 모양.
-        marker.setMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-        marker.setSelectedMarkerType(MapPOIItem.MarkerType.BluePin);
-        mMapView.addPOIItem(marker);
-    }
-
     public String getKeyHash(final Context context) {
         PackageInfo packageInfo = Utility.getPackageInfo(context, PackageManager.GET_SIGNATURES);
         if (packageInfo == null) return null;
@@ -138,7 +115,6 @@ public class MeetingMaking extends AppCompatActivity implements MapView.CurrentL
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float accuracyInMeters) {
         MapPoint.GeoCoordinate mapPointGeo = currentLocation.getMapPointGeoCoord();
-        Log.i(LOG_TAG, String.format("MapView onCurrentLocationUpdate (%f,%f) accuracy (%f)", mapPointGeo.latitude, mapPointGeo.longitude, accuracyInMeters));
     }
 
     @Override
@@ -298,7 +274,16 @@ public class MeetingMaking extends AppCompatActivity implements MapView.CurrentL
 
     @Override
     public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) {
-
+        double latitude = mapPoint.getMapPointGeoCoord().latitude;
+        double logitude = mapPoint.getMapPointGeoCoord().longitude;
+        mapPoint = MapPoint.mapPointWithGeoCoord(latitude, logitude);
+        mMapView.setMapCenterPoint(mapPoint, true);
+        MapPOIItem marker = new MapPOIItem();
+        marker.setItemName("마커 생성"); // 마커 클릭 시 컨테이너에 담길 내용
+        marker.setMapPoint(mapPoint); // 기본으로 제공하는 BluePin 마커 모양.
+        marker.setMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+        marker.setSelectedMarkerType(MapPOIItem.MarkerType.BluePin);
+        mMapView.addPOIItem(marker);
     }
 
     @Override
