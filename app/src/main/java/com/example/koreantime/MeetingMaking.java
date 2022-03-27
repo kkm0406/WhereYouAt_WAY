@@ -79,7 +79,7 @@ public class MeetingMaking extends AppCompatActivity implements MapView.CurrentL
         mapViewContainer = findViewById(R.id.kakaoMap);
         mapViewContainer.addView(mMapView);
         mMapView.removeAllPOIItems();
-//        lm = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        lm = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         mMapView.setMapViewEventListener(MeetingMaking.this);
         mMapView.setCurrentLocationEventListener(MeetingMaking.this);
         if (!checkLocationServicesStatus()) {
@@ -87,7 +87,7 @@ public class MeetingMaking extends AppCompatActivity implements MapView.CurrentL
         }else {
             checkRunTimePermission();
         }
-//        mMapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+        mMapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
     }
 
     public void Marker(String MakerName, double startX, double startY) {
@@ -264,17 +264,13 @@ public class MeetingMaking extends AppCompatActivity implements MapView.CurrentL
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        switch (requestCode) {
-            case GPS_ENABLE_REQUEST_CODE:
-                //사용자가 GPS 활성 시켰는지 검사
+        if (requestCode == GPS_ENABLE_REQUEST_CODE) {//사용자가 GPS 활성 시켰는지 검사
+            if (checkLocationServicesStatus()) {
                 if (checkLocationServicesStatus()) {
-                    if (checkLocationServicesStatus()) {
-                        Log.d("@@@", "onActivityResult : GPS 활성화 되있음");
-                        checkRunTimePermission();
-                        return;
-                    }
+                    Log.d("@@@", "onActivityResult : GPS 활성화 되있음");
+                    checkRunTimePermission();
                 }
-                break;
+            }
         }
     }
 
