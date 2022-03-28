@@ -4,105 +4,138 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/firstpage_border"
+    android:backgroundTint="#EFFFFD"
     android:orientation="vertical">
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="400dp">
-
-        <ImageView
-            android:id="@+id/pic_pda"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="120dp"
-            android:foreground="@drawable/sand_clock">
-        </ImageView>
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:weightSum="5"
         android:orientation="vertical">
-        <EditText
+        <View
             android:layout_width="match_parent"
-            android:layout_height="20pt"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginBottom="20dp"
-            android:gravity="center"
-            android:hint="ID"
-            android:inputType="number"
-            android:textSize="17sp"
-            android:textColorHint="#032149"
-            android:id="@+id/id">
-        </EditText>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp">
-        </Space>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="20pt"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="30dp"
-            android:gravity="center"
-            android:hint="PW"
-            android:textSize="17sp"
-            android:textColorHint="#032149"
-            android:id="@+id/pw">
-        </EditText>
-
-
+            android:layout_height="0dp"
+            android:layout_weight="0.5"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-<!--            android:layout_marginTop="50dp">-->
-            <Button
-                android:id="@+id/findPw"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:text="PW 찾기"
-                android:layout_weight="0.05"
-                android:layout_marginLeft="40dp"
-                android:background="@drawable/btn_border"
-                android:textSize="8sp">
-            </Button>
-
-            <Button
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:text="회원가입"
-                android:layout_weight="0.05"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                android:textSize="10sp"
-                android:background="@drawable/btn_border"
-                android:id="@+id/signUp">
-            </Button>
-
-            <Button
-                android:id="@+id/logIn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Log In"
-                android:layout_weight="1"
-                android:background="@drawable/btn_border"
-                android:layout_marginRight="40dp"
-                android:layout_marginLeft="10dp">
-            </Button>
-
+            android:layout_height="0dp"
+            android:layout_weight="1.7"
+            android:orientation="vertical"
+            android:weightSum="5"
+            android:gravity="center">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <ImageView
+                android:id="@+id/pic"
+                android:layout_width="150dp"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:foreground="@drawable/sand_clock">
+            </ImageView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:weightSum="5"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_weight="2.3">
+            <EditText
+                android:layout_gravity="center"
+                android:layout_width="280dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
+                android:gravity="center"
+                android:hint="ID"
+                android:textSize="17sp"
+                android:id="@+id/id">
+            </EditText>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"/>
+
+            <EditText
+                android:layout_gravity="center"
+                android:layout_width="280dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
+                android:gravity="center"
+                android:hint="PW"
+                android:textSize="17sp"
+                android:id="@+id/pw">
+            </EditText>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2.4"
+                android:orientation="horizontal">
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.8"/>
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:text="Sign Up"
+                    android:textSize="18sp"
+                    android:textColor="#42C2FF"
+                    android:gravity="center"
+                    android:id="@+id/signUp"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.3"/>
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:text="Find PW"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:textColor="#42C2FF"
+                    android:id="@+id/findPw"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.5"/>
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:text="Log In"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:textColor="#42C2FF"
+                    android:id="@+id/login"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.8"/>
+            </LinearLayout>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"/>
 
 
     </LinearLayout>
+
 
 
 </LinearLayout>
