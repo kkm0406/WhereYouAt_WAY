@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class StartPage extends AppCompatActivity {
 
@@ -17,14 +18,22 @@ public class StartPage extends AppCompatActivity {
 
         EditText id = findViewById(R.id.id);
         EditText pw = findViewById(R.id.pw);
-        Button findPw = findViewById(R.id.findPw);
-        Button signUp = findViewById(R.id.signUp);
-        Button logIn = findViewById(R.id.logIn);
+        TextView findPw = findViewById(R.id.findPw);
+        TextView signUp = findViewById(R.id.signUp);
+        TextView logIn = findViewById(R.id.login);
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(StartPage.this, SignUp.class);
+                startActivity(intent);
+            }
+        });
+
+        findPw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(StartPage.this, findPW.class);
                 startActivity(intent);
             }
         });

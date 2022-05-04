@@ -39,7 +39,6 @@ public class MainPage extends AppCompatActivity {
         setContentView(R.layout.activity_main_page);
 
         sidebar = findViewById(R.id.sidebar);
-        Button sidebarBtn = findViewById(R.id.sidebarBtn);
         ImageButton group_making_btn = findViewById(R.id.group_making_btn);
         LinearLayout showGroups = findViewById(R.id.showGroups);
 
@@ -62,18 +61,7 @@ public class MainPage extends AppCompatActivity {
             }
         });
         //그룹 만드는 페이지로 intent
-        
-        Button tmpBtn = findViewById(R.id.tmpBtn);//임시버튼 -> 나중에 동적으로 레이아웃 생기도록
-        tmpBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tmpClass tmp_class = new tmpClass("groupName1", "groupDate1", "groupPeople1");
-                ArrayList<tmpClass> arrayList = new ArrayList<>();
-                arrayList.add(tmp_class);
-                MakeNewGroup makeNewGroup = new MakeNewGroup(getApplicationContext(), arrayList.get(0));
-                showGroups.addView(makeNewGroup);
-            }
-        });
+
         //임시버튼 만들어서 누르면 동적으로 그룹 보여지는 레이아웃 생성
         //나중에 그룹명, 인원 등을 db에서 읽어서 tmpClass로 보낸 후 
         //MakeNewGroup에서 tmpClass를 담은 arraylist 인덱스 맞춰서
@@ -88,20 +76,6 @@ public class MainPage extends AppCompatActivity {
         translateRight.setAnimationListener(animationListner);
 
 
-        sidebarBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (sidebarFlag) {
-                    sidebar.startAnimation(translateRight);
-                    sidebar.setBackground(new ColorDrawable(0xf000000));
-                } else {
-                    sidebar.startAnimation(translateLeft);
-                    sidebar.setVisibility(View.VISIBLE);
-                    sidebar.setBackground(new ColorDrawable(0x7f000000));
-                }
-            }
-        });
-        //사이드바
 
         Spinner orderSpinner = findViewById(R.id.order);
         ArrayAdapter<String> orderAdapter = new ArrayAdapter<>(MainPage.this,

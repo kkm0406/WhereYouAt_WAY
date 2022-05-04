@@ -5,244 +5,200 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SignUp"
-    android:background="@drawable/firstpage_border"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="회원가입"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_marginTop="30dp"
-        android:textSize="40sp">
-    </TextView>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"/>
-
-    <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
-        <TextView
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:text="이름"
-            android:textSize="20sp"
-            android:layout_marginLeft="8dp"
-            android:textColor="@color/black">
-        </TextView>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_shadow"
-            android:singleLine="true"
-            android:id="@+id/name">
-        </EditText>
-    </LinearLayout>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"/>
-
-    <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
-        <TextView
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:text="나이"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:layout_marginLeft="8dp">
-        </TextView>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_shadow"
-            android:inputType="number"
-            android:singleLine="true"
-            android:id="@+id/age">
-        </EditText>
-    </LinearLayout>
-
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"/>
-
-    <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
-        <TextView
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:text="주소"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:layout_marginLeft="8dp">
-        </TextView>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_shadow"
-            android:singleLine="true"
-            android:id="@+id/address">
-        </EditText>
-    </LinearLayout>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"/>
-
-    <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="전화번호"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:layout_marginLeft="8dp">
-        </TextView>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_shadow"
-            android:inputType="phone"
-            android:singleLine="true"
-            android:id="@+id/phone">
-        </EditText>
-    </LinearLayout>
-
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"/>
-
-    <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
-        <TextView
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:text="PW"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:layout_marginLeft="8dp">
-        </TextView>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_shadow"
-            android:inputType="textPassword"
-            android:singleLine="true"
-            android:id="@+id/pw">
-        </EditText>
-    </LinearLayout>
-
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"/>
-
-    <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PW 확인"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:layout_marginLeft="8dp">
-        </TextView>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_shadow"
-            android:inputType="textPassword"
-            android:singleLine="true"
-            android:id="@+id/pwConfirm">
-        </EditText>
-    </LinearLayout>
-
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"/>
-
-    <LinearLayout
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_height="match_parent"
+        android:weightSum="10"
         android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:background="@drawable/get_img_btn"
-            android:autofillHints="사진"/>
-
-        <Button
+        <View
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:hint="사진 불러오기"
-            android:textColor="@color/teal_200"
-            android:textSize="8sp"
-            android:id="@+id/getImg"/>
+            android:layout_height="0dp"
+            android:layout_weight="0.6"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:text="Welcome to W.A.Y"
+            android:textFontWeight="600"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:fontFamily="@font/cafe"
+            android:textSize="30sp"
+            android:textColor="#42c2ff"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.9"/>
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="40dp"
+            android:id="@+id/name"
+            android:fontFamily="@font/cafe"
+            android:hint="Name"
+            android:gravity="center"
+            android:singleLine="true" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.4"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="40dp"
+            android:weightSum="4"
+            android:layout_gravity="center">
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2.8"
+                android:id="@+id/id"
+                android:hint="ID"
+                android:gravity="center"
+                android:fontFamily="@font/cafe"
+                android:singleLine="true" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"/>
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:foreground="@drawable/tick"
+                android:backgroundTint="#fff"
+                android:id="@+id/isExist"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.4"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:fontFamily="@font/cafe"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="40dp"
+            android:id="@+id/pw"
+            android:hint="PW (영문+숫자 10자 이내)"
+            android:textSize="16sp"
+            android:inputType="textPassword"
+            android:gravity="center"
+            android:singleLine="true" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.4"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fontFamily="@font/cafe"
+            android:layout_weight="0.6"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="40dp"
+            android:id="@+id/address"
+            android:hint="주소"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:singleLine="true" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.4" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:layout_gravity="center"
+            android:fontFamily="@font/cafe"
+            android:layout_marginHorizontal="40dp"
+            android:id="@+id/tel"
+            android:hint="전화번호 ( ' - ' 제외 )"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:singleLine="true" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.4"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.95"
+            android:orientation="horizontal"
+            android:weightSum="4"
+            android:layout_marginHorizontal="30dp">
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"/>
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:id="@+id/user_pic"
+                android:foregroundTintMode="screen"
+                android:foreground="@drawable/plus"
+                android:background="@drawable/get_img_btn"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:textSize="16sp"
+                android:text="프로필 사진 등록"
+                android:textFontWeight="600"
+                android:fontFamily="@font/cafe"
+                android:id="@+id/getImg"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.8"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:text="Join W.A.Y"
+            android:fontFamily="@font/cafe"
+            android:gravity="center"
+            android:textFontWeight="600"
+            android:layout_gravity="right"
+            android:textColor="#42c2ff"
+            android:textSize="20sp"
+            android:id="@+id/signUp"
+            android:layout_marginRight="30dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.7"/>
     </LinearLayout>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"/>
-
-
-    <Button
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Sign Up"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:id="@+id/signUp">
-    </Button>
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
 
 </LinearLayout>
