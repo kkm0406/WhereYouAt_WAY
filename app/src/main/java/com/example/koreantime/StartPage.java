@@ -30,6 +30,14 @@ public class StartPage extends AppCompatActivity {
             }
         });
 
+        findPw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(StartPage.this, findPW.class);
+                startActivity(intent);
+            }
+        });
+
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

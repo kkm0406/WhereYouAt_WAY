@@ -29,10 +29,10 @@
                 android:layout_weight="1"/>
             <ImageView
                 android:id="@+id/pic"
-                android:layout_width="150dp"
-                android:layout_height="0dp"
                 android:layout_weight="3"
-                android:foreground="@drawable/sand_clock">
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:foreground="@drawable/way">
             </ImageView>
             <View
                 android:layout_width="match_parent"
@@ -45,12 +45,14 @@
             android:weightSum="5"
             android:orientation="vertical"
             android:layout_gravity="center"
+            android:layout_marginTop="30dp"
             android:layout_weight="2.3">
             <EditText
                 android:layout_gravity="center"
                 android:layout_width="280dp"
                 android:layout_height="0dp"
                 android:layout_weight="0.8"
+                android:fontFamily="@font/cafe"
                 android:gravity="center"
                 android:hint="ID"
                 android:textSize="17sp"
@@ -60,7 +62,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.5"/>
+                android:layout_weight="0.6"/>
 
             <EditText
                 android:layout_gravity="center"
@@ -68,7 +70,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.8"
                 android:gravity="center"
+                android:fontFamily="@font/cafe"
                 android:hint="PW"
+                android:inputType="textPassword"
                 android:textSize="17sp"
                 android:id="@+id/pw">
             </EditText>
@@ -92,6 +96,8 @@
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:text="Sign Up"
+                    android:textFontWeight="650"
+                    android:fontFamily="@font/cafe"
                     android:textSize="18sp"
                     android:textColor="#42C2FF"
                     android:gravity="center"
@@ -107,6 +113,8 @@
                     android:text="Find PW"
                     android:textSize="18sp"
                     android:gravity="center"
+                    android:textFontWeight="650"
+                    android:fontFamily="@font/cafe"
                     android:textColor="#42C2FF"
                     android:id="@+id/findPw"/>
                 <View
@@ -119,6 +127,8 @@
                     android:layout_gravity="center"
                     android:text="Log In"
                     android:textSize="18sp"
+                    android:textFontWeight="650"
+                    android:fontFamily="@font/cafe"
                     android:gravity="center"
                     android:textColor="#42C2FF"
                     android:id="@+id/login"/>
@@ -131,7 +141,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.45"/>
 
 
     </LinearLayout>

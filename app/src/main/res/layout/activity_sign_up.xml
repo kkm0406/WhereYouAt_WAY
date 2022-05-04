@@ -22,8 +22,10 @@
             android:layout_height="0dp"
             android:layout_weight="0.5"
             android:text="Welcome to W.A.Y"
+            android:textFontWeight="600"
             android:layout_gravity="center"
             android:gravity="center"
+            android:fontFamily="@font/cafe"
             android:textSize="30sp"
             android:textColor="#42c2ff"/>
 
@@ -38,8 +40,9 @@
             android:layout_height="0dp"
             android:layout_weight="0.6"
             android:layout_gravity="center"
-            android:layout_marginHorizontal="60dp"
+            android:layout_marginHorizontal="40dp"
             android:id="@+id/name"
+            android:fontFamily="@font/cafe"
             android:hint="Name"
             android:gravity="center"
             android:singleLine="true" />
@@ -55,7 +58,7 @@
             android:layout_height="0dp"
             android:layout_weight="0.6"
             android:orientation="horizontal"
-            android:layout_marginHorizontal="60dp"
+            android:layout_marginHorizontal="40dp"
             android:weightSum="4"
             android:layout_gravity="center">
 
@@ -66,17 +69,17 @@
                 android:id="@+id/id"
                 android:hint="ID"
                 android:gravity="center"
+                android:fontFamily="@font/cafe"
                 android:singleLine="true" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="0.6"/>
+                android:layout_weight="0.8"/>
 
             <ImageButton
-                android:layout_width="0dp"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.6"
                 android:foreground="@drawable/tick"
                 android:backgroundTint="#fff"
                 android:id="@+id/isExist"/>
@@ -91,8 +94,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.6"
+            android:fontFamily="@font/cafe"
             android:layout_gravity="center"
-            android:layout_marginHorizontal="60dp"
+            android:layout_marginHorizontal="40dp"
             android:id="@+id/pw"
             android:hint="PW (영문+숫자 10자 이내)"
             android:textSize="16sp"
@@ -108,9 +112,10 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:fontFamily="@font/cafe"
             android:layout_weight="0.6"
             android:layout_gravity="center"
-            android:layout_marginHorizontal="60dp"
+            android:layout_marginHorizontal="40dp"
             android:id="@+id/address"
             android:hint="주소"
             android:textSize="16sp"
@@ -120,14 +125,15 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.4"/>
+            android:layout_weight="0.4" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.6"
             android:layout_gravity="center"
-            android:layout_marginHorizontal="60dp"
+            android:fontFamily="@font/cafe"
+            android:layout_marginHorizontal="40dp"
             android:id="@+id/tel"
             android:hint="전화번호 ( ' - ' 제외 )"
             android:textSize="16sp"
@@ -145,25 +151,28 @@
             android:layout_weight="0.95"
             android:orientation="horizontal"
             android:weightSum="4"
-            android:layout_marginHorizontal="60dp">
+            android:layout_marginHorizontal="30dp">
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"/>
 
             <ImageView
-                android:layout_width="0dp"
+                android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:id="@+id/user_pic"
+                android:foregroundTintMode="screen"
+                android:foreground="@drawable/plus"
                 android:background="@drawable/get_img_btn"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 android:textSize="16sp"
                 android:text="프로필 사진 등록"
+                android:textFontWeight="600"
+                android:fontFamily="@font/cafe"
                 android:id="@+id/getImg"
                 android:gravity="center"/>
         </LinearLayout>
@@ -178,7 +187,9 @@
             android:layout_height="0dp"
             android:layout_weight="0.5"
             android:text="Join W.A.Y"
+            android:fontFamily="@font/cafe"
             android:gravity="center"
+            android:textFontWeight="600"
             android:layout_gravity="right"
             android:textColor="#42c2ff"
             android:textSize="20sp"
