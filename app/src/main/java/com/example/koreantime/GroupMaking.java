@@ -15,15 +15,15 @@ public class GroupMaking extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_making);
 
-        Button back = findViewById(R.id.back);
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(GroupMaking.this, MainPage.class);
-                startActivity(intent);
-            }
-        });
+//        Button back = findViewById(R.id.back);
+//
+//        back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(GroupMaking.this, MainPage.class);
+//                startActivity(intent);
+//            }
+//        });
 
 
     }

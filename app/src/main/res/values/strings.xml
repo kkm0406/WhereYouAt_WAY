@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">KoreanTime</string>
+    <string name="app_name">WAY</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu1">메뉴 1</string>
+    <string name="menu2">메뉴 2</string>
+    <string name="menu3">메뉴 3</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
