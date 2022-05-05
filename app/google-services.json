@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "35862713692",
+    "project_id": "whereareyou-2022",
+    "storage_bucket": "whereareyou-2022.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:35862713692:android:48ccdd2d8ae31861691d99",
+        "android_client_info": {
+          "package_name": "com.example.koreantime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "35862713692-i7fvu7gq9l9vogstrothdl3qraf2a8jr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfbK9fzvt7FIaXcxrJjXXyNDWJLXerF9k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "35862713692-i7fvu7gq9l9vogstrothdl3qraf2a8jr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
