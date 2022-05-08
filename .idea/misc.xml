@@ -3,56 +3,33 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/33387/Desktop/WAY/KoreanTime/app/src/main/res/layout/start_page.xml" value="0.27219202898550726" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.367" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/board_border.xml" value="0.353" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/board_shadow.xml" value="0.353" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/btn_border.xml" value="0.353" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/edittext_shadow.xml" value="0.285" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/firstpage_border.xml" value="0.367" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/frame_shadow.xml" value="0.285" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/get_img_btn.xml" value="0.367" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/ic_launcher_background.xml" value="0.367" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/my_selector.xml" value="0.367" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/square.xml" value="0.367" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/font/font.xml" value="0.1" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_find_pw.xml" value="0.33" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_group_making.xml" value="0.33" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_group_meetings.xml" value="0.20425724637681159" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_main_page.xml" value="0.36614583333333334" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_meeting_making.xml" value="0.36614583333333334" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_sign_up.xml" value="0.36614583333333334" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/get_img_dialog.xml" value="0.36614583333333334" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/make_new_group.xml" value="0.36614583333333334" />
-        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/start_page.xml" value="0.33" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable-v24/board_border.xml" value="0.38229166666666664" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable-v24/board_shadow.xml" value="0.38229166666666664" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable-v24/btn_border.xml" value="0.38229166666666664" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable-v24/edittext_shadow.xml" value="0.38229166666666664" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable-v24/firstpage_border.xml" value="0.38229166666666664" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/board_border.xml" value="0.38229166666666664" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/board_shadow.xml" value="0.38229166666666664" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/btn_border.xml" value="0.38229166666666664" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/edittext_shadow.xml" value="0.38229166666666664" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/firstpage_border.xml" value="0.38229166666666664" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/frame_shadow.xml" value="0.38229166666666664" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/get_img_btn.xml" value="0.38229166666666664" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/my_selector.xml" value="0.38229166666666664" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/square.xml" value="0.38229166666666664" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_group_making.xml" value="0.36614583333333334" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_group_meetings.xml" value="0.36614583333333334" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_main_page.xml" value="0.3265822784810127" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_meeting_making.xml" value="0.29517579721995096" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_sign_up.xml" value="0.4" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/get_img_dialog.xml" value="0.36614583333333334" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/make_new_group.xml" value="0.2046875" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/new_group.xml" value="0.2046875" />
-        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/start_page.xml" value="0.2046875" />
+        <entry key="..\:/Users/33387/Desktop/WAY/KoreanTime/app/src/main/res/layout/start_page.xml" value="0.1859375" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable-v24/side_nav_bar.xml" value="0.1" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/board_shadow.xml" value="0.1" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/btn_border.xml" value="0.1" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/edittext_shadow.xml" value="0.1" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/my_selector.xml" value="0.1" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/square.xml" value="0.103" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_find_pw.xml" value="0.20199275362318841" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_group_making.xml" value="0.20199275362318841" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_group_meetings.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_main_page.xml" value="0.2" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_main_page_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_meeting_making.xml" value="0.2115036231884058" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_mission10_fragment1.xml" value="0.1" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_mission10_fragment2.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_mission10_main_fragment.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_sign_up.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/get_img_dialog.xml" value="0.1125" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/nav_header_main.xml" value="0.1" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/menu/activity_main_drawer.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/menu/menu1.xml" value="0.1" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/menu/menu2.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/menu/menu_bottom.xml" value="0.25364583333333335" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

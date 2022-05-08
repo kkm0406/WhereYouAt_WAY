@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -63,20 +62,20 @@ public class StartPage extends AppCompatActivity {
             public void onClick(View view) {
 
                 db.collection("user")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                                if (task.isSuccessful()){
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        Toast.makeText(StartPage.this, document.getData().values().toString(), Toast.LENGTH_SHORT).show();
-                                    }
-                                } else {
-                                    Toast.makeText(StartPage.this, "에러", Toast.LENGTH_SHORT).show();
-                                }
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Toast.makeText(StartPage.this, document.getData().values().toString(), Toast.LENGTH_SHORT).show();
                             }
-                        });
+                        } else {
+                            Toast.makeText(StartPage.this, "에러", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
             }
         });
