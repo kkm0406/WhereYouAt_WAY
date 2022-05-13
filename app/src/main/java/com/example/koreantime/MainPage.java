@@ -11,6 +11,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -24,6 +25,7 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.koreantime.DTO.DTO_user;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -38,11 +40,14 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     String[] orderList = {"생성순", "시간순"};
     ArrayList<ImageButton> meetingMaking = new ArrayList<>();
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
-
+        Intent Intent = getIntent();
+        DTO_user user_info=(DTO_user) Intent.getSerializableExtra("user_info");
+        Log.d("DATABASE", "DocumentSnapshot data: " + user_info);
 
         ImageButton group_making_btn = findViewById(R.id.group_making_btn);
         LinearLayout showGroups = findViewById(R.id.showGroups);

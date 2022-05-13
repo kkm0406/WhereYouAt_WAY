@@ -2,23 +2,24 @@ package com.example.koreantime;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
+
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.*;
 
-public class SignUp extends AppCompatActivity {
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+public class SignUp extends AppCompatActivity {
+    private FirebaseAuth mAuth;
     final String TAG = getClass().getSimpleName();
     Dialog imgDialog;
 
@@ -78,9 +79,31 @@ public class SignUp extends AppCompatActivity {
                 }
                 if (signFlag) {
                     Toast.makeText(SignUp.this, "db에 저장해야됨", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(SignUp.this, StartPage.class);
-                    startActivity(intent);
+                    Log.d("hi dhksfy", "createUserWithEmail:success");
+                    mAuth= FirebaseAuth.getInstance();
+                    mAuth.createUserWithEmailAndPassword(tel.getText().toString(), pw.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+
+
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                Log.d("tag", "createUserWithEmail:success"+user);
+                                Intent intent = new Intent(SignUp.this, StartPage.class);
+                                startActivity(intent);
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Toast.makeText(SignUp.this, tel.getText().toString(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignUp.this, pw.getText().toString(), Toast.LENGTH_SHORT).show();
+                                Log.w("tag", "createUserWithEmail:failure", task.getException());
+                            }
+                        }
+                    });
+
                 }
+
             }
         });
     }
