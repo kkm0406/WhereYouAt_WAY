@@ -15,14 +15,14 @@ public class findPW extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_pw);
 
-        EditText id = findViewById(R.id.id);
+        EditText email = findViewById(R.id.email);
         TextView btn_find = findViewById(R.id.btn_find);
         TextView Exit = findViewById(R.id.Exit);
 
         btn_find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String userID = id.getText().toString();
+                String userInfo = email.getText().toString();
 
                 Intent intent = new Intent(findPW.this, StartPage.class);
                 startActivity(intent);
