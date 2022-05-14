@@ -67,63 +67,34 @@ public class SignUp extends AppCompatActivity {
                     signFlag = false;
                 }
                 if (signFlag) {
-                    Toast.makeText(SignUp.this, "db에 저장해야됨", Toast.LENGTH_SHORT).show();
-                    Log.d("hi dhksfy", "createUserWithEmail:success");
                     mAuth= FirebaseAuth.getInstance();
-                    mAuth.createUserWithEmailAndPassword(tel.getText().toString().trim(), pw.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    Log.d("signup", "다적음");
+                    Toast.makeText(SignUp.this, "db에 저장해야됨", Toast.LENGTH_SHORT).show();
+                    mAuth.createUserWithEmailAndPassword(email.getText().toString().trim(), pw.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-
-                                FirebaseUser user = mAuth.getCurrentUser();
                                 FirebaseFirestore db= FirebaseFirestore.getInstance();
-                                DTO_user new_user = new DTO_user(name.getText().toString(),tel.toString(),address.toString(),"","");
-                                Log.d("add_user", ""+new_user);
-                                String email=tel.toString();
+                                DTO_user new_user = new DTO_user(email.getText().toString(),name.getText().toString(),address.getText().toString(),"","");
+                                Log.d("signup", ""+new_user);
 
-                                db.collection("user").document(email)
+                                db.collection("user").document(email.getText().toString())
                                         .set(new_user)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                Log.d("add user", "DocumentSnapshot successfully written!");
-//                                                Intent intent = new Intent(SignUp.this, StartPage.class);
-//                                                startActivity(intent);
+                                                Log.d("signup", "DocumentSnapshot successfully written!");
+                                                finish();
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Log.w("add user", "Error writing document", e);
+                                                Log.w("signup", "Error writing document", e);
                                             }
                                         });
-//                                Map<String, Object> city = new HashMap<>();
-//                                city.put("name", "Los Angeles");
-//                                city.put("state", "CA");
-//                                city.put("country", "USA");
-//
-//                                db.collection("user").document("LA")
-//                                        .set(city)
-//                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                            @Override
-//                                            public void onSuccess(Void aVoid) {
-//                                                Log.d(TAG, "DocumentSnapshot successfully written!");
-//                                            }
-//                                        })
-//                                        .addOnFailureListener(new OnFailureListener() {
-//                                            @Override
-//                                            public void onFailure(@NonNull Exception e) {
-//                                                Log.w(TAG, "Error writing document", e);
-//                                            }
-//                                        });
-
-
                             } else {
-                                // If sign in fails, display a message to the user.
-                                Toast.makeText(SignUp.this, tel.getText().toString(), Toast.LENGTH_SHORT).show();
-                                Toast.makeText(SignUp.this, pw.getText().toString(), Toast.LENGTH_SHORT).show();
-                                Log.w("tag", "createUserWithEmail:failure", task.getException());
+                                Log.w("signup", "createUserWithEmail:failure", task.getException());
                             }
                         }
                     });
