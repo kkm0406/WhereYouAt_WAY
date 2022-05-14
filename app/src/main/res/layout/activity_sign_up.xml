@@ -15,13 +15,13 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.6"/>
+            android:layout_weight="0.7"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="0.5"
-            android:text="Welcome to W.A.Y"
+            android:text="Welcome W.A.Y"
             android:textFontWeight="600"
             android:layout_gravity="center"
             android:gravity="center"
@@ -32,7 +32,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.9"/>
+            android:layout_weight="1.2"/>
 
 
         <EditText
@@ -43,7 +43,8 @@
             android:layout_marginHorizontal="40dp"
             android:id="@+id/name"
             android:fontFamily="@font/cafe"
-            android:hint="Name"
+            android:hint="Nick Name"
+            android:inputType="text"
             android:gravity="center"
             android:singleLine="true" />
 
@@ -51,44 +52,25 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.4"/>
+            android:layout_weight="0.6"/>
 
-        <LinearLayout
+
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.6"
-            android:orientation="horizontal"
+            android:id="@+id/email"
+            android:hint="E-mail"
+            android:inputType="textEmailAddress"
+            android:gravity="center"
             android:layout_marginHorizontal="40dp"
-            android:weightSum="4"
-            android:layout_gravity="center">
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2.8"
-                android:id="@+id/id"
-                android:hint="ID"
-                android:gravity="center"
-                android:fontFamily="@font/cafe"
-                android:singleLine="true" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="0.8"/>
-
-            <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:foreground="@drawable/tick"
-                android:backgroundTint="#fff"
-                android:id="@+id/isExist"/>
-        </LinearLayout>
+            android:fontFamily="@font/cafe"
+            android:singleLine="true" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.4"/>
+            android:layout_weight="0.6"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -107,7 +89,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.4"/>
+            android:layout_weight="0.6"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -122,65 +104,12 @@
             android:gravity="center"
             android:singleLine="true" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.4" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.6"
-            android:layout_gravity="center"
-            android:fontFamily="@font/cafe"
-            android:layout_marginHorizontal="40dp"
-            android:id="@+id/tel"
-            android:hint="전화번호 ( ' - ' 제외 )"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:singleLine="true" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.4"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.95"
-            android:orientation="horizontal"
-            android:weightSum="4"
-            android:layout_marginHorizontal="30dp">
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="0.5"/>
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:id="@+id/user_pic"
-                android:foregroundTintMode="screen"
-                android:foreground="@drawable/plus"
-                android:background="@drawable/get_img_btn"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:textSize="16sp"
-                android:text="프로필 사진 등록"
-                android:textFontWeight="600"
-                android:fontFamily="@font/cafe"
-                android:id="@+id/getImg"
-                android:gravity="center"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.8"/>
+            android:layout_weight="2.3"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -200,5 +129,4 @@
             android:layout_height="0dp"
             android:layout_weight="0.7"/>
     </LinearLayout>
-
 </LinearLayout>

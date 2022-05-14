@@ -29,7 +29,6 @@ import java.util.Map;
 public class SignUp extends AppCompatActivity {
     private FirebaseAuth mAuth;
     final String TAG = getClass().getSimpleName();
-    Dialog imgDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,23 +36,10 @@ public class SignUp extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         EditText name = findViewById(R.id.name);
-        EditText id = findViewById(R.id.id);
+        EditText email = findViewById(R.id.email);
         EditText pw = findViewById(R.id.pw);
         EditText address = findViewById(R.id.address);
-        EditText tel = findViewById(R.id.tel);
-        TextView getImg = findViewById(R.id.getImg);
         TextView signUp = findViewById(R.id.signUp);
-
-        imgDialog = new Dialog(SignUp.this);
-        imgDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        imgDialog.setContentView(R.layout.get_img_dialog);
-
-        getImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showImgDialog();
-            }
-        });
 
 
         signUp.setOnClickListener(new View.OnClickListener() {
@@ -65,9 +51,9 @@ public class SignUp extends AppCompatActivity {
                     name.requestFocus();
                     signFlag = false;
                 }
-                if (id.getText().toString().length() == 0) {
-                    id.setHint("ID를 입력하세요");
-                    id.requestFocus();
+                if (email.getText().toString().length() == 0) {
+                    email.setHint("이메일을 입력하세요");
+                    email.requestFocus();
                     signFlag = false;
                 }
                 if (pw.getText().toString().length() == 0) {
@@ -78,11 +64,6 @@ public class SignUp extends AppCompatActivity {
                 if (address.getText().toString().length() == 0) {
                     address.setHint("주소를 입력하세요");
                     address.requestFocus();
-                    signFlag = false;
-                }
-                if (tel.getText().toString().length() == 0) {
-                    tel.setHint("이메일을 입력하세요");
-                    tel.requestFocus();
                     signFlag = false;
                 }
                 if (signFlag) {
@@ -152,34 +133,4 @@ public class SignUp extends AppCompatActivity {
             }
         });
     }
-
-
-    public void showImgDialog() {
-            imgDialog.show();
-
-            Button cancel = imgDialog.findViewById(R.id.cancle);
-            cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    imgDialog.dismiss();
-                }
-            });
-
-            Button fromCamera = imgDialog.findViewById(R.id.fromCamera);
-            fromCamera.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(SignUp.this, "카메라 연결", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            Button fromFile = imgDialog.findViewById(R.id.fromFile);
-            fromFile.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(SignUp.this, "파일 저장소 연결", Toast.LENGTH_SHORT).show();
-
-                }
-            });
-        }
-    }
+}
