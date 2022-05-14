@@ -17,7 +17,9 @@ import com.example.koreantime.DTO.DTO_group;
 import com.example.koreantime.DTO.DTO_user;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -59,27 +61,43 @@ public class StartPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 FirebaseFirestore db= FirebaseFirestore.getInstance();
-
-                db.collection("user").document("users").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        DTO_user user;
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                Log.d("DATABASE", "DocumentSnapshot data: " + document.getData());
-                                user =document.toObject(DTO_user.class);
-                                Intent intent = new Intent(StartPage.this, MainPage.class);
-                                intent.putExtra("user_info", user);
-                                startActivity(intent);
-                            } else {
-                                Log.d("DATABASE", "No such document");
+                FirebaseAuth mAuth=FirebaseAuth.getInstance();
+                mAuth.signInWithEmailAndPassword(id.toString().trim(), pw.toString())
+                        .addOnCompleteListener(StartPage.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d("login success", "signInWithEmail:success");
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    db.collection("user").document("users").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            DTO_user user;
+                                            if (task.isSuccessful()) {
+                                                DocumentSnapshot document = task.getResult();
+                                                if (document.exists()) {
+                                                    Log.d("DATABASE", "DocumentSnapshot data: " + document.getData());
+                                                    user =document.toObject(DTO_user.class);
+                                                    Intent intent = new Intent(StartPage.this, MainPage.class);
+                                                    intent.putExtra("user_info", user);
+                                                    startActivity(intent);
+                                                } else {
+                                                    Log.d("DATABASE", "No such document");
+                                                }
+                                            } else {
+                                                Log.d("DATABASE", "get failed with ", task.getException());
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w("login success", "signInWithEmail:failure", task.getException());
+                                }
                             }
-                        } else {
-                            Log.d("DATABASE", "get failed with ", task.getException());
-                        }
-                    }
-                });
+                        });
+
+
 //                for (String group_id:user.getGroups_id()) {
 //                    db.collection("user").document(group_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 //                        @Override
