@@ -15,26 +15,11 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@color/white"
-                app:title="W A Y"
-                android:layout_gravity="center"
-                android:textSize="20sp"
-                app:popupTheme="@style/AppTheme.NoActionBar"
-                />
-            <!--여기 바꿔야 됨 상단-->
+            app:flow_verticalAlign="baseline"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints">            <!--여기 바꿔야 됨 상단-->
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -44,11 +29,9 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout" >
-
         </FrameLayout>
 
         <LinearLayout
@@ -62,21 +45,21 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-<!--                <TextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="W.A.Y"-->
-<!--                    android:fontFamily="@font/cafebold"-->
-<!--                    android:textColor="#42C2FF"-->
-<!--                    android:textSize="55sp"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:gravity="center"/>-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="W.A.Y"
+                    android:fontFamily="@font/cafebold"
+                    android:textColor="#42C2FF"
+                    android:textSize="55sp"
+                    android:layout_gravity="center"
+                    android:gravity="center"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="10dp"
                     android:orientation="vertical"
                     android:layout_gravity="right">
                     <TextView
@@ -86,8 +69,16 @@
                         android:textSize="20sp"
                         android:fontFamily="@font/cafe"
                         android:paddingTop="1mm"
-                        android:hint="Name" />
+                        android:text="Name" />
                 </LinearLayout>
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="40sp"
+                    app:popupTheme="@style/AppTheme.NoActionBar" />
 
             </FrameLayout>
 

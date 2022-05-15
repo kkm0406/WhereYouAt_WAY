@@ -63,41 +63,46 @@ public class StartPage extends AppCompatActivity {
                 Toast.makeText(StartPage.this, "로그인시도", Toast.LENGTH_SHORT).show();
                 FirebaseFirestore db= FirebaseFirestore.getInstance();
                 FirebaseAuth mAuth=FirebaseAuth.getInstance();
-                mAuth.signInWithEmailAndPassword(id.getText().toString().trim(), pw.getText().toString())
-                        .addOnCompleteListener(StartPage.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Log.d("login", "signInWithEmail:success");
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    db.collection("user").document(id.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                            DTO_user user;
-                                            if (task.isSuccessful()) {
-                                                DocumentSnapshot document = task.getResult();
-                                                if (document.exists()) {
-                                                    Log.d("login", "DocumentSnapshot data: " + document.getData());
-                                                    user =document.toObject(DTO_user.class);
-                                                    Intent intent = new Intent(StartPage.this, MainPage.class);
-                                                    intent.putExtra("user_info", user);
-                                                    startActivity(intent);
+                if(id.getText().toString().length() == 0 || pw.getText().toString().length() == 0){
+                    Toast.makeText(StartPage.this, "아이디와 비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+                }else{
+                    mAuth.signInWithEmailAndPassword(id.getText().toString().trim(), pw.getText().toString())
+                            .addOnCompleteListener(StartPage.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        Log.d("login", "signInWithEmail:success");
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        db.collection("user").document(id.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                DTO_user user;
+                                                if (task.isSuccessful()) {
+                                                    DocumentSnapshot document = task.getResult();
+                                                    if (document.exists()) {
+                                                        Log.d("login", "DocumentSnapshot data: " + document.getData());
+                                                        user =document.toObject(DTO_user.class);
+                                                        Intent intent = new Intent(StartPage.this, MainPage.class);
+                                                        intent.putExtra("user_info", user);
+                                                        startActivity(intent);
+                                                    } else {
+                                                        Log.d("login", "No such document");
+                                                    }
                                                 } else {
-                                                    Log.d("login", "No such document");
+                                                    Log.d("login", "get failed with ", task.getException());
                                                 }
-                                            } else {
-                                                Log.d("login", "get failed with ", task.getException());
                                             }
-                                        }
-                                    });
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w("login", "signInWithEmail:failure", task.getException());
-                                    Toast.makeText(StartPage.this, "로그인실패", Toast.LENGTH_SHORT).show();
+                                        });
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        Log.w("login", "signInWithEmail:failure", task.getException());
+                                        Toast.makeText(StartPage.this, "로그인실패", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
+                            });
+
+                }
 
 
 //                for (String group_id:user.getGroups_id()) {

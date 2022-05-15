@@ -57,7 +57,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         meetingMaking.get(0).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainPage.this, MeetingMaking.class);
+                Intent intent = new Intent(MainPage.this, mission10.class);
                 startActivity(intent);
             }
         });

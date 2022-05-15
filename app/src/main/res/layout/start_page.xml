@@ -47,7 +47,7 @@
                 android:layout_weight="0.8"
                 android:fontFamily="@font/cafe"
                 android:gravity="center"
-                android:hint="ID"
+                android:hint="E-Mail"
                 android:textSize="17sp"
                 android:id="@+id/id">
             </EditText>

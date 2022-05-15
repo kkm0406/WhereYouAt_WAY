@@ -16,6 +16,10 @@ import java.util.ArrayList;
 
 public class mission10MainFragment extends Fragment {
 
+    mission10MainFragment mainFragment;
+    com.example.koreantime.mission10Fragment1 fragment1;
+    com.example.koreantime.mission10Fragment2 fragment2;
+
     ViewPager pager;
 
     @Override
@@ -27,6 +31,10 @@ public class mission10MainFragment extends Fragment {
         pager.setOffscreenPageLimit(3);
 
         MypaperAdapter adapter = new MypaperAdapter(getChildFragmentManager());
+        fragment1 = new com.example.koreantime.mission10Fragment1();
+        adapter.addItem(fragment1);
+        fragment2 = new com.example.koreantime.mission10Fragment2();
+        adapter.addItem(fragment2);
 
 
         pager.setAdapter(adapter);

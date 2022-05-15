@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.koreantime.mission10MainFragment"
+        android:label="@string/menu1"
+        tools:layout="@layout/fragment_map" />
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="com.example.koreantime.mission10MainFragment"
+        android:label="@string/menu2"
+        tools:layout="@layout/fragment_meeting" />
+
+<!--    <fragment-->
+<!--        android:id="@+id/nav_slideshow"-->
+<!--        android:name="com.example.week6.mission10Fragment3"-->
+<!--        android:label="@string/menu3"-->
+<!--        tools:layout="@layout/activity_mission10_fragment3" />-->
+</navigation>
