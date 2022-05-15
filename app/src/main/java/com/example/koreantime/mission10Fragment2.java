@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,10 +39,15 @@ public class mission10Fragment2 extends Fragment implements MapView.MapViewEvent
     MapView mapView;
     Geocoder geocoder;
     String locationName = "";
+    EditText locationText;
+    Button locationBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.activity_mission10_fragment2, container, false);
+
+        locationText = v.findViewById(R.id.locationText);
+        locationBtn = v.findViewById(R.id.locationBtn);
 
         mapView = new MapView(getActivity());
         ViewGroup mapViewContainer = (ViewGroup) v.findViewById(R.id.kakaoMap);
@@ -63,6 +69,33 @@ public class mission10Fragment2 extends Fragment implements MapView.MapViewEvent
 
         geocoder = new Geocoder(this.getContext());
 
+        locationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String tmpLocation = locationText.getText().toString();
+                List<Address> list = null;
+                try {
+                    list = geocoder.getFromLocationName(tmpLocation,10);
+                } catch (IOException e) {
+                    Log.d("geocoder error", String.valueOf(e));
+                    e.printStackTrace();
+                }
+                if (list != null) {
+                    String city = "";
+                    String country = "";
+                    if (list.size() == 0) {
+                        locationText.setText("올바른 주소를 입력해주세요. ");
+                    }
+                    else {
+                        Address address = list.get(0);
+                        double lat = address.getLatitude();
+                        double lon = address.getLongitude();
+                        Log.d("gps", String.valueOf(lat));
+                        //여기서부터 주소 입력하면 마커생기게
+                    }
+                }
+            }
+        });
 
         return v;
     }
