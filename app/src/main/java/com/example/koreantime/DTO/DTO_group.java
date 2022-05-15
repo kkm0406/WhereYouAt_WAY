@@ -1,16 +1,14 @@
 package com.example.koreantime.DTO;
 
+import java.util.List;
+
 public class DTO_group {
     String name;
     int num;
-    String participation;
+    List<String> participation;
 
-    public DTO_group(){
-        this.name="";
-        this.num=0;
-        this.participation="";
-    }
-    public DTO_group(String name, int num, String participation){
+    public DTO_group(){}
+    public DTO_group(String name, int num, List<String> participation){
         this.name=name;
         this.num=num;
         this.participation=participation;
@@ -24,7 +22,7 @@ public class DTO_group {
         return name;
     }
 
-    public String getParticipation() {
+    public List<String> getParticipation() {
         return participation;
     }
 
@@ -36,7 +34,7 @@ public class DTO_group {
         this.num = num;
     }
 
-    public void setParticipation(String participation) {
+    public void setParticipation(List<String> participation) {
         this.participation = participation;
     }
 }

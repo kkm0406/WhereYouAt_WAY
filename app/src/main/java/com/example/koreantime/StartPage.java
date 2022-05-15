@@ -99,26 +99,6 @@ public class StartPage extends AppCompatActivity {
                             }
                         });
 
-
-//                for (String group_id:user.getGroups_id()) {
-//                    db.collection("user").document(group_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                            if (task.isSuccessful()) {
-//                                DocumentSnapshot document = task.getResult();
-//                                if (document.exists()) {
-//                                    Log.d("DATABASE", "DocumentSnapshot data: " + document.getData());
-//                                    groups[0] =(document.toObject(DTO_group.class));
-//                                } else {
-//                                    Log.d("DATABASE", "No such document");
-//                                }
-//                            } else {
-//                                Log.d("DATABASE", "get failed with ", task.getException());
-//                            }
-//                        }
-//                    });
-//                }
-
             }
         });
 

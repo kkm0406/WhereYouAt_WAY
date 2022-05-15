@@ -1,6 +1,7 @@
 package com.example.koreantime;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,6 +24,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.koreantime.DTO.DTO_user;
@@ -39,14 +41,28 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     DrawerLayout drawer;
     String[] orderList = {"생성순", "시간순"};
     ArrayList<ImageButton> meetingMaking = new ArrayList<>();
+    DTO_user user_info;
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 0:
+            {
+                if(resultCode==1){
+                    user_info=(DTO_user) data.getSerializableExtra("result_user");
+                    Log.d("group_making", "DocumentSnapshot data: " + user_info.getGroups_id());
+                }
+            }
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
         Intent Intent = getIntent();
-        DTO_user user_info=(DTO_user) Intent.getSerializableExtra("user_info");
+        user_info=(DTO_user) Intent.getSerializableExtra("user_info");
         Log.d("DATABASE", "DocumentSnapshot data: " + user_info);
 
         ImageButton group_making_btn = findViewById(R.id.group_making_btn);
@@ -67,7 +83,8 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View view) {
                 Toast.makeText(MainPage.this, "Asdf", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainPage.this, GroupMaking.class);
-                startActivity(intent);
+                intent.putExtra("user_info", user_info);
+                startActivityForResult(intent,0);
             }
         });
         //그룹 만드는 페이지로 intent
