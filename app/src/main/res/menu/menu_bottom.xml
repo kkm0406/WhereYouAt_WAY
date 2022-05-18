@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu1"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:title="일정 선택" />
+
+    <item
+        android:id="@+id/menu2"
+        app:showAsAction="ifRoom"
+        android:title="장소 선택" />
+
+</menu>
