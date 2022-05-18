@@ -44,7 +44,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     DTO_user user_info;
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {//그룹만들고서 user_info 업데이트
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             case 0:
