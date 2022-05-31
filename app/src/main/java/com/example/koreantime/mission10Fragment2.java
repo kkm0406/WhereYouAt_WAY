@@ -188,7 +188,6 @@ public class mission10Fragment2 extends Fragment implements MapView.MapViewEvent
         double[] tmpArr = {Math.abs(cx), Math.abs(cy)};
 
         return tmpArr;
-
     }
 
 
