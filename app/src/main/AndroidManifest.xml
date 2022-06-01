@@ -39,13 +39,16 @@
             android:name=".GroupMaking"
             android:exported="false" />
         <activity
-            android:name=".StartPage"
+            android:name=".mission10"
+            android:exported="false" />
+        <activity
+            android:name=".MainPage"
             android:exported="false" />
         <activity
             android:name=".SignUp"
             android:exported="false" />
         <activity
-            android:name=".mission10"
+            android:name=".StartPage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
