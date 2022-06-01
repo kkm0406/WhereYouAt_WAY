@@ -4,123 +4,138 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GroupMaking"
+    android:orientation="vertical"
     android:weightSum="5"
-    android:orientation="vertical">
+    tools:context=".GroupMaking">
 
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="0.3"/>
+        android:layout_weight="0.3" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_weight="0.2"
+        android:orientation="horizontal"
         android:weightSum="4">
+
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.5" />
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.2"
             android:gravity="center"
+            android:text="Group Name :"
             android:textColor="#42C2FF"
-            android:textSize="18sp"
-            android:text="Group Name :"/>
+            android:textSize="18sp" />
 
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:layout_weight="1.8"
             android:gravity="center"
-            android:textSize="16sp"
+            android:hint="Enter Group Name"
             android:textColor="@color/black"
-            android:layout_marginLeft="20dp"
-            android:hint="Enter Group Name"/>
+            android:textSize="16sp" />
+
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.5" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.4"
-        android:weightSum="4"
         android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+        android:layout_weight="0.4"
+        android:orientation="horizontal"
+        android:weightSum="4">
 
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.7"/>
+            android:layout_weight="0.7" />
 
-        <ImageView
-            android:layout_width="33dp"
+        <ImageButton
+            android:layout_width="28dp"
             android:layout_height="33dp"
+            android:layout_gravity="center"
             android:background="@drawable/search"
-            android:layout_gravity="center"/>
+            android:id="@+id/searchBtn"/>
 
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.25"/>
+            android:layout_weight="0.25" />
 
         <EditText
+            android:id="@+id/enterName"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2.3"
-            android:id="@+id/enterName"
-            android:hint="Enter Nick Name"
             android:gravity="center"
-            android:textSize="16sp"
-            android:textColor="@color/black"/>
+            android:hint="Enter Nick Name"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.5" />
 
     </LinearLayout>
 
     <!--여기에 검색되는 리스트-->
 
-    <TextView
-        android:id="@+id/search_list"
+    <!--여기에 검색되는 리스트-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/search_list"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_marginHorizontal="40dp"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        android:layout_weight="2.0"-->
+    <!--        android:gravity="center_horizontal"-->
+    <!--        android:hint="SEARCH" />-->
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2.0"
-        android:hint="SEARCH"
-        android:gravity="center_horizontal"
+        android:layout_marginHorizontal="40dp"
         android:layout_marginTop="10dp"
-        android:layout_marginHorizontal="40dp"/>
-
-    <!--여기에 검색되는 리스트-->
+        android:layout_weight="2.0"
+        android:gravity="center_horizontal"
+        android:hint="SEARCH"
+        android:id="@+id/searchList"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.35"
-        android:weightSum="4"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="4">
+
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.5" />
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="Members"
             android:textColor="#42C2FF"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:layout_weight="1"/>
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -128,70 +143,88 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.6"
         android:layout_gravity="center"
+        android:layout_weight="0.6"
         android:orientation="horizontal"
         android:weightSum="4">
+
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.2"/>
+            android:layout_weight="0.2" />
 
+        <!--        그룹 하나 보여주는 레이아웃-->
         <HorizontalScrollView
+            android:id="@+id/memberScroll"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3.6"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_height="50dp"
-                android:layout_width="80dp"
-                android:background="@drawable/get_img_btn"
-                android:orientation="vertical"
-                android:layout_gravity="center_vertical"
-                android:gravity="center"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp">
+                android:id="@+id/memberList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="NickName"
-                    android:fontFamily="@font/cafe"
-                    android:layout_marginTop="7dp"
-                    android:textAlignment="center"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="10dp"
-                    android:textSize="15sp"/>
+                <LinearLayout
+                    android:id="@+id/member"
+                    android:layout_width="80dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/get_img_btn"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+
+                    <TextView
+                        android:id="@+id/memberName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/cafe"
+                        android:text="NickName"
+                        android:textAlignment="center"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
         </HorizontalScrollView>
-<!--        그룹 하나 보여주는 레이아웃-->
+
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.2"/>
+            android:layout_weight="0.2" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.65"
-        android:paddingVertical="20dp"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingVertical="20dp">
+
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
+
         <ImageButton
+            android:id="@+id/complete"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:foreground="@drawable/tick"
-            android:backgroundTint="#fff"
             android:layout_marginRight="30dp"
-            android:id="@+id/complete"/>
+            android:backgroundTint="#fff"
+            android:foreground="@drawable/tick" />
     </LinearLayout>
 
 </LinearLayout>
