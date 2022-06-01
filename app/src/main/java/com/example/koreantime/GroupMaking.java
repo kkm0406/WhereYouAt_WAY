@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -41,8 +42,12 @@ public class GroupMaking extends AppCompatActivity {
     ImageButton searchBtn;
     HorizontalScrollView memberScroll;
     LinearLayout memberList;
-    ArrayList<LinearLayout> members;
+    ArrayList<String> joinedMember = new ArrayList<String>();
     LayoutInflater layoutInflater;
+    EditText enterName;
+    ImageButton complete;
+    DTO_group new_group;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,102 +56,99 @@ public class GroupMaking extends AppCompatActivity {
         searchBtn = findViewById(R.id.searchBtn);
         memberScroll = findViewById(R.id.memberScroll);
         memberList = findViewById(R.id.memberList);
-
-        FirebaseFirestore db= FirebaseFirestore.getInstance();
+        enterName = findViewById((R.id.enterName));
+        listAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, searchList);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        complete=findViewById(R.id.complete);
 
         Intent Intent = getIntent();
-        DTO_user user_info=(DTO_user) Intent.getSerializableExtra("user_info");
-        ArrayList<String> parti=new ArrayList<>();
-        parti.add("123456@naver.com");
-        DTO_group new_group=new DTO_group("name",1,parti);
-
-        String search_nick="jongwon";
-        db.collection("user").whereEqualTo("nickname", search_nick)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("add_group", document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.d("add_group", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-
-        db.collection("group")
-                .add(new_group)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("add_group", "DocumentSnapshot written with ID: " + documentReference.getId());
-                        FirebaseAuth mAuth=FirebaseAuth.getInstance();
-                        String email=user_info.getEmail();
-                        ArrayList<String> update_group=(ArrayList<String>) user_info.getGroups_id();
-                        update_group.add(documentReference.getId());
-                        Log.d("add_group", update_group+"");
-                        DocumentReference washingtonRef = db.collection("user").document(email);
-// Set the "isCapital" field of the city 'DC'
-                        washingtonRef
-                                .update("groups_id",(List<String>)update_group )
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d("add_group", "DocumentSnapshot successfully updated!");
-                                        Intent result_intent=new Intent();
-                                        result_intent.putExtra("result_user",user_info);
-                                        setResult(1,result_intent);
-//                                        finish();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w("add_group", "Error updating document", e);
-                                    }
-                                });
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("add_group", "Error adding document", e);
-                    }
-                });
-
-
+        DTO_user user_info = (DTO_user) Intent.getSerializableExtra("user_info");
+        joinedMember.add(user_info.getEmail());
+        MakeMemberView(user_info.getEmail());
 
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchList.add("member1");
-                searchList.add("member2");
-                searchList.add("member3");
-                searchList.add("member4");
-                searchList.add("member5");
-                searchList.add("member6");
-
-                listAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, searchList);
-                searchListView.setAdapter(listAdapter);
+                String search_nick = enterName.getText().toString();
+                listAdapter.clear();
+                db.collection("user").whereEqualTo("nickname", search_nick)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        searchList.add(document.getId());
+                                    }
+                                    searchListView.setAdapter(listAdapter);
+                                } else {
+                                    Log.d("add_group", "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
             }
         });
 
         searchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(GroupMaking.this, searchList.get(i)+"asdfasdf", Toast.LENGTH_SHORT).show();
-//                members.add(MakeMemberView(searchList.get((i))));
-                MakeMemberView(searchList.get((i)));
+                joinedMember.add(searchList.get(i));
+                MakeMemberView(searchList.get(i));
+            }
+        });
+        complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText text = findViewById(R.id.group_name);
+                new_group = new DTO_group(text.getText().toString(), joinedMember.size(), joinedMember);
+                db.collection("group")
+                        .add(new_group)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d("add_group", "DocumentSnapshot written with ID: " + documentReference.getId());
+                                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                                String email = user_info.getEmail();
+                                ArrayList<String> update_group = (ArrayList<String>) user_info.getGroups_id();
+                                update_group.add(documentReference.getId());
+                                Log.d("add_group", update_group + "");
+                                DocumentReference washingtonRef = db.collection("user").document(email);
+// Set the "isCapital" field of the city 'DC'
+                                washingtonRef
+                                        .update("groups_id", (List<String>) update_group)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d("add_group", "DocumentSnapshot successfully updated!");
+                                                Intent result_intent = new Intent();
+                                                result_intent.putExtra("result_user", user_info);
+                                                setResult(1, result_intent);
+                                                finish();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w("add_group", "Error updating document", e);
+                                            }
+                                        });
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("add_group", "Error adding document", e);
+                            }
+                        });
             }
         });
 
 
+
     }
 
-    public void MakeMemberView (String name){
+    public void MakeMemberView(String name) {
         layoutInflater = getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.activity_add_member_view, null, false);
 

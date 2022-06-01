@@ -57,17 +57,17 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
             {
                 if(resultCode==1){
                     String searchemail=user_info.getEmail();
-                    db.collection("user").whereArrayContains("regions", searchemail)
+                    db.collection("group").whereArrayContains("participation", searchemail)
                             .get()
                             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                     if (task.isSuccessful()) {
                                         for (QueryDocumentSnapshot document : task.getResult()) {
-                                            Log.d("add_group", document.getId() + " => " + document.getData());
+                                            Log.d("added_group", document.getId() + " => " + document.getData());
                                         }
                                     } else {
-                                        Log.d("add_group", "Error getting documents: ", task.getException());
+                                        Log.d("added_group", "Error getting documents: ", task.getException());
                                     }
                                 }
                             });
