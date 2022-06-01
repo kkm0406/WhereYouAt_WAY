@@ -77,20 +77,19 @@ public class mission10Fragment2 extends Fragment implements MapView.MapViewEvent
 //        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
 //        mapView.addPOIItem(marker);
 
-        userLocations.add(new markerGPS(37.541, 126.986));
-        userLocations.add(new markerGPS(37.545, 126.986));
-        userLocations.add(new markerGPS(37.551, 126.986));
-        userLocations.add(new markerGPS(37.553, 126.986));
-        userLocations.add(new markerGPS(37.537, 126.986));
-        userLocations.add(new markerGPS(37.535, 126.986));
-        //https://jayprogram.tistory.com/82 -> 다각형 무게중심
+        userLocations.add(new markerGPS(37.541, 126.987));
+        userLocations.add(new markerGPS(37.545, 126.976));
+        userLocations.add(new markerGPS(37.551, 126.970));
+        userLocations.add(new markerGPS(37.553, 126.983));
 
 
-        ArrayList<markerGPS> centerGPS = new ArrayList<>();
-        double[] tmpLocation = GetCenter();
-        centerGPS.add(new markerGPS(tmpLocation[0], tmpLocation[1]));
+        GetCenter();
 
-        Log.d("Qwerqwer", String.valueOf(centerGPS.get(0).getLat()));
+//        ArrayList<markerGPS> centerGPS = new ArrayList<>();
+//        double[] tmpLocation = GetCenter();
+//        centerGPS.add(new markerGPS(tmpLocation[0], tmpLocation[1]));
+//
+//        Log.d("Qwerqwer", String.valueOf(centerGPS.get(0).getLat()));
 
 
         geocoder = new Geocoder(this.getContext());
@@ -137,9 +136,9 @@ public class mission10Fragment2 extends Fragment implements MapView.MapViewEvent
         return v;
     }
 
-    public double[] GetCenter() {
-        double area = 0, cx = 0, cy = 0;
-        double finalX = 0, finalY = 0;
+    public void GetCenter() {
+        double area = 0;
+        float cx = 0, cy = 0;
         for (int i = 0; i < userLocations.size(); i++) {
             int j = (i + 1) % userLocations.size();
             float x1 = Float.parseFloat(String.format("%.3f", userLocations.get(i).getLat()));
@@ -149,45 +148,47 @@ public class mission10Fragment2 extends Fragment implements MapView.MapViewEvent
 
             area += x1 * y2;
             area -= y1 * x2;
+            area = Double.parseDouble(String.format("%.3f", area));
+            Log.d("area", String.valueOf(area));
+
 
             float vx = (x1 + x2) * ((x1 * y2) - (x2 * y1));
-            float tmpCx =  Float.parseFloat(String.format("%.4f", vx));
+            float tmpCx = Float.parseFloat(String.format("%.3f", vx));
+            cx = Float.parseFloat(String.format("%.3f", cx));
             cx += tmpCx;
 
             float vy = (y1 + y2) * ((x1 * y2) - (x2 * y1));
-            float tmpCy = Float.parseFloat(String.format("%.4f", vy));
+            float tmpCy = Float.parseFloat(String.format("%.3f", vy));
+            cy = Float.parseFloat(String.format("%.3f", cy));
             cy += tmpCy;
-            Log.d("tmpCx : : : : ", String.valueOf(tmpCx));
-            Log.d("tmpCy : : : : ", String.valueOf(tmpCy));
+
+            Log.d("tmpCx, tmpCy", tmpCx+ ", "+ tmpCy);
 
 
-            finalX = Double.parseDouble(String.format("%.4f", cx));
-            finalY = Double.parseDouble(String.format("%.4f", cy));
-            Log.d("cx : : : : ", String.valueOf(finalX));
-            Log.d("cy : : : : ", String.valueOf(finalY));
+            Log.d("cx, cy", cx+", "+cy);
         }
 
+        area = Float.parseFloat(String.format("%.3f", area));
+        Log.d("finalarea", String.valueOf(area));
         area /= 2;
         area = Math.abs(area);
+        if(area == 0.0){
+            area = 0.00001;
+        }
 
-        Log.d("StringX : : : : ", String.valueOf(cx));
-        Log.d("StringY : : : : ", String.valueOf(cy));
 
-        float tmpCx = Float.parseFloat(String.format("%.6f", (cx)));
-        float tmpCy = Float.parseFloat(String.format("%.6f", (cy)));
+        float tmpCx = Float.parseFloat(String.format("%.3f", (cx)));
+        float tmpCy = Float.parseFloat(String.format("%.3f", (cy)));
 
-        Log.d("tmpCx : : : : ", String.valueOf(tmpCx));
-        Log.d("tmpCy : : : : ", String.valueOf(tmpCy));
+        Log.d("tmpCx, tmpCy", tmpCx+", "+tmpCy);
 
-        cx =  Float.parseFloat(String.format("%.6f", (tmpCx / (6.0 * area))));
-        cy =  Float.parseFloat(String.format("%.6f", (tmpCy / (6.0 * area))));
+        cx = Float.parseFloat(String.format("%.3f", (tmpCx / (6.0 * area))));
+        cy = Float.parseFloat(String.format("%.3f", (tmpCy / (6.0 * area))));
 
-        Log.d("finalcx : : : : ", String.valueOf(cx));
-        Log.d("finalcy : : : : ", String.valueOf(cy));
+        Log.d("finalcx, finalcy", cx+", "+cy);
 
         double[] tmpArr = {Math.abs(cx), Math.abs(cy)};
 
-        return tmpArr;
     }
 
 
