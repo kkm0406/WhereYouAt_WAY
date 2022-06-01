@@ -28,8 +28,13 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.koreantime.DTO.DTO_user;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -42,6 +47,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     String[] orderList = {"생성순", "시간순"};
     ArrayList<ImageButton> meetingMaking = new ArrayList<>();
     DTO_user user_info;
+    FirebaseFirestore db= FirebaseFirestore.getInstance();
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {//그룹만들고서 user_info 업데이트
@@ -50,8 +56,21 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
             case 0:
             {
                 if(resultCode==1){
-                    user_info=(DTO_user) data.getSerializableExtra("result_user");
-                    Log.d("group_making", "DocumentSnapshot data: " + user_info.getGroups_id());
+                    String searchemail=user_info.getEmail();
+                    db.collection("user").whereArrayContains("regions", searchemail)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            Log.d("add_group", document.getId() + " => " + document.getData());
+                                        }
+                                    } else {
+                                        Log.d("add_group", "Error getting documents: ", task.getException());
+                                    }
+                                }
+                            });
                 }
             }
         }
