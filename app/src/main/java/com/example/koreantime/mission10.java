@@ -64,7 +64,7 @@ public class mission10 extends AppCompatActivity implements MapView.MapViewEvent
     String meetingLocation;
     String[] groupmember;
     String groupname;
-    FirebaseFirestore db= FirebaseFirestore.getInstance();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayList<String> memberAddress = new ArrayList<>();
 
     @Override
@@ -87,12 +87,11 @@ public class mission10 extends AppCompatActivity implements MapView.MapViewEvent
         calendarView.addDecorator(sundayDecorator);
 
 
-
         Intent Intent = getIntent();
         groupname = Intent.getStringExtra("groupname");//그룹 이름 받아오기
         groupmember = Intent.getStringArrayExtra("groupmember");//그룹멤버 받아오기
         Log.d("meetingmake", groupmember[2]);
-        for (String email:groupmember) {//그룹멤버의 첫번째 주소 정보 가져옴
+        for (String email : groupmember) {//그룹멤버의 첫번째 주소 정보 가져옴
             db.collection("user").document(email)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -108,13 +107,32 @@ public class mission10 extends AppCompatActivity implements MapView.MapViewEvent
                         }
                     });
         }
-        DTO_schecule new_meeting = new DTO_schecule("123456@naver.com", "청주시 개신동","진동", "20220602","1512","첨만드는 회의");
+        DTO_schecule new_meeting = new DTO_schecule("123456@naver.com", "청주시 개신동", "진동", "20220602", "1512", "첨만드는 회의");
         db.collection("group").document(groupname).collection("schedule")//생성한 회의 DB에 쓰기
                 .add(new_meeting)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d("add_meeting", "DocumentSnapshot successfully updated!");
+                        geocoder = new Geocoder(mission10.this);
+                        AddressToGPS();
+
+                        for (int i = 0; i < userLocations.size(); i++) {
+                            MapPOIItem marker = new MapPOIItem();
+                            MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord
+                                    (userLocations.get(i).getLat(), userLocations.get(i).getLon());
+                            marker.setItemName("Default Marker");
+                            marker.setTag(0);
+                            marker.setMapPoint(MARKER_POINT);
+                            marker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 기본으로 제공하는 BluePin 마커 모양.
+                            marker.setSelectedMarkerType(MapPOIItem.MarkerType.YellowPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+
+                            mapView.addPOIItem(marker);
+                        }
+
+
+
+                        meetingLocation = GetCenter();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -137,52 +155,46 @@ public class mission10 extends AppCompatActivity implements MapView.MapViewEvent
             @Override
             public void onTimeChanged(TimePicker timePicker, int i, int i1) {
                 String str = "", str1 = "";
-                if(i <= 9){
-                    str = '0'+String.valueOf(i);
-                }else{
+                if (i <= 9) {
+                    str = '0' + String.valueOf(i);
+                } else {
                     str = String.valueOf(i);
                 }
-                if (i1 <= 9){
-                    str1 = '0'+String.valueOf(i1);
-                }else{
+                if (i1 <= 9) {
+                    str1 = '0' + String.valueOf(i1);
+                } else {
                     str1 = String.valueOf(i1);
                 }
-                time = str+"-"+str1;
+                time = str + "-" + str1;
             }
         });
 
         mapView = new MapView(mission10.this);
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord( 37.5418, 126.9818), true);
+        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.5418, 126.9818), true);
         mapView.setZoomLevel(4, true);
         mapView.setMapViewEventListener(this);
         mapView.setPOIItemEventListener(this);
         relativeLayout.addView(mapView);
 
-        userLocations.add(new markerGPS(37.5418, 126.9738));
-        userLocations.add(new markerGPS(37.5437, 126.9627));
-        userLocations.add(new markerGPS(37.5256, 126.9926));
-        userLocations.add(new markerGPS(37.5525, 126.9875));
-        userLocations.add(new markerGPS(37.5384, 126.9214));
-        userLocations.add(new markerGPS(37.5203, 126.9343));
-        userLocations.add(new markerGPS(37.5372, 126.9542));
-        userLocations.add(new markerGPS(37.5481, 126.9422));
 
-        for(int i=0;i<userLocations.size();i++){
-            MapPOIItem marker = new MapPOIItem();
-            MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord
-                    (userLocations.get(i).getLat(), userLocations.get(i).getLon());
-            marker.setItemName("Default Marker");
-            marker.setTag(0);
-            marker.setMapPoint(MARKER_POINT);
-            marker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 기본으로 제공하는 BluePin 마커 모양.
-            marker.setSelectedMarkerType(MapPOIItem.MarkerType.YellowPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-
-            mapView.addPOIItem(marker);
-        }
-
-        meetingLocation = GetCenter();
-
-        geocoder = new Geocoder(this);
+//        AddressToGPS();
+//
+//        for(int i=0;i<userLocations.size();i++){
+//            MapPOIItem marker = new MapPOIItem();
+//            MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord
+//                    (userLocations.get(i).getLat(), userLocations.get(i).getLon());
+//            marker.setItemName("Default Marker");
+//            marker.setTag(0);
+//            marker.setMapPoint(MARKER_POINT);
+//            marker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 기본으로 제공하는 BluePin 마커 모양.
+//            marker.setSelectedMarkerType(MapPOIItem.MarkerType.YellowPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+//
+//            mapView.addPOIItem(marker);
+//        }
+//
+//        geocoder = new Geocoder(mission10.this);
+//
+//        meetingLocation = GetCenter();
 
         locationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,20 +237,56 @@ public class mission10 extends AppCompatActivity implements MapView.MapViewEvent
         });
     }
 
-    public String GetString(CalendarDay tmpDate){
+    private void AddressToGPS() {
+        for (int j = 0; j < memberAddress.size(); j++) {
+            String tmpLocation = memberAddress.get(j);
+            List<Address> list = null;
+            try {
+                list = geocoder.getFromLocationName(tmpLocation, 10);
+            } catch (IOException e) {
+                Log.d("geocoder error", String.valueOf(e));
+                e.printStackTrace();
+            }
+            if (list != null) {
+                double centerLat = list.get(0).getLatitude();
+                double centerLon = list.get(0).getLongitude();
+                mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(centerLat, centerLon), true);
+                mapView.setZoomLevel(5, true);
+                Log.d("geocoder error", String.valueOf(list.size()));
+                for (int i = 0; i < list.size(); i++) {
+                    Address address = list.get(i);
+                    double lat = address.getLatitude();
+                    double lon = address.getLongitude();
+                    userLocations.add(new markerGPS(lat, lon));
+                    MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(lat, lon);
+                    MapPOIItem marker = new MapPOIItem();
+                    marker.setItemName(list.get(i).getAddressLine(0));
+                    marker.setMapPoint(MARKER_POINT);
+                    marker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 기본으로 제공하는 BluePin 마커 모양.
+                    marker.setSelectedMarkerType(MapPOIItem.MarkerType.YellowPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+                    mapView.addPOIItem(marker);
+
+                    markerGPS newMarker = new markerGPS(lat, lon);
+                    markerList.add(newMarker);
+                }
+            }
+        }
+    }
+
+    public String GetString(CalendarDay tmpDate) {
         String strDate = String.valueOf(tmpDate).substring(12);
-        strDate = strDate.substring(0, strDate.length()-1);
+        strDate = strDate.substring(0, strDate.length() - 1);
         String[] newDate = strDate.split("-");
-        if(Integer.parseInt(newDate[1]) <= 9){
+        if (Integer.parseInt(newDate[1]) <= 9) {
             int tmpNum = Integer.parseInt(newDate[1]);
             tmpNum += 1;
-            newDate[1] = "0"+tmpNum;
-        }else{
-            int tmpNum =  Integer.parseInt(newDate[1]);
+            newDate[1] = "0" + tmpNum;
+        } else {
+            int tmpNum = Integer.parseInt(newDate[1]);
             tmpNum += 1;
             newDate[1] = String.valueOf(tmpNum);
         }
-        return newDate[0]+"-"+newDate[1]+"-"+newDate[2];
+        return newDate[0] + "-" + newDate[1] + "-" + newDate[2];
     }
 
     public String GetCenter() {
@@ -266,7 +314,6 @@ public class mission10 extends AppCompatActivity implements MapView.MapViewEvent
         double finalY = (centerY / (6.0 * area));
 
 
-
         finalX = Math.abs(finalX);
         finalY = Math.abs(finalY);
 
@@ -275,9 +322,9 @@ public class mission10 extends AppCompatActivity implements MapView.MapViewEvent
 
         Log.d("x, y", locateX + ", " + locateY);
 
-        MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord( Math.abs(finalX), Math.abs(finalY));
+        MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(locateX, locateY);
 
-        Log.d("GPS", MARKER_POINT.getMapPointGeoCoord().latitude+", "+MARKER_POINT.getMapPointGeoCoord().longitude);
+        Log.d("GPS", MARKER_POINT.getMapPointGeoCoord().latitude + ", " + MARKER_POINT.getMapPointGeoCoord().longitude);
 
         MapPOIItem marker = new MapPOIItem();
         marker.setItemName("Meeting Place");
@@ -290,8 +337,8 @@ public class mission10 extends AppCompatActivity implements MapView.MapViewEvent
         List<Address> list = null;
         try {
             list = geocoder.getFromLocation(
-                    MARKER_POINT.getMapPointGeoCoord().latitude, // 위도
-                    MARKER_POINT.getMapPointGeoCoord().longitude, // 경도
+                    finalX, // 위도
+                    finalY, // 경도
                     10); // 얻어올 값의 개수
         } catch (IOException e) {
             e.printStackTrace();
@@ -307,7 +354,7 @@ public class mission10 extends AppCompatActivity implements MapView.MapViewEvent
         }
 
         mapView.addPOIItem(marker);
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord( Math.abs(finalX), Math.abs(finalY)), true);
+        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(Math.abs(finalX), Math.abs(finalY)), true);
         return list.get(0).getAddressLine(0);
     }
 
