@@ -70,12 +70,6 @@
                 android:id="@+id/pw">
             </EditText>
 
-            <Button
-                android:id="@+id/DB_practice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Button" />
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
