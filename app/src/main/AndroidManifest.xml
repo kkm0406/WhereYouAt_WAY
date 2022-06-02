@@ -21,6 +21,9 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".firstmenu"
+            android:exported="false" />
+        <activity
             android:name=".MainPageFragment"
             android:exported="false"
             tools:ignore="Instantiatable" />

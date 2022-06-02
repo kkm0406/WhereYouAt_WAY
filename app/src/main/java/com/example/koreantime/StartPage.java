@@ -83,7 +83,7 @@ public class StartPage extends AppCompatActivity {
                                                     if (document.exists()) {
                                                         Log.d("login", "DocumentSnapshot data: " + document.getData());
                                                         user =document.toObject(DTO_user.class);
-                                                        Intent intent = new Intent(StartPage.this, MainPage.class);
+                                                        Intent intent = new Intent(StartPage.this, firstmenu.class);
                                                         intent.putExtra("user_info", user);
                                                         startActivity(intent);
                                                     } else {
