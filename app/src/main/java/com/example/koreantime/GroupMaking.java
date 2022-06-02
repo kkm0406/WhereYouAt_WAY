@@ -45,7 +45,7 @@ public class GroupMaking extends AppCompatActivity {
     ArrayList<String> joinedMember = new ArrayList<String>();
     LayoutInflater layoutInflater;
     EditText enterName;
-    ImageButton complete;
+    Button complete;
     DTO_group new_group;
 
     @Override
@@ -59,7 +59,7 @@ public class GroupMaking extends AppCompatActivity {
         enterName = findViewById((R.id.enterName));
         listAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, searchList);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        complete=findViewById(R.id.complete);
+        complete = findViewById(R.id.complete);
 
         Intent Intent = getIntent();
         DTO_user user_info = (DTO_user) Intent.getSerializableExtra("user_info");
