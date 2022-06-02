@@ -47,8 +47,17 @@ public class firstmenu extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                     if (task.isSuccessful()) {
+                                        Log.d("added_group", Integer.toString(task.getResult().size()) );
+                                        GridLayout grid = findViewById(R.id.grid);
+//                                        for (int i=0;i<task.getResult().size()-2;i++) {//유저가 소속되어있는 그룹들 리턴
+//
+//                                        }
+                                        grid.removeViewsInLayout(2,task.getResult().size()-1);
+                                        int num=0;
                                         for (QueryDocumentSnapshot document : task.getResult()) {//유저가 소속되어있는 그룹들 리턴
+                                            createNew(num,document.getData().get("name").toString());
                                             Log.d("added_group", document.getId() + " => " + document.getData());
+                                            num++;
                                         }
                                     } else {
                                         Log.d("added_group", "Error getting documents: ", task.getException());
@@ -73,12 +82,30 @@ public class firstmenu extends AppCompatActivity {
         Intent fcm = new Intent(getApplicationContext(), MyFirebaseMessaging.class);
         startService(fcm);
 
+        db.collection("group").whereArrayContains("participation", user_info.getEmail())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            int num=0;
+                            for (QueryDocumentSnapshot document : task.getResult()) {//유저가 소속되어있는 그룹들 리턴
+                                createNew(num,document.getData().get("name").toString());
+                                Log.d("added_group", document.getId() + " => " + document.getData());
+                                num++;
+                            }
+                        } else {
+                            Log.d("added_group", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                Intent intent = new Intent(firstmenu.this, GroupMaking.class);
 //                startActivity(intent);
-                createNew();
+
             }
         });
 
@@ -92,7 +119,7 @@ public class firstmenu extends AppCompatActivity {
         });
     }
 
-    private void createNew(){
+    private void createNew(int e, String name){
         GridLayout grid = findViewById(R.id.grid);
 
         LinearLayout group = new LinearLayout(this);
@@ -102,15 +129,16 @@ public class firstmenu extends AppCompatActivity {
         groupParams.setMargins(ConvertDPtoPX(this,10),ConvertDPtoPX(this,10),ConvertDPtoPX(this,10),ConvertDPtoPX(this,10));
         group.setGravity(Gravity.CENTER);
         group.setLayoutParams(groupParams);
-        group.setId(0);
+        group.setId(e);
 
         TextView view1 = new TextView(this);
-        view1.setText("그룹명");
+        view1.setText(name);
         view1.setTextColor(Color.parseColor("#42C2FF"));
         view1.setGravity(Gravity.CENTER);
         view1.setPadding(0,ConvertDPtoPX(this,10),0,0);
         view1.setTextSize(18);
-//        view1.setTypeface(Typeface.createFromFile("@font/cafe"), Typeface.BOLD);
+//        Typeface typeface = getResources().getFont(R.font.cafe);
+//        view1.setTypeface(typeface);
 
         ImageView view2 = new ImageView(this);
         LinearLayout.LayoutParams ImgParams = new LinearLayout.LayoutParams(ConvertDPtoPX(this,70), ConvertDPtoPX(this,70));

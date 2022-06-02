@@ -43,6 +43,7 @@ public class StartPage extends AppCompatActivity {
 
         Intent fcm = new Intent(StartPage.this, MyFirebaseMessaging.class);
         startService(fcm);
+
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

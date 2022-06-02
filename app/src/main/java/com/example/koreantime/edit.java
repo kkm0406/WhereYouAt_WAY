@@ -59,6 +59,22 @@ public class edit extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //바뀐 이름 + 주소 db에 저장
+//                DocumentReference washingtonRef = db.collection("user").document(email);
+//// Set the "isCapital" field of the city 'DC'
+//                                washingtonRef
+//                                        .update("groups_id", (List<String>) update_group)
+//                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                            @Override
+//                                            public void onSuccess(Void aVoid) {
+//
+//                                            }
+//                                        })
+//                                        .addOnFailureListener(new OnFailureListener() {
+//                                            @Override
+//                                            public void onFailure(@NonNull Exception e) {
+//                                                Log.w("add_group", "Error updating document", e);
+//                                            }
+//                                        });
                 Intent intent = new Intent(edit.this, firstmenu.class);
                 startActivity(intent);
             }
