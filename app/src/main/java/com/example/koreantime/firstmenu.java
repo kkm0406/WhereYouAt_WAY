@@ -116,7 +116,7 @@ public class firstmenu extends AppCompatActivity {
         LinearLayout.LayoutParams ImgParams = new LinearLayout.LayoutParams(ConvertDPtoPX(this,70), ConvertDPtoPX(this,70));
         ImgParams.setMargins(0,ConvertDPtoPX(this,15),0,0);
         view2.setLayoutParams(ImgParams);
-        view2.setImageResource(R.drawable.user);
+        view2.setImageResource(R.drawable.groups);
 
 
         group.addView(view1);
