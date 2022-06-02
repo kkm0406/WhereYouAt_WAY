@@ -31,13 +31,13 @@
                 android:layout_margin="20dp">
             </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
 
+
             <TimePicker
+                android:id="@+id/timePicker"
                 android:layout_width="wrap_content"
                 android:layout_height="140dp"
                 android:layout_gravity="center"
-                android:timePickerMode="spinner"
-                android:id="@+id/timePicker"/>
-
+                android:timePickerMode="spinner" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -62,14 +62,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="위치 :"
+                        android:textColor="#42C2FF"
                         android:textSize="20sp"
                         android:id="@+id/location"
+                        android:textFontWeight="650"
+                        android:fontFamily="@font/cafe"
                         android:layout_weight="0.5"/>
 
                     <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_weight="6.5"
+                        android:fontFamily="@font/cafe"
                         android:id="@+id/locationText"/>
                     <Button
                         android:layout_width="wrap_content"
