@@ -7,20 +7,30 @@
         <entry key="..\:/Users/33387/Desktop/WAY/KoreanTime/app/src/main/res/layout/activity_main_page_fragment.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/33387/Desktop/WAY/KoreanTime/app/src/main/res/layout/activity_sign_up.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/33387/Desktop/WAY/KoreanTime/app/src/main/res/layout/start_page.xml" value="0.1859375" />
-        <entry key="..\:/Users/YooByeongJu/Desktop/koreantime/KoreanTime/app/src/main/res/layout/activity_add_member_view.xml" value="0.30416666666666664" />
-        <entry key="..\:/Users/YooByeongJu/Desktop/koreantime/KoreanTime/app/src/main/res/layout/activity_find_pw.xml" value="0.30416666666666664" />
-        <entry key="..\:/Users/YooByeongJu/Desktop/koreantime/KoreanTime/app/src/main/res/layout/activity_group_making.xml" value="0.14635416666666667" />
-        <entry key="..\:/Users/YooByeongJu/Desktop/koreantime/KoreanTime/app/src/main/res/layout/activity_group_meetings.xml" value="0.36" />
-        <entry key="..\:/Users/YooByeongJu/Desktop/koreantime/KoreanTime/app/src/main/res/layout/activity_intro.xml" value="0.24871794871794872" />
-        <entry key="..\:/Users/YooByeongJu/Desktop/koreantime/KoreanTime/app/src/main/res/layout/activity_main_page.xml" value="0.2164855072463768" />
-        <entry key="..\:/Users/YooByeongJu/Desktop/koreantime/KoreanTime/app/src/main/res/layout/activity_main_page_fragment.xml" value="0.14792299898682879" />
-        <entry key="..\:/Users/YooByeongJu/Desktop/koreantime/KoreanTime/app/src/main/res/layout/activity_mission10.xml" value="0.14635416666666667" />
-        <entry key="..\:/Users/YooByeongJu/Desktop/koreantime/KoreanTime/app/src/main/res/layout/demo1.xml" value="0.30416666666666664" />
-        <entry key="..\:/Users/YooByeongJu/Desktop/koreantime/KoreanTime/app/src/main/res/layout/main.xml" value="0.228125" />
-        <entry key="..\:/Users/YooByeongJu/Desktop/koreantime/KoreanTime/app/src/main/res/layout/row.xml" value="0.303125" />
-        <entry key="..\:/Users/YooByeongJu/Desktop/koreantime/KoreanTime/app/src/main/res/layout/views.xml" value="0.303125" />
-        <entry key="..\:/Users/YooByeongJu/Desktop/koreantime/KoreanTime/app/src/main/res/menu/activity_main_drawer.xml" value="0.2979591836734694" />
-        <entry key="..\:/Users/YooByeongJu/Desktop/koreantime/KoreanTime/app/src/main/res/xml/motion_scene_1.xml" value="0.303125" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/board_border.xml" value="0.223" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/board_shadow.xml" value="0.223" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/border_blue.xml" value="0.3125" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/edittext_shadow.xml" value="0.223" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/firstpage_border.xml" value="0.223" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/frame_shadow.xml" value="0.223" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/get_img_btn.xml" value="0.223" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_edit.xml" value="0.33" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_find_pw.xml" value="0.33" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_firstmenu.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_group_making.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_group_meetings.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_main_page.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_main_page_fragment.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_meeting_making.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_meeting_making_map.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_mission10.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_mission10_fragment1.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_mission10_main_fragment.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_sign_up.xml" value="0.33" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/make_new_group.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/nav_header_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/popup.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/start_page.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable-v24/side_nav_bar.xml" value="0.1" />
         <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/board_border.xml" value="0.1085" />
         <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/board_shadow.xml" value="0.1" />
