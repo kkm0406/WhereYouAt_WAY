@@ -22,12 +22,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="너 지금 어디야? \n WAY"
-            android:fontFamily="@font/cafebold"
-            android:textColor="#42C2FF"
-            android:textSize="30sp"
+            android:text="  너 지금 어디야?"
+            android:fontFamily="@font/cafe"
+            android:textFontWeight="650"
+            android:textColor="#7FB5FF"
+            android:textSize="22sp"
             android:layout_marginTop="20dp"/>
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Where are you"
+            android:fontFamily="@font/cafe"
+            android:textFontWeight="650"
+            android:textColor="#7FB5FF"
+            android:textSize="22sp"
+            android:layout_marginTop="10dp"/>
     </LinearLayout>
 
 </LinearLayout>
