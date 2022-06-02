@@ -22,6 +22,9 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".KakaoMap"
+            android:exported="false" />
+        <activity
             android:name=".edit"
             android:exported="false" />
         <activity
