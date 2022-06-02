@@ -25,6 +25,8 @@ public class edit extends AppCompatActivity {
         ImageView chAd3 = findViewById(R.id.chAd3);
         Button confirm = findViewById(R.id.confirm);
 
+
+
         name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,6 +58,7 @@ public class edit extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //바뀐 이름 + 주소 db에 저장
                 Intent intent = new Intent(edit.this, firstmenu.class);
                 startActivity(intent);
             }

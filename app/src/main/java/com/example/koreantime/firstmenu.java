@@ -5,10 +5,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.fonts.Font;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,14 +68,16 @@ public class firstmenu extends AppCompatActivity {
         LinearLayout edit = findViewById(R.id.edit);
         LinearLayout makeGroup = findViewById(R.id.makeGroup);
         TextView name = findViewById(R.id.name);
+        GridLayout grid = findViewById(R.id.grid);
         Intent fcm = new Intent(getApplicationContext(), MyFirebaseMessaging.class);
         startService(fcm);
 
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(firstmenu.this, GroupMaking.class);
-                startActivity(intent);
+//                Intent intent = new Intent(firstmenu.this, GroupMaking.class);
+//                startActivity(intent);
+                createNew();
             }
         });
 
@@ -80,5 +90,38 @@ public class firstmenu extends AppCompatActivity {
                 startActivityForResult(intent,0);
             }
         });
+    }
+
+    private void createNew(){
+        GridLayout grid = findViewById(R.id.grid);
+
+        LinearLayout group = new LinearLayout(this);
+        group.setBackground(Drawable.createFromPath("@drawable/frame_shadow"));
+        group.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams groupParams = new LinearLayout.LayoutParams(160, 160,Gravity.CENTER);
+        groupParams.setMargins(10,10,10,10);
+        group.setGravity(Gravity.FILL);
+        group.setLayoutParams(groupParams);
+        group.setId(0);
+
+        TextView view1 = new TextView(this);
+        view1.setText("그룹명");
+        view1.setTextColor(Color.parseColor("#42C2FF"));
+        view1.setGravity(Gravity.CENTER);
+        view1.setPadding(0,10,0,0);
+        view1.setTextSize(18);
+        view1.setTypeface(Typeface.createFromFile("@font/cafe"), Typeface.BOLD);
+
+        ImageView view2 = new ImageView(this);
+        LinearLayout.LayoutParams ImgParams = new LinearLayout.LayoutParams(160, 160);
+        ImgParams.setMargins(0,15,0,0);
+        view2.setLayoutParams(ImgParams);
+        view2.setImageResource(R.drawable.user);
+
+
+        group.addView(view1);
+        group.addView(view2);
+
+        grid.addView(group);
     }
 }
