@@ -24,7 +24,9 @@ import android.widget.Toast;
 
 import com.example.koreantime.DTO.DTO_user;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -65,6 +67,19 @@ public class firstmenu extends AppCompatActivity {
                                 }
                             });
                 }
+            }case 1:
+            {
+                if(resultCode==1){
+                    String searchemail=user_info.getEmail();
+                    db.collection("user").document(searchemail)
+                            .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            user_info = documentSnapshot.toObject(DTO_user.class);
+                            Log.d("성공", user_info.getNickname());
+                        }
+                    });
+                }
             }
         }
     }
@@ -103,11 +118,9 @@ public class firstmenu extends AppCompatActivity {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {//임시로 회의만들기 연결
-                Intent intent = new Intent(firstmenu.this, mission10.class);
-                intent.putExtra("groupname","vx8wmq6udyECfB6woP3O");//임시로 그룹이름 전달
-                String[] tempgroupmember=new String[] {"1@naver.com", "123456@naver.com","123@naver.com","email@naver.com"};
-                intent.putExtra("groupmember",tempgroupmember);
-                startActivity(intent);
+                Intent intent = new Intent(firstmenu.this, edit.class);
+                intent.putExtra("user_info", user_info);
+                startActivityForResult(intent,1);
             }
         });
 
