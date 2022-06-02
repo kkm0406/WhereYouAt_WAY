@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -84,7 +85,6 @@ public class firstmenu extends AppCompatActivity {
         makeGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(firstmenu.this, "Asdf", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(firstmenu.this, GroupMaking.class);
                 intent.putExtra("user_info", user_info);
                 startActivityForResult(intent,0);
@@ -96,11 +96,11 @@ public class firstmenu extends AppCompatActivity {
         GridLayout grid = findViewById(R.id.grid);
 
         LinearLayout group = new LinearLayout(this);
-        group.setBackground(Drawable.createFromPath("@drawable/frame_shadow"));
+        group.setBackgroundResource(R.drawable.frame_shadow);
         group.setOrientation(LinearLayout.VERTICAL);
-        LinearLayout.LayoutParams groupParams = new LinearLayout.LayoutParams(160, 160,Gravity.CENTER);
-        groupParams.setMargins(10,10,10,10);
-        group.setGravity(Gravity.FILL);
+        LinearLayout.LayoutParams groupParams = new LinearLayout.LayoutParams(ConvertDPtoPX(this,160), ConvertDPtoPX(this,160),Gravity.CENTER);
+        groupParams.setMargins(ConvertDPtoPX(this,10),ConvertDPtoPX(this,10),ConvertDPtoPX(this,10),ConvertDPtoPX(this,10));
+        group.setGravity(Gravity.CENTER);
         group.setLayoutParams(groupParams);
         group.setId(0);
 
@@ -108,13 +108,13 @@ public class firstmenu extends AppCompatActivity {
         view1.setText("그룹명");
         view1.setTextColor(Color.parseColor("#42C2FF"));
         view1.setGravity(Gravity.CENTER);
-        view1.setPadding(0,10,0,0);
+        view1.setPadding(0,ConvertDPtoPX(this,10),0,0);
         view1.setTextSize(18);
-        view1.setTypeface(Typeface.createFromFile("@font/cafe"), Typeface.BOLD);
+//        view1.setTypeface(Typeface.createFromFile("@font/cafe"), Typeface.BOLD);
 
         ImageView view2 = new ImageView(this);
-        LinearLayout.LayoutParams ImgParams = new LinearLayout.LayoutParams(160, 160);
-        ImgParams.setMargins(0,15,0,0);
+        LinearLayout.LayoutParams ImgParams = new LinearLayout.LayoutParams(ConvertDPtoPX(this,70), ConvertDPtoPX(this,70));
+        ImgParams.setMargins(0,ConvertDPtoPX(this,15),0,0);
         view2.setLayoutParams(ImgParams);
         view2.setImageResource(R.drawable.user);
 
@@ -123,5 +123,9 @@ public class firstmenu extends AppCompatActivity {
         group.addView(view2);
 
         grid.addView(group);
+    }
+    public static int ConvertDPtoPX(Context context, int dp) {
+        float density = context.getResources().getDisplayMetrics().density;
+        return Math.round((float) dp * density);
     }
 }
