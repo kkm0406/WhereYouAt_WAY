@@ -40,7 +40,14 @@ public class StartPage extends AppCompatActivity {
         TextView findPw = findViewById(R.id.findPw);
         TextView signUp = findViewById(R.id.signUp);
         TextView logIn = findViewById(R.id.login);
-
+        Button button=findViewById(R.id.debug_btn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Messaging temp=new Messaging();
+                temp.execute();
+            }
+        });
         Intent fcm = new Intent(StartPage.this, MyFirebaseMessaging.class);
         startService(fcm);
 
@@ -75,6 +82,7 @@ public class StartPage extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         // Sign in success, update UI with the signed-in user's information
+                                        Toast.makeText(StartPage.this, "로그인성공", Toast.LENGTH_SHORT).show();
                                         Log.d("login", "signInWithEmail:success");
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         db.collection("user").document(id.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
