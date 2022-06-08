@@ -1,0 +1,279 @@
+Index: app/src/main/res/layout/activity_kakao_map.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".KakaoMap\">\r\n\r\n    <ScrollView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:fadingEdge=\"none\"\r\n        android:fillViewport=\"true\"\r\n        tools:ignore=\"MissingConstraints\">\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:gravity=\"center_horizontal\"\r\n            android:orientation=\"vertical\">\r\n\r\n            <com.prolificinteractive.materialcalendarview.MaterialCalendarView\r\n                android:id=\"@+id/calendar\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_gravity=\"center\"\r\n                android:background=\"@drawable/get_img_btn\"\r\n                android:paddingLeft=\"40dp\"\r\n                android:paddingTop=\"20dp\"\r\n                android:paddingRight=\"40dp\"\r\n                app:mcv_selectionColor=\"#d2d2d2\"\r\n                android:layout_margin=\"20dp\">\r\n            </com.prolificinteractive.materialcalendarview.MaterialCalendarView>\r\n\r\n            <TimePicker\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"140dp\"\r\n                android:layout_gravity=\"center\"\r\n                android:timePickerMode=\"spinner\"\r\n                android:id=\"@+id/timePicker\"/>\r\n\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"match_parent\"\r\n                android:orientation=\"vertical\"\r\n                android:padding=\"20dp\">\r\n\r\n                <RelativeLayout\r\n                    android:id=\"@+id/kakaoMap\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"400dp\"\r\n                    android:orientation=\"horizontal\" />\r\n\r\n                <LinearLayout\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_marginBottom=\"20dp\"\r\n                    android:orientation=\"horizontal\"\r\n                    android:weightSum=\"7\">\r\n\r\n                    <TextView\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"위치 :\"\r\n                        android:textSize=\"20sp\"\r\n                        android:id=\"@+id/location\"\r\n                        android:layout_weight=\"0.5\"/>\r\n\r\n                    <EditText\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"40dp\"\r\n                        android:layout_weight=\"6.5\"\r\n                        android:id=\"@+id/locationText\"/>\r\n                    <Button\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"match_parent\"\r\n                        android:text=\"확인\"\r\n                        android:layout_weight=\"0\"\r\n                        android:id=\"@+id/locationBtn\"/>\r\n                </LinearLayout>\r\n                <!--            위치 입력받는 레이아웃-->\r\n\r\n            </LinearLayout>\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:orientation=\"vertical\"\r\n                android:paddingLeft=\"20dp\"\r\n                android:paddingRight=\"20dp\">\r\n\r\n                <LinearLayout\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_marginBottom=\"20dp\"\r\n                    android:orientation=\"vertical\">\r\n\r\n\r\n                    <TextView\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"지각 시 벌칙\"\r\n                        android:textSize=\"20sp\"\r\n                        android:id=\"@+id/tmp\"/>\r\n\r\n                    <LinearLayout\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:orientation=\"horizontal\">\r\n\r\n                        <CheckBox\r\n                            android:layout_width=\"wrap_content\"\r\n                            android:layout_height=\"50dp\"\r\n                            android:checked=\"true\"\r\n                            android:text=\"진동\"\r\n                            android:layout_marginRight=\"10dp\"/>\r\n\r\n                        <SeekBar\r\n                            android:layout_width=\"match_parent\"\r\n                            android:layout_height=\"match_parent\"\r\n                            android:id=\"@+id/vibrate\"\r\n                            android:progress=\"50\"\r\n                            style=\"?android:attr/progressBarStyleHorizontal\" />\r\n                    </LinearLayout>\r\n\r\n                    <LinearLayout\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"50dp\"\r\n                        android:orientation=\"horizontal\">\r\n\r\n                        <CheckBox\r\n                            android:layout_width=\"wrap_content\"\r\n                            android:layout_height=\"match_parent\"\r\n                            android:text=\"알람\"\r\n                            android:layout_marginRight=\"10dp\"/>\r\n\r\n                        <SeekBar\r\n                            android:layout_width=\"match_parent\"\r\n                            android:layout_height=\"match_parent\"\r\n                            android:max=\"100\"\r\n                            android:id=\"@+id/alarm\"\r\n                            style=\"?android:attr/progressBarStyleHorizontal\"\r\n                            android:progress=\"50\"/>\r\n\r\n                    </LinearLayout>\r\n\r\n                    <LinearLayout\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"50dp\"\r\n                        android:orientation=\"horizontal\">\r\n\r\n                        <CheckBox\r\n                            android:layout_width=\"match_parent\"\r\n                            android:layout_height=\"match_parent\"\r\n                            android:hint=\"핸드폰 셧다운\" />\r\n                    </LinearLayout>\r\n\r\n                </LinearLayout>\r\n                <!--            지각 벌칙 선택 레이아웃-->\r\n\r\n            </LinearLayout>\r\n\r\n            <Button\r\n                android:id=\"@+id/complete\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_gravity=\"center\"\r\n                android:text=\"완료\" />\r\n        </LinearLayout>\r\n\r\n    </ScrollView>\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_kakao_map.xml b/app/src/main/res/layout/activity_kakao_map.xml
+--- a/app/src/main/res/layout/activity_kakao_map.xml	(revision 9c825d00beb54dc0a1aad3d4aeeda522f9e88450)
++++ b/app/src/main/res/layout/activity_kakao_map.xml	(date 1654665870921)
+@@ -4,40 +4,43 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".KakaoMap">
++    tools:context=".mission10">
+ 
+     <ScrollView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:fadingEdge="none"
+         android:fillViewport="true"
+-        tools:ignore="MissingConstraints">
++        tools:ignore="MissingConstraints"
++        tools:layout_editor_absoluteX="-82dp"
++        tools:layout_editor_absoluteY="-16dp">
++
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:gravity="center_horizontal"
+             android:orientation="vertical">
+ 
++
+             <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                 android:id="@+id/calendar"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center"
+-                android:background="@drawable/get_img_btn"
++                android:layout_margin="20dp"
++                android:layout_marginTop="10dp"
++                android:background="@drawable/border_blue"
+                 android:paddingLeft="40dp"
+                 android:paddingTop="20dp"
+                 android:paddingRight="40dp"
+-                app:mcv_selectionColor="#d2d2d2"
+-                android:layout_margin="20dp">
+-            </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
++                app:mcv_selectionColor="#d2d2d2"></com.prolificinteractive.materialcalendarview.MaterialCalendarView>
+ 
+             <TimePicker
++                android:id="@+id/timePicker"
+                 android:layout_width="wrap_content"
+                 android:layout_height="140dp"
+                 android:layout_gravity="center"
+-                android:timePickerMode="spinner"
+-                android:id="@+id/timePicker"/>
+-
++                android:timePickerMode="spinner" />
+ 
+             <LinearLayout
+                 android:layout_width="match_parent"
+@@ -58,25 +61,25 @@
+                     android:orientation="horizontal"
+                     android:weightSum="7">
+ 
+-                    <TextView
+-                        android:layout_width="wrap_content"
+-                        android:layout_height="wrap_content"
+-                        android:text="위치 :"
+-                        android:textSize="20sp"
+-                        android:id="@+id/location"
+-                        android:layout_weight="0.5"/>
++                    <View
++                        android:layout_width="0dp"
++                        android:layout_height="match_parent"
++                        android:layout_weight="0.4" />
+ 
+                     <EditText
+-                        android:layout_width="wrap_content"
++                        android:id="@+id/locationText"
++                        android:layout_width="0dp"
+                         android:layout_height="40dp"
+-                        android:layout_weight="6.5"
+-                        android:id="@+id/locationText"/>
+-                    <Button
+-                        android:layout_width="wrap_content"
+-                        android:layout_height="match_parent"
+-                        android:text="확인"
+-                        android:layout_weight="0"
+-                        android:id="@+id/locationBtn"/>
++                        android:layout_marginRight="10dp"
++                        android:layout_weight="6.1"
++                        android:textFontWeight="650"
++                        android:fontFamily="@font/cafe" />
++
++                    <ImageView
++                        android:id="@+id/locationBtn"
++                        android:layout_width="30dp"
++                        android:layout_height="30dp"
++                        android:src="@drawable/search" />
+                 </LinearLayout>
+                 <!--            위치 입력받는 레이아웃-->
+ 
+@@ -95,13 +98,16 @@
+                     android:layout_marginBottom="20dp"
+                     android:orientation="vertical">
+ 
+-
+                     <TextView
++                        android:id="@+id/tmp"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+-                        android:text="지각 시 벌칙"
+-                        android:textSize="20sp"
+-                        android:id="@+id/tmp"/>
++                        android:text="늦기만 해"
++                        android:textFontWeight="650"
++                        android:fontFamily="@font/cafe"
++                        android:textColor="@color/black"
++                        android:layout_marginBottom="10dp"
++                        android:textSize="22sp"/>
+ 
+                     <LinearLayout
+                         android:layout_width="match_parent"
+@@ -111,16 +117,20 @@
+                         <CheckBox
+                             android:layout_width="wrap_content"
+                             android:layout_height="50dp"
++                            android:layout_marginRight="10dp"
+                             android:checked="true"
+-                            android:text="진동"
+-                            android:layout_marginRight="10dp"/>
++                            android:buttonTint="#42C2FF"
++                            android:fontFamily="@font/cafe"
++                            android:textFontWeight="650"
++                            android:text="진동" />
+ 
+                         <SeekBar
++                            android:id="@+id/vibrate"
++                            style="?android:attr/progressBarStyleHorizontal"
+                             android:layout_width="match_parent"
+                             android:layout_height="match_parent"
+-                            android:id="@+id/vibrate"
+-                            android:progress="50"
+-                            style="?android:attr/progressBarStyleHorizontal" />
++                            android:theme="@style/SeekBarColor"
++                            android:progress="50" />
+                     </LinearLayout>
+ 
+                     <LinearLayout
+@@ -131,41 +141,54 @@
+                         <CheckBox
+                             android:layout_width="wrap_content"
+                             android:layout_height="match_parent"
+-                            android:text="알람"
+-                            android:layout_marginRight="10dp"/>
++                            android:layout_marginRight="10dp"
++                            android:buttonTint="#42C2FF"
++                            android:fontFamily="@font/cafe"
++                            android:textFontWeight="650"
++                            android:text="알람" />
+ 
+                         <SeekBar
+-                            android:layout_width="match_parent"
+-                            android:layout_height="match_parent"
+-                            android:max="100"
+                             android:id="@+id/alarm"
+                             style="?android:attr/progressBarStyleHorizontal"
+-                            android:progress="50"/>
+-
+-                    </LinearLayout>
+-
+-                    <LinearLayout
+-                        android:layout_width="match_parent"
+-                        android:layout_height="50dp"
+-                        android:orientation="horizontal">
+-
+-                        <CheckBox
+                             android:layout_width="match_parent"
+                             android:layout_height="match_parent"
+-                            android:hint="핸드폰 셧다운" />
++                            android:max="100"
++                            android:theme="@style/SeekBarColor"
++                            android:progress="50" />
++
+                     </LinearLayout>
+ 
++
++
+                 </LinearLayout>
+                 <!--            지각 벌칙 선택 레이아웃-->
+ 
+             </LinearLayout>
+ 
+-            <Button
+-                android:id="@+id/complete"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:layout_gravity="center"
+-                android:text="완료" />
++            \
++
++            <LinearLayout
++                android:layout_width="match_parent"
++                android:layout_height="0dp"
++                android:layout_marginBottom="15dp"
++                android:layout_weight="0.5"
++                android:gravity="center"
++                android:paddingHorizontal="20dp"
++                android:paddingVertical="10dp">
++
++                <Button
++                    android:id="@+id/complete"
++                    android:layout_width="match_parent"
++                    android:layout_height="match_parent"
++                    android:background="@drawable/get_img_btn"
++                    android:backgroundTint="#4294ff"
++                    android:fontFamily="@font/cafe"
++                    android:text="COMPLETE"
++                    android:textColor="@color/white"
++                    android:textFontWeight="650"
++                    android:textSize="18sp" />
++
++            </LinearLayout>
+         </LinearLayout>
+ 
+     </ScrollView>
+Index: app/src/main/java/com/example/koreantime/firstmenu.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.koreantime;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.content.Context;\r\nimport android.content.Intent;\r\nimport android.graphics.Color;\r\nimport android.graphics.Typeface;\r\nimport android.graphics.drawable.Drawable;\r\nimport android.graphics.fonts.Font;\r\nimport android.os.Bundle;\r\nimport android.util.Log;\r\nimport android.view.Gravity;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.Button;\r\nimport android.widget.GridLayout;\r\nimport android.widget.ImageView;\r\nimport android.widget.LinearLayout;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport com.example.koreantime.DTO.DTO_user;\r\nimport com.google.android.gms.tasks.OnCompleteListener;\r\nimport com.google.android.gms.tasks.OnSuccessListener;\r\nimport com.google.android.gms.tasks.Task;\r\nimport com.google.firebase.firestore.DocumentSnapshot;\r\nimport com.google.firebase.firestore.FirebaseFirestore;\r\nimport com.google.firebase.firestore.QueryDocumentSnapshot;\r\nimport com.google.firebase.firestore.QuerySnapshot;\r\n\r\npublic class firstmenu extends AppCompatActivity {\r\n\r\n    DTO_user user_info;\r\n    FirebaseFirestore db= FirebaseFirestore.getInstance();\r\n    @Override\r\n    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {//그룹만들고서 그룹리스트 업데이트\r\n        super.onActivityResult(requestCode, resultCode, data);\r\n        switch (requestCode){\r\n            case 0:\r\n            {\r\n                if(resultCode==1){\r\n                    String searchemail=user_info.getEmail();\r\n                    db.collection(\"group\").whereArrayContains(\"participation\", searchemail)\r\n                            .get()\r\n                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {\r\n                                @Override\r\n                                public void onComplete(@NonNull Task<QuerySnapshot> task) {\r\n                                    if (task.isSuccessful()) {\r\n                                        Log.d(\"added_group\", Integer.toString(task.getResult().size()) );\r\n                                        GridLayout grid = findViewById(R.id.grid);\r\n//                                        for (int i=0;i<task.getResult().size()-2;i++) {//유저가 소속되어있는 그룹들 리턴\r\n//\r\n//                                        }\r\n                                        grid.removeViewsInLayout(2,task.getResult().size()-1);\r\n                                        int num=0;\r\n                                        for (QueryDocumentSnapshot document : task.getResult()) {//유저가 소속되어있는 그룹들 리턴\r\n                                            createNew(num,document.getData().get(\"name\").toString());\r\n                                            Log.d(\"added_group\", document.getId() + \" => \" + document.getData());\r\n                                            num++;\r\n                                        }\r\n                                    } else {\r\n                                        Log.d(\"added_group\", \"Error getting documents: \", task.getException());\r\n                                    }\r\n                                }\r\n                            });\r\n                }\r\n            }case 1:\r\n            {\r\n                if(resultCode==1){\r\n                    String searchemail=user_info.getEmail();\r\n                    db.collection(\"user\").document(searchemail)\r\n                            .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {\r\n                        @Override\r\n                        public void onSuccess(DocumentSnapshot documentSnapshot) {\r\n                            user_info = documentSnapshot.toObject(DTO_user.class);\r\n                            Log.d(\"성공\", user_info.getNickname());\r\n                        }\r\n                    });\r\n                }\r\n            }\r\n        }\r\n    }\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_firstmenu);\r\n\r\n        Intent Intent = getIntent();\r\n        user_info=(DTO_user) Intent.getSerializableExtra(\"user_info\");\r\n        LinearLayout edit = findViewById(R.id.edit);\r\n        LinearLayout makeGroup = findViewById(R.id.makeGroup);\r\n        TextView name = findViewById(R.id.name);\r\n        GridLayout grid = findViewById(R.id.grid);\r\n        Intent fcm = new Intent(getApplicationContext(), MyFirebaseMessaging.class);\r\n        startService(fcm);\r\n\r\n        db.collection(\"group\").whereArrayContains(\"participation\", user_info.getEmail())\r\n                .get()\r\n                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {\r\n                    @Override\r\n                    public void onComplete(@NonNull Task<QuerySnapshot> task) {\r\n                        if (task.isSuccessful()) {\r\n                            int num=0;\r\n                            for (QueryDocumentSnapshot document : task.getResult()) {//유저가 소속되어있는 그룹들 리턴\r\n                                createNew(num,document.getData().get(\"name\").toString());\r\n                                Log.d(\"added_group\", document.getId() + \" => \" + document.getData());\r\n                                num++;\r\n                            }\r\n                        } else {\r\n                            Log.d(\"added_group\", \"Error getting documents: \", task.getException());\r\n                        }\r\n                    }\r\n                });\r\n\r\n        edit.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {//임시로 회의만들기 연결\r\n                Intent intent = new Intent(firstmenu.this, edit.class);\r\n                intent.putExtra(\"user_info\", user_info);\r\n                startActivityForResult(intent,1);\r\n            }\r\n        });\r\n\r\n        makeGroup.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                Intent intent = new Intent(firstmenu.this, GroupMaking.class);\r\n                intent.putExtra(\"user_info\", user_info);\r\n                startActivityForResult(intent,0);\r\n            }\r\n        });\r\n    }\r\n\r\n    private void createNew(int e, String name){\r\n        GridLayout grid = findViewById(R.id.grid);\r\n\r\n        LinearLayout group = new LinearLayout(this);\r\n        group.setBackgroundResource(R.drawable.frame_shadow);\r\n        group.setOrientation(LinearLayout.VERTICAL);\r\n        LinearLayout.LayoutParams groupParams = new LinearLayout.LayoutParams(ConvertDPtoPX(this,160), ConvertDPtoPX(this,160),Gravity.CENTER);\r\n        groupParams.setMargins(ConvertDPtoPX(this,10),ConvertDPtoPX(this,10),ConvertDPtoPX(this,10),ConvertDPtoPX(this,10));\r\n        group.setGravity(Gravity.CENTER);\r\n        group.setLayoutParams(groupParams);\r\n        group.setId(e);\r\n\r\n        TextView view1 = new TextView(this);\r\n        view1.setText(name);\r\n        view1.setTextColor(Color.parseColor(\"#42C2FF\"));\r\n        view1.setGravity(Gravity.CENTER);\r\n        view1.setPadding(0,ConvertDPtoPX(this,10),0,0);\r\n        view1.setTextSize(18);\r\n//        Typeface typeface = getResources().getFont(R.font.cafe);\r\n//        view1.setTypeface(typeface);\r\n\r\n        ImageView view2 = new ImageView(this);\r\n        LinearLayout.LayoutParams ImgParams = new LinearLayout.LayoutParams(ConvertDPtoPX(this,70), ConvertDPtoPX(this,70));\r\n        ImgParams.setMargins(0,ConvertDPtoPX(this,15),0,0);\r\n        view2.setLayoutParams(ImgParams);\r\n        view2.setImageResource(R.drawable.groups);\r\n\r\n\r\n        group.addView(view1);\r\n        group.addView(view2);\r\n\r\n        grid.addView(group);\r\n    }\r\n    public static int ConvertDPtoPX(Context context, int dp) {\r\n        float density = context.getResources().getDisplayMetrics().density;\r\n        return Math.round((float) dp * density);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/koreantime/firstmenu.java b/app/src/main/java/com/example/koreantime/firstmenu.java
+--- a/app/src/main/java/com/example/koreantime/firstmenu.java	(revision 9c825d00beb54dc0a1aad3d4aeeda522f9e88450)
++++ b/app/src/main/java/com/example/koreantime/firstmenu.java	(date 1654666176710)
+@@ -166,6 +166,13 @@
+         group.addView(view2);
+ 
+         grid.addView(group);
++        grid.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View view) {
++                Intent intent = new Intent(firstmenu.this, MainActivity.class);
++                startActivity(intent);
++            }
++        });
+     }
+     public static int ConvertDPtoPX(Context context, int dp) {
+         float density = context.getResources().getDisplayMetrics().density;
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"DesignSurface\">\r\n    <option name=\"filePathToZoomLevelMap\">\r\n      <map>\r\n        <entry key=\"..\\:/Users/33387/Desktop/WAY/KoreanTime/app/src/main/res/layout/activity_group_making.xml\" value=\"0.22552083333333334\" />\r\n        <entry key=\"..\\:/Users/33387/Desktop/WAY/KoreanTime/app/src/main/res/layout/activity_main_page_fragment.xml\" value=\"0.22552083333333334\" />\r\n        <entry key=\"..\\:/Users/33387/Desktop/WAY/KoreanTime/app/src/main/res/layout/activity_sign_up.xml\" value=\"0.22552083333333334\" />\r\n        <entry key=\"..\\:/Users/33387/Desktop/WAY/KoreanTime/app/src/main/res/layout/start_page.xml\" value=\"0.1859375\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/board_border.xml\" value=\"0.223\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/board_shadow.xml\" value=\"0.223\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/border_blue.xml\" value=\"0.3125\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/edittext_shadow.xml\" value=\"0.223\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/firstpage_border.xml\" value=\"0.223\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/frame_shadow.xml\" value=\"0.223\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/get_img_btn.xml\" value=\"0.223\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_edit.xml\" value=\"0.33\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_find_pw.xml\" value=\"0.33\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_firstmenu.xml\" value=\"0.36614583333333334\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_group_making.xml\" value=\"0.36614583333333334\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_group_meetings.xml\" value=\"0.36614583333333334\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_main_page.xml\" value=\"0.36614583333333334\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_main_page_fragment.xml\" value=\"0.36614583333333334\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_meeting_making.xml\" value=\"0.36614583333333334\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_meeting_making_map.xml\" value=\"0.36614583333333334\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_mission10.xml\" value=\"0.33\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_mission10_fragment1.xml\" value=\"0.36614583333333334\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_mission10_main_fragment.xml\" value=\"0.36614583333333334\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_sign_up.xml\" value=\"0.33\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/make_new_group.xml\" value=\"0.36614583333333334\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/nav_header_main.xml\" value=\"0.36614583333333334\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/popup.xml\" value=\"0.36614583333333334\" />\r\n        <entry key=\"..\\:/Users/ancx1/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/start_page.xml\" value=\"0.36614583333333334\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable-v24/side_nav_bar.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/board_border.xml\" value=\"0.1085\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/board_shadow.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/btn_border.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/edittext_shadow.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/firstpage_border.xml\" value=\"0.1085\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/frame_shadow.xml\" value=\"0.1085\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/get_img_btn.xml\" value=\"0.1085\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/my_selector.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/drawable/square.xml\" value=\"0.103\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_add_member_view.xml\" value=\"0.25364583333333335\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_find_pw.xml\" value=\"0.20199275362318841\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_group_making.xml\" value=\"0.20199275362318841\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_group_meetings.xml\" value=\"0.25364583333333335\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_main_page.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_main_page_fragment.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_meeting_making.xml\" value=\"0.2115036231884058\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_meeting_making_map.xml\" value=\"0.18802083333333333\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_mission10.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_mission10_fragment1.xml\" value=\"0.3318014705882353\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_mission10_fragment2.xml\" value=\"0.25364583333333335\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_mission10_fragment3.xml\" value=\"0.18802083333333333\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_mission10_main_fragment.xml\" value=\"0.25364583333333335\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_sign_up.xml\" value=\"0.25364583333333335\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/fragment_item.xml\" value=\"0.36614583333333334\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/fragment_item_list.xml\" value=\"0.3515625\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/fragment_map.xml\" value=\"0.36614583333333334\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/fragment_meeting.xml\" value=\"0.36614583333333334\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/get_img_dialog.xml\" value=\"0.1125\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/make_new_group.xml\" value=\"0.19610507246376813\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/nav_header_main.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/start_page.xml\" value=\"0.12335359675785208\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/menu/activity_main_drawer.xml\" value=\"0.25364583333333335\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/menu/menu1.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/menu/menu2.xml\" value=\"0.25364583333333335\" />\r\n        <entry key=\"..\\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/menu/menu_bottom.xml\" value=\"0.25364583333333335\" />\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_11\" default=\"true\" project-jdk-name=\"11\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 9c825d00beb54dc0a1aad3d4aeeda522f9e88450)
++++ b/.idea/misc.xml	(date 1654665800683)
+@@ -45,6 +45,7 @@
+         <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_find_pw.xml" value="0.20199275362318841" />
+         <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_group_making.xml" value="0.20199275362318841" />
+         <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_group_meetings.xml" value="0.25364583333333335" />
++        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_kakao_map.xml" value="0.12158054711246201" />
+         <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_main_page.xml" value="0.2" />
+         <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_main_page_fragment.xml" value="0.1" />
+         <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/activity_meeting_making.xml" value="0.2115036231884058" />
+@@ -62,6 +63,7 @@
+         <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/get_img_dialog.xml" value="0.1125" />
+         <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/make_new_group.xml" value="0.19610507246376813" />
+         <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/nav_header_main.xml" value="0.1" />
++        <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/popup.xml" value="0.25" />
+         <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/layout/start_page.xml" value="0.12335359675785208" />
+         <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/menu/activity_main_drawer.xml" value="0.25364583333333335" />
+         <entry key="..\:/Users/sdjmc/AndroidStudioProjects/KoreanTime/app/src/main/res/menu/menu1.xml" value="0.1" />
