@@ -4,40 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".KakaoMap">
+    tools:context=".mission10">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fadingEdge="none"
         android:fillViewport="true"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-82dp"
+        tools:layout_editor_absoluteY="-16dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
+
             <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                 android:id="@+id/calendar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/get_img_btn"
+                android:layout_margin="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_blue"
                 android:paddingLeft="40dp"
                 android:paddingTop="20dp"
                 android:paddingRight="40dp"
-                app:mcv_selectionColor="#d2d2d2"
-                android:layout_margin="20dp">
-            </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
+                app:mcv_selectionColor="#d2d2d2"></com.prolificinteractive.materialcalendarview.MaterialCalendarView>
 
             <TimePicker
+                android:id="@+id/timePicker"
                 android:layout_width="wrap_content"
                 android:layout_height="140dp"
                 android:layout_gravity="center"
                 android:timePickerMode="spinner"
-                android:id="@+id/timePicker"/>
-
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -54,29 +58,33 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
                     android:orientation="horizontal"
+                    android:layout_marginVertical="20dp"
                     android:weightSum="7">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="위치 :"
-                        android:textSize="20sp"
-                        android:id="@+id/location"
-                        android:layout_weight="0.5"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4" />
 
                     <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_weight="6.5"
-                        android:id="@+id/locationText"/>
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="확인"
-                        android:layout_weight="0"
-                        android:id="@+id/locationBtn"/>
+                        android:id="@+id/locationText"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="6.1"
+                        android:textFontWeight="650"
+                        android:hint="장소 입력"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/cafe" />
+
+                    <ImageView
+                        android:id="@+id/locationBtn"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/search" />
                 </LinearLayout>
                 <!--            위치 입력받는 레이아웃-->
 
@@ -95,13 +103,17 @@
                     android:layout_marginBottom="20dp"
                     android:orientation="vertical">
 
-
                     <TextView
+                        android:id="@+id/tmp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="지각 시 벌칙"
-                        android:textSize="20sp"
-                        android:id="@+id/tmp"/>
+                        android:text="늦기만 해"
+                        android:textFontWeight="650"
+                        android:fontFamily="@font/cafe"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:textSize="22sp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -111,16 +123,21 @@
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="50dp"
+                            android:layout_marginRight="10dp"
                             android:checked="true"
-                            android:text="진동"
-                            android:layout_marginRight="10dp"/>
+                            android:buttonTint="#42C2FF"
+                            android:fontFamily="@font/cafe"
+                            android:textSize="16sp"
+                            android:textFontWeight="650"
+                            android:text="진동" />
 
                         <SeekBar
+                            android:id="@+id/vibrate"
+                            style="?android:attr/progressBarStyleHorizontal"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:id="@+id/vibrate"
-                            android:progress="50"
-                            style="?android:attr/progressBarStyleHorizontal" />
+                            android:theme="@style/SeekBarColor"
+                            android:progress="50" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -131,41 +148,53 @@
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="알람"
-                            android:layout_marginRight="10dp"/>
+                            android:layout_marginRight="10dp"
+                            android:buttonTint="#42C2FF"
+                            android:fontFamily="@font/cafe"
+                            android:textFontWeight="650"
+                            android:textSize="16sp"
+                            android:text="알람" />
 
                         <SeekBar
+                            android:id="@+id/alarm"
+                            style="?android:attr/progressBarStyleHorizontal"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:max="100"
-                            android:id="@+id/alarm"
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:progress="50"/>
+                            android:theme="@style/SeekBarColor"
+                            android:progress="50" />
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:orientation="horizontal">
 
-                        <CheckBox
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:hint="핸드폰 셧다운" />
-                    </LinearLayout>
 
                 </LinearLayout>
                 <!--            지각 벌칙 선택 레이아웃-->
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/complete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="완료" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="10dp">
+
+                <Button
+                    android:id="@+id/complete"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/get_img_btn"
+                    android:backgroundTint="#4294ff"
+                    android:fontFamily="@font/cafe"
+                    android:text="COMPLETE"
+                    android:textColor="@color/white"
+                    android:textFontWeight="650"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

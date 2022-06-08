@@ -118,7 +118,7 @@ public class firstmenu extends AppCompatActivity {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {//임시로 회의만들기 연결
-                Intent intent = new Intent(firstmenu.this, edit.class);
+                Intent intent = new Intent(firstmenu.this, KakaoMap.class);
                 intent.putExtra("user_info", user_info);
                 startActivityForResult(intent,1);
             }
@@ -166,6 +166,13 @@ public class firstmenu extends AppCompatActivity {
         group.addView(view2);
 
         grid.addView(group);
+        grid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(firstmenu.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     public static int ConvertDPtoPX(Context context, int dp) {
         float density = context.getResources().getDisplayMetrics().density;
