@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="  너 지금 어디야?"
+            android:text="너 지금 어디야?"
             android:fontFamily="@font/cafe"
             android:textFontWeight="650"
             android:textColor="#7FB5FF"
@@ -32,12 +32,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Where are you"
+            android:text="Where Are You?"
+            android:gravity="center"
             android:fontFamily="@font/cafe"
             android:textFontWeight="650"
             android:textColor="#7FB5FF"
             android:textSize="22sp"
             android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:textColor="#919191"
+            android:layout_marginTop="50dp"
+            android:lineSpacingExtra="5dp"
+            android:text="WAY는 회의 및 그룹 관리를 \n 효율적으로 도와주는 앱입니다."/>
     </LinearLayout>
 
 </LinearLayout>

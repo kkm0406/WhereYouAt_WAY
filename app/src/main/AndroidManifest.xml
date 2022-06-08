@@ -49,9 +49,6 @@
             android:name=".GroupMaking"
             android:exported="false" />
         <activity
-            android:name=".mission10"
-            android:exported="false" />
-        <activity
             android:name=".SignUp"
             android:exported="false" />
         <activity

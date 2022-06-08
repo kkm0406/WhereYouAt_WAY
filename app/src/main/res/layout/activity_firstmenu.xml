@@ -86,8 +86,8 @@
                             android:textColor="#42C2FF"
                             android:fontFamily="@font/cafe"
                             android:text="Make Group"
-                            android:textFontWeight="650"
-                            android:textSize="21sp"
+                            android:textFontWeight="700"
+                            android:textSize="23sp"
                             android:layout_gravity="center"
                             android:paddingTop="20dp"/>
                         <ImageView
@@ -106,7 +106,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
-                        android:background="@drawable/frame_shadow"
+                        android:background="@drawable/frame_dif"
                         android:orientation="vertical"
                         android:layout_columnSpan="1"
                         android:gravity="center"
@@ -114,10 +114,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#42C2FF"
+                            android:textColor="#BE8FFF"
                             android:fontFamily="@font/cafe"
                             android:text="Edit Profile"
-                            android:textFontWeight="650"
+                            android:textFontWeight="700"
                             android:textSize="18sp"
                             android:layout_gravity="center"
                             android:paddingTop="10dp"/>

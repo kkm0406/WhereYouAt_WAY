@@ -24,4 +24,8 @@
         <item name="android:textSize">24sp</item>
     </style>
 
+    <style name="SeekBarColor" parent="Widget.AppCompat.SeekBar">
+        <item name="colorAccent">#4294ff</item>
+    </style>
+
 </resources>
