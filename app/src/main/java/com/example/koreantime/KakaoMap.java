@@ -3,13 +3,17 @@ package com.example.koreantime;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -20,11 +24,14 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapPolyline;
 import net.daum.mf.map.api.MapView;
 
 import java.io.IOException;
+import java.security.Policy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 //class markerGPS {
 //    double lat;
@@ -50,16 +57,18 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
     Geocoder geocoder;
     String locationName = "";
     EditText locationText;
-    Button locationBtn;
+    ImageView locationBtn;
     ArrayList<markerGPS> markerList = new ArrayList<>();
     ArrayList<markerGPS> userLocations = new ArrayList<>();
     boolean isMarker = false;
     RelativeLayout relativeLayout;
     MaterialCalendarView calendarView;
     TimePicker timePicker;
-    String date;
-    String time;
+    String date = "";
+    String time = "";
     String meetingLocation;
+    double finalX = 0.0;
+    double finalY = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +94,11 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay tmpDate, boolean selected) {
                 date = GetString(tmpDate);
+                if (!date.equals("")) {
+                    timePicker.setVisibility(View.VISIBLE);
+                } else {
+                    timePicker.setVisibility(View.GONE);
+                }
                 Log.d("date", date);
             }
         });
@@ -93,22 +107,22 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
             @Override
             public void onTimeChanged(TimePicker timePicker, int i, int i1) {
                 String str = "", str1 = "";
-                if(i <= 9){
-                    str = '0'+String.valueOf(i);
-                }else{
+                if (i <= 9) {
+                    str = '0' + String.valueOf(i);
+                } else {
                     str = String.valueOf(i);
                 }
-                if (i1 <= 9){
-                    str1 = '0'+String.valueOf(i1);
-                }else{
+                if (i1 <= 9) {
+                    str1 = '0' + String.valueOf(i1);
+                } else {
                     str1 = String.valueOf(i1);
                 }
-                time = str+"-"+str1;
+                time = str + "-" + str1;
             }
         });
 
         mapView = new MapView(KakaoMap.this);
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord( 37.5418, 126.9818), true);
+        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.5418, 126.9818), true);
         mapView.setZoomLevel(4, true);
         mapView.setMapViewEventListener(this);
         mapView.setPOIItemEventListener(this);
@@ -123,7 +137,7 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
         userLocations.add(new markerGPS(37.5372, 126.9542));
         userLocations.add(new markerGPS(37.5481, 126.9422));
 
-        for(int i=0;i<userLocations.size();i++){
+        for (int i = 0; i < userLocations.size(); i++) {
             MapPOIItem marker = new MapPOIItem();
             MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord
                     (userLocations.get(i).getLat(), userLocations.get(i).getLon());
@@ -136,9 +150,10 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
             mapView.addPOIItem(marker);
         }
 
-        meetingLocation = GetCenter();
 
         geocoder = new Geocoder(this);
+        meetingLocation = GetCenter();
+        MakeLine();
 
         locationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,20 +196,32 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
         });
     }
 
-    public String GetString(CalendarDay tmpDate){
+    private void MakeLine() {
+        for (markerGPS item:userLocations) {
+            double lat = item.getLat();
+            double lon = item.getLon();
+            MapPolyline polyline = new MapPolyline();
+            polyline.addPoint(MapPoint.mapPointWithGeoCoord(lat, lon));
+            polyline.addPoint(MapPoint.mapPointWithGeoCoord(finalX, finalY));
+            polyline.setLineColor(Color.argb(100, 255, 0, 0));
+            mapView.addPolyline(polyline);
+        }
+    }
+
+    public String GetString(CalendarDay tmpDate) {
         String strDate = String.valueOf(tmpDate).substring(12);
-        strDate = strDate.substring(0, strDate.length()-1);
+        strDate = strDate.substring(0, strDate.length() - 1);
         String[] newDate = strDate.split("-");
-        if(Integer.parseInt(newDate[1]) <= 9){
+        if (Integer.parseInt(newDate[1]) <= 9) {
             int tmpNum = Integer.parseInt(newDate[1]);
             tmpNum += 1;
-            newDate[1] = "0"+tmpNum;
-        }else{
-            int tmpNum =  Integer.parseInt(newDate[1]);
+            newDate[1] = "0" + tmpNum;
+        } else {
+            int tmpNum = Integer.parseInt(newDate[1]);
             tmpNum += 1;
             newDate[1] = String.valueOf(tmpNum);
         }
-        return newDate[0]+"-"+newDate[1]+"-"+newDate[2];
+        return newDate[0] + "-" + newDate[1] + "-" + newDate[2];
     }
 
     public String GetCenter() {
@@ -218,26 +245,18 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
         area /= 2.0;
         area = Math.abs(area);
 
-        double finalX = (centerX / (6.0 * area));
-        double finalY = (centerY / (6.0 * area));
-
-
+        finalX = (centerX / (6.0 * area));
+        finalY = (centerY / (6.0 * area));
 
         finalX = Math.abs(finalX);
         finalY = Math.abs(finalY);
 
-        float locateX = Float.parseFloat(String.valueOf(finalX));
-        float locateY = Float.parseFloat(String.valueOf(finalY));
-
-        Log.d("x, y", locateX + ", " + locateY);
-
-        MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord( Math.abs(finalX), Math.abs(finalY));
-
-        Log.d("GPS", MARKER_POINT.getMapPointGeoCoord().latitude+", "+MARKER_POINT.getMapPointGeoCoord().longitude);
+        MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(Math.abs(finalX), Math.abs(finalY));
 
         MapPOIItem marker = new MapPOIItem();
         marker.setItemName("Meeting Place");
 
+        mapView.setZoomLevel(5, true);
         marker.setTag(0);
         marker.setMapPoint(MARKER_POINT);
         marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
@@ -263,41 +282,12 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
         }
 
         mapView.addPOIItem(marker);
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord( Math.abs(finalX), Math.abs(finalY)), true);
+        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(Math.abs(finalX), Math.abs(finalY)), true);
         return list.get(0).getAddressLine(0);
     }
 
     @Override
-    public void onMapViewInitialized(MapView mapView) {
-
-    }
-
-    @Override
-    public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewZoomLevelChanged(MapView mapView, int i) {
-
-    }
-
-    @Override
-    public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewDoubleTapped(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
     public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) {
-//        if (isMarker) {
-//            mapView.removeAllPOIItems();
-//            isMarker = false;
-//        }
         MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord
                 (mapPoint.getMapPointGeoCoord().latitude, mapPoint.getMapPointGeoCoord().longitude);
         MapPOIItem marker = new MapPOIItem();
@@ -326,6 +316,42 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
 
         markerGPS markerGPS = new markerGPS(mapPoint.getMapPointGeoCoord().latitude, mapPoint.getMapPointGeoCoord().longitude);
         markerList.add(markerGPS);
+        mapView.removeAllPolylines();
+        for (markerGPS item:userLocations) {
+            double lat = item.getLat();
+            double lon = item.getLon();
+            MapPolyline polyline = new MapPolyline();
+            polyline.addPoint(MapPoint.mapPointWithGeoCoord(lat, lon));
+            polyline.addPoint(MapPoint.mapPointWithGeoCoord
+                    (mapPoint.getMapPointGeoCoord().latitude, mapPoint.getMapPointGeoCoord().longitude));
+            polyline.setLineColor(Color.argb(100, 255, 0, 0));
+            mapView.addPolyline(polyline);
+        }
+    }
+
+    @Override
+    public void onMapViewInitialized(MapView mapView) {
+
+    }
+
+    @Override
+    public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapPoint) {
+
+    }
+
+    @Override
+    public void onMapViewZoomLevelChanged(MapView mapView, int i) {
+
+    }
+
+    @Override
+    public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) {
+
+    }
+
+    @Override
+    public void onMapViewDoubleTapped(MapView mapView, MapPoint mapPoint) {
+
     }
 
     @Override
