@@ -60,12 +60,10 @@
                     android:orientation="horizontal"
                     android:layout_marginVertical="20dp"
                     android:weightSum="7">
-
                     <View
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4" />
-
                     <EditText
                         android:id="@+id/locationText"
                         android:layout_width="0dp"
