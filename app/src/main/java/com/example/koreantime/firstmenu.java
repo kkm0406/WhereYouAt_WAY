@@ -86,6 +86,35 @@ public class firstmenu extends AppCompatActivity {
                     });
                 }
             }
+            case 2:
+            {
+                if(resultCode==1){
+                    String searchemail=user_info.getEmail();
+                    db.collection("group").whereArrayContains("participation", searchemail)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("added_group", Integer.toString(task.getResult().size()) );
+                                        GridLayout grid = findViewById(R.id.grid);
+//                                        for (int i=0;i<task.getResult().size()-2;i++) {//유저가 소속되어있는 그룹들 리턴
+//
+//                                        }
+                                        grid.removeViewsInLayout(2,task.getResult().size());
+                                        int num=0;
+                                        for (QueryDocumentSnapshot document : task.getResult()) {//유저가 소속되어있는 그룹들 리턴
+                                            createNew(num,document.getData().get("name").toString());
+                                            Log.d("added_group", document.getId() + " => " + document.getData());
+                                            num++;
+                                        }
+                                    } else {
+                                        Log.d("added_group", "Error getting documents: ", task.getException());
+                                    }
+                                }
+                            });
+                }
+            }
         }
     }
     @Override
@@ -130,8 +159,8 @@ public class firstmenu extends AppCompatActivity {
             public void onClick(View view) {//임시로 회의만들기 연결
                 Intent intent = new Intent(firstmenu.this, KakaoMap.class);
                 intent.putExtra("user_info", user_info);
-                intent.putExtra("groupname", "9mlRcdQX7Ho2az7jjbkj");
-                String[] groupmember={"123456@naver.com","1@naver.com","123@naver.com"};
+                intent.putExtra("groupname", "v2sg81UrkypvA4UrPaZH");
+                String[] groupmember={"123456@naver.com","1@naver.com","123@naver.com","email@naver.com"};
                 intent.putExtra("groupmember", groupmember);
                 startActivityForResult(intent,1);
             }
@@ -204,9 +233,10 @@ public class firstmenu extends AppCompatActivity {
                                     Log.d("add_meeting", temp.getParticipation().toString());
                                     Log.d("add_meeting", temp.getName());
                                     Intent intent = new Intent(firstmenu.this, CarouselActivity.class);
+                                    intent.putExtra("groupid",group_id.get(num));
                                     intent.putExtra("groupname",name);
                                     intent.putExtra("membernick",(ArrayList)temp.getParticipation());
-                                    startActivity(intent);
+                                    startActivityForResult(intent,2);
                                 } else {
                                     Log.d("add_meeting", "Error getting documents: ", task.getException());
                                 }
