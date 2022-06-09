@@ -23,8 +23,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
         recyclerView.addItemDecoration(
             DividerItemDecoration(
-                this,
-                LinearLayoutManager.VERTICAL
+                this,LinearLayoutManager.VERTICAL
             )
         )
         recyclerView.layoutManager =

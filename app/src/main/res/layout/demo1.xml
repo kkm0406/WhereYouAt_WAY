@@ -1,13 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout
+<com.sothree.slidinguppanel.SlidingUpPanelLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/motion_container"
-    app:layoutDescription="@xml/motion_scene_1">
+    tools:context=".CarouselActivity"
+    android:gravity="bottom"
+    app:umanoDragView="@id/slide_layout">
 
-    <include layout="@layout/views"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/back_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</androidx.constraintlayout.motion.widget.MotionLayout>
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/motion_container"
+            app:layoutDescription="@xml/motion_scene_1">
+
+            <include layout="@layout/views"/>
+
+        </androidx.constraintlayout.motion.widget.MotionLayout>
+
+        <TextView
+            android:id="@+id/tv_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Background Layout"
+            android:textColor="?android:attr/textColorPrimaryInverse"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/slide_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btn_toggle"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="열기"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_slideText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="128dp"
+            android:text="slideOffset"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_slideOffset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_slideText1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>
