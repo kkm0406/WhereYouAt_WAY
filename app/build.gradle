@@ -15,7 +15,13 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    dataBinding{
+        enabled = true
+    }
 
+    buildFeatures {
+        viewBinding true
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -62,6 +68,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.0'
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
     implementation 'com.google.firebase:firebase-messaging'
     implementation "androidx.gridlayout:gridlayout:1.0.0"
 }

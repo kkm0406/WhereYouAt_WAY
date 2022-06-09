@@ -9,5 +9,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/rv"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/rv"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
