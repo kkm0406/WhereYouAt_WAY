@@ -208,6 +208,50 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
 //        userLocations.add(new markerGPS(37.5481, 126.9422));
 
 
+
+        locationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String tmpLocation = locationText.getText().toString();
+                List<Address> list = null;
+                try {
+                    list = geocoder.getFromLocationName(tmpLocation, 10);
+                } catch (IOException e) {
+                    Log.d("geocoder error", String.valueOf(e));
+                    e.printStackTrace();
+                }
+                if (list != null) {
+                    if (list.size() != 0) {
+                        isMarker = true;
+                        double centerLat = list.get(0).getLatitude();
+                        double centerLon = list.get(0).getLongitude();
+                        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(centerLat, centerLon), true);
+                        mapView.setZoomLevel(4, true);
+                        Log.d("geocoder error", String.valueOf(list.size()));
+                        for (int i = 0; i < list.size(); i++) {
+                            Address address = list.get(i);
+                            double lat = address.getLatitude();
+                            double lon = address.getLongitude();
+                            MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(lat, lon);
+                            MapPOIItem marker = new MapPOIItem();
+                            marker.setItemName(list.get(i).getAddressLine(0));
+                            marker.setMapPoint(MARKER_POINT);
+                            marker.setMarkerType(MapPOIItem.MarkerType.RedPin); // 기본으로 제공하는 BluePin 마커 모양.
+                            marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+                            mapView.addPOIItem(marker);
+
+                            markerGPS newMarker = new markerGPS(lat, lon);
+                            markerList.add(newMarker);
+                        }
+                    } else {
+                        Toast.makeText(KakaoMap.this, "정확한 지명을 입력해주세요", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(KakaoMap.this, "검색 결과가 존재하지 않습니다", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         seekBarVibrate.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {

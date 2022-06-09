@@ -16,12 +16,14 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/motion_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/motion_container"
-            app:layoutDescription="@xml/motion_scene_1">
+            app:layoutDescription="@xml/motion_scene_1"
+            tools:layout_editor_absoluteX="-16dp"
+            tools:layout_editor_absoluteY="-293dp">
 
-            <include layout="@layout/views"/>
+            <include layout="@layout/views" />
 
         </androidx.constraintlayout.motion.widget.MotionLayout>
 

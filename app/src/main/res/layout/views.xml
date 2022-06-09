@@ -96,7 +96,7 @@
         android:id="@+id/v1"
         android:layout_width="250dp"
         android:layout_height="350dp"
-        android:background="#EFFFFD"
+        android:background="#EAFFFC"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -152,7 +152,7 @@
         android:id="@+id/v2"
         android:layout_width="250dp"
         android:layout_height="350dp"
-        android:background="#EFFFFD"
+        android:background="#EAFFFC"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -208,7 +208,7 @@
         android:id="@+id/v3"
         android:layout_width="250dp"
         android:layout_height="350dp"
-        android:background="#EFFFFD"
+        android:background="#EAFFFC"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -228,7 +228,7 @@
             android:layout_width="match_parent"
             android:layout_height="240dp"
             android:src="@drawable/plus"
-            android:padding="60dp"
+            android:padding="70dp"
             android:layout_gravity="center" />
 
         <TextView
