@@ -15,8 +15,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -59,8 +61,10 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
 
     MapView mapView;
     Geocoder geocoder;
-    String locationName = "";
-    EditText locationText;
+    LinearLayout setTime;
+    TextView month;
+    TextView day;
+    TextView Meetingtime;
     ImageView locationBtn;
     ArrayList<markerGPS> markerList = new ArrayList<>();
     ArrayList<markerGPS> userLocations = new ArrayList<>();
@@ -90,8 +94,10 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kakao_map);
         calendarView = findViewById(R.id.calendar);
-        locationText = findViewById(R.id.locationText);
-        locationBtn = findViewById(R.id.locationBtn);
+        setTime = findViewById(R.id.setTime);
+        month = findViewById(R.id.month);
+        day = findViewById(R.id.day);
+        Meetingtime = findViewById(R.id.Meetingtime);
         relativeLayout = findViewById(R.id.kakaoMap);
         timePicker = findViewById(R.id.timePicker);
         seekBarVibrate = findViewById(R.id.vibrate);
