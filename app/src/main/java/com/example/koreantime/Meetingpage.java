@@ -34,11 +34,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import net.daum.android.map.MapViewEventListener;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapPolyline;
 import net.daum.mf.map.api.MapView;
 
 import java.util.ArrayList;
 
-public class Meetingpage extends AppCompatActivity implements MapView.POIItemEventListener, MapView.MapViewEventListener, MapView.CurrentLocationEventListener{
+public class Meetingpage extends AppCompatActivity implements MapView.CurrentLocationEventListener{
 
     FirebaseFirestore db= FirebaseFirestore.getInstance();
     DTO_user user_info;
@@ -56,30 +57,32 @@ public class Meetingpage extends AppCompatActivity implements MapView.POIItemEve
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
     Messaging temp=new Messaging();
     TextView nowAddress;
+    MapPOIItem initMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meetingpage);
-        kakaoMap = findViewById(R.id.kakaoMap);
-//        nowAddress = findViewById(R.id.nowAddress);
-        mapView = new MapView(Meetingpage.this);
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.5418, 126.9818), true);
-        mapView.setZoomLevel(4, true);
-        mapView.setPOIItemEventListener(this);
-        arrive=findViewById(R.id.arrive);
-        punish=findViewById(R.id.punish);
-        kakaoMap.addView(mapView);
 
-        mapView.setMapViewEventListener((MapViewEventListener) this);
-        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
+//        nowAddress = findViewById(R.id.nowAddress);
+
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting();
         }else {
             checkRunTimePermission();
         }
 
+        kakaoMap = findViewById(R.id.kakaoMap);
+        mapView = new MapView(Meetingpage.this);
+        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.5418, 126.9818), true);
+        mapView.setZoomLevel(3, true);
+        kakaoMap.addView(mapView);
 
+        arrive=findViewById(R.id.arrive);
+        punish=findViewById(R.id.punish);
+
+
+        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
 
         arrive.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +108,15 @@ public class Meetingpage extends AppCompatActivity implements MapView.POIItemEve
                 temp.execute();
             }
         });
-        setContentView(R.layout.activity_meetingpage);
+
+        initMarker = new MapPOIItem();
+        MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(initLat, initLon);
+        initMarker.setItemName("Final Location");
+        initMarker.setTag(0);
+        initMarker.setMapPoint(MARKER_POINT);
+        initMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 기본으로 제공하는 BluePin 마커 모양.
+        mapView.addPOIItem(initMarker);
+
 
     }
     void send_penalty(String token, String vibrate, String alarm){
@@ -120,19 +131,53 @@ public class Meetingpage extends AppCompatActivity implements MapView.POIItemEve
 
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float accuracyInMeters) {
+        Toast.makeText(Meetingpage.this, "real-time GPS", Toast.LENGTH_SHORT).show();
+
         MapPoint.GeoCoordinate mapPointGeo = currentLocation.getMapPointGeoCoord();
-        Log.i("my real-time location", String.format("MapView onCurrentLocationUpdate (%f,%f) accuracy (%f)", mapPointGeo.latitude, mapPointGeo.longitude, accuracyInMeters));
+        Check10M(mapPointGeo.latitude, mapPointGeo.longitude);
     }
+
+    private void Check10M(double latitude, double longitude) {
+        double theta = initLon - longitude;
+        double dist = Math.sin(deg2rad(latitude)) * Math.sin(deg2rad(initLat)) + Math.cos(deg2rad(latitude)) * Math.cos(deg2rad(initLat)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        dist = dist * 1609.344;
+        Toast.makeText(Meetingpage.this, "checking distance: "+dist, Toast.LENGTH_SHORT).show();
+        if(dist >=10){
+            Log.d("distance", "아직 멀음");
+            Toast.makeText(Meetingpage.this, "아직 멀음: "+dist, Toast.LENGTH_SHORT).show();
+        }else{
+            Log.d("distance", "거의 도착");
+            Toast.makeText(Meetingpage.this, "거의 도착: "+dist, Toast.LENGTH_SHORT).show();
+        }
+    }
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private static double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
+    }
+
+
     @Override
     public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float v) {
+        Toast.makeText(Meetingpage.this, "deviceheadingupdate", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     public void onCurrentLocationUpdateFailed(MapView mapView) {
+        Toast.makeText(Meetingpage.this, "locationupdatefail", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     public void onCurrentLocationUpdateCancelled(MapView mapView) {
+        Toast.makeText(Meetingpage.this, "locationupdatecancelld", Toast.LENGTH_SHORT).show();
+
     }
 
 
@@ -233,17 +278,13 @@ public class Meetingpage extends AppCompatActivity implements MapView.POIItemEve
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        switch (requestCode) {
-            case GPS_ENABLE_REQUEST_CODE:
-                //사용자가 GPS 활성 시켰는지 검사
+        if (requestCode == GPS_ENABLE_REQUEST_CODE) {//사용자가 GPS 활성 시켰는지 검사
+            if (checkLocationServicesStatus()) {
                 if (checkLocationServicesStatus()) {
-                    if (checkLocationServicesStatus()) {
-                        Log.d("@@@", "onActivityResult : GPS 활성화 되있음");
-                        checkRunTimePermission();
-                        return;
-                    }
+                    Log.d("@@@", "onActivityResult : GPS 활성화 되있음");
+                    checkRunTimePermission();
                 }
-                break;
+            }
         }
     }
 
@@ -254,68 +295,4 @@ public class Meetingpage extends AppCompatActivity implements MapView.POIItemEve
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
-    @Override
-    public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
-
-    }
-
-    @Override
-    public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
-
-    }
-
-    @Override
-    public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
-
-    }
-
-    @Override
-    public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewInitialized(MapView mapView) {
-
-    }
-
-    @Override
-    public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewZoomLevelChanged(MapView mapView, int i) {
-
-    }
-
-    @Override
-    public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewDoubleTapped(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewDragStarted(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewDragEnded(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
-
-    }
 }
