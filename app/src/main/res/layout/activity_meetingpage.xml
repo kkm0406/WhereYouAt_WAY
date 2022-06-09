@@ -119,7 +119,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/punish_btn"
-            android:backgroundTint=""
             android:fontFamily="@font/cafe"
             android:text="너 어디야?!"
             android:visibility="invisible"

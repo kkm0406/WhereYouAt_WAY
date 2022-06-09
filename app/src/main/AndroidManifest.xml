@@ -23,13 +23,16 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".KakaoMap"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".edit"
             android:exported="false" />
         <activity
             android:name=".firstmenu"
             android:exported="false" />
+        <activity
+            android:name=".Meetingpage"
+            android:exported="true"/>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -48,13 +51,13 @@
             android:name=".SignUp"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".StartPage"
             android:exported="true"/>
         <activity
             android:name=".IntroActivity"
             android:exported="true"/>
         <activity
-            android:name=".StartPage"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

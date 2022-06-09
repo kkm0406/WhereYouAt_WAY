@@ -1,5 +1,6 @@
 package com.example.koreantime
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.constraintlayout.motion.widget.MotionLayout
@@ -7,18 +8,21 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import com.example.koreantime.databinding.Demo1Binding
+import com.example.koreantime.databinding.ViewsBinding
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
 class CarouselActivity : AppCompatActivity() {
-    private lateinit var binding : Demo1Binding
+    private lateinit var binding : ViewsBinding
     private var selectedIndex: Int = 0;
-
+    mbinding
+    private val binding get() = mbinding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = Demo1Binding.inflate(layoutInflater)
+
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -30,68 +34,50 @@ class CarouselActivity : AppCompatActivity() {
         val layout = intent.getIntExtra("layout_file_id", R.layout.demo1)
         setContentView(layout)
 
-        val slidePanel = binding.mainFrame
-        slidePanel.addPanelSlideListener(PanelEventListener())
-
         val motionLayout = findViewById<MotionLayout>(R.id.motion_container)
 
         val v1 = findViewById<View>(R.id.v1)
         val v2 = findViewById<View>(R.id.v2)
         val v3 = findViewById<View>(R.id.v3)
-        val btn1: Button =findViewById(R.id.btn_toggle1)
-        val btn2: Button =findViewById(R.id.btn_toggle2)
-        val btn3: Button =findViewById(R.id.btn_toggle3)
+        val btn1 = findViewById<ImageView>(R.id.Map_image1)
+        val btn2 = findViewById<ImageView>(R.id.Map_image2)
+        val btn3 = findViewById<ImageView>(R.id.Map_image3)
+        val toggle1 = findViewById<Button>(R.id.btn_toggle1)
+        val toggle2 = findViewById<Button>(R.id.btn_toggle2)
+        val toggle3 = findViewById<Button>(R.id.btn_toggle3)
 
-        binding.btnToggle.setOnClickListener {
-            val state = slidePanel.panelState
-
-            if (state == SlidingUpPanelLayout.PanelState.COLLAPSED) {
-                slidePanel.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
-            }
-
-            else if (state == SlidingUpPanelLayout.PanelState.EXPANDED) {
-                slidePanel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
-            }
-        }
-
-        btn1.setOnClickListener {
-            val state = slidePanel.panelState
-            // 닫힌 상태일 경우 열기
-            if (state == SlidingUpPanelLayout.PanelState.COLLAPSED) {
-                binding.mainFrame.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
-            }
-            // 열린 상태일 경우 닫기
-            else if (state == SlidingUpPanelLayout.PanelState.ANCHORED) {
-                binding.mainFrame.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
-            }
+        btn1.setOnClickListener{
+            val btn1intent = Intent(this, KakaoMap::class.java)
+            startActivity(btn1intent)
         }
         btn2.setOnClickListener {
-            val state = slidePanel.panelState
-            // 닫힌 상태일 경우 열기
-
-            if (state == SlidingUpPanelLayout.PanelState.COLLAPSED) {
-                slidePanel.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
-            }
-            // 열린 상태일 경우 닫기
-            else if (state == SlidingUpPanelLayout.PanelState.EXPANDED) {
-                slidePanel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
-            }
+            val btn2intent = Intent(this, KakaoMap::class.java)
+            startActivity(btn2intent)
         }
-        btn3.setOnClickListener {
-            val state = slidePanel.panelState
-            // 닫힌 상태일 경우 열기
-            if (state == SlidingUpPanelLayout.PanelState.COLLAPSED) {
-                slidePanel.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
-            }
-            // 열린 상태일 경우 닫기
-            else if (state == SlidingUpPanelLayout.PanelState.EXPANDED) {
-                slidePanel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
-            }
+        btn3.setOnClickListener{
+            val btn3intent = Intent(this, KakaoMap::class.java)
+            startActivity(btn3intent)
+        }
+
+        toggle1.setOnClickListener{
+            val tg1intent = Intent(this, Meetingpage::class.java)
+            startActivity(tg1intent)
+        }
+
+        toggle2.setOnClickListener{
+            val tg2intent = Intent(this, Meetingpage::class.java)
+            startActivity(tg2intent)
+        }
+
+        toggle3.setOnClickListener{
+            val tg3intent = Intent(this, Meetingpage::class.java)
+            startActivity(tg3intent)
         }
 
 
         v1.setOnClickListener {
             if (selectedIndex == 0) return@setOnClickListener
+
 
             motionLayout.setTransition(R.id.s2, R.id.s1) //orange to blue transition
             motionLayout.transitionToEnd()
@@ -99,6 +85,7 @@ class CarouselActivity : AppCompatActivity() {
         }
         v2.setOnClickListener {
             if (selectedIndex == 1) return@setOnClickListener
+
 
             if (selectedIndex == 2) {
                 motionLayout.setTransition(R.id.s3, R.id.s2)  //red to orange transition
@@ -111,23 +98,12 @@ class CarouselActivity : AppCompatActivity() {
         v3.setOnClickListener {
             if (selectedIndex == 2) return@setOnClickListener
 
+
             motionLayout.setTransition(R.id.s2, R.id.s3) //orange to red transition
             motionLayout.transitionToEnd()
             selectedIndex = 2;
         }
 
-    }
-    inner class PanelEventListener : SlidingUpPanelLayout.PanelSlideListener {
-        // 패널이 슬라이드 중일 때
-        override fun onPanelSlide(panel: View?, slideOffset: Float) {
-        }
-
-        // 패널의 상태가 변했을 때
-        override fun onPanelStateChanged(panel: View?, previousState: SlidingUpPanelLayout.PanelState?, newState: SlidingUpPanelLayout.PanelState?) {
-            if (newState == SlidingUpPanelLayout.PanelState.COLLAPSED) {
-            } else if (newState == SlidingUpPanelLayout.PanelState.EXPANDED) {
-            }
-        }
     }
 
 }
