@@ -141,17 +141,25 @@ public class firstmenu extends AppCompatActivity {
         group.setBackgroundResource(R.drawable.frame_shadow);
         group.setOrientation(LinearLayout.VERTICAL);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.FILL;
+        params.gravity = Gravity.FILL_HORIZONTAL;
+//        params.setMargins(ConvertDPtoPX(this,10),0,ConvertDPtoPX(this,10),0);
+        GridLayout.LayoutParams parem = new GridLayout.LayoutParams(GridLayout.spec(
+                GridLayout.UNDEFINED,1f),
+                GridLayout.spec(GridLayout.UNDEFINED, 1f));
+        parem.setMargins(ConvertDPtoPX(this,10),0,ConvertDPtoPX(this,10),0);
 
-        GridLayout.LayoutParams params2 = new GridLayout.LayoutParams(grid.getLayoutParams());
-        params2.columnSpec = GridLayout.spec(1);
+//        GridLayout.LayoutParams params2 = new GridLayout.LayoutParams(grid.getLayoutParams());
+//        params2.columnSpec = GridLayout.spec(e+2);
         group.setGravity(Gravity.CENTER);
         group.setLayoutParams(params);
-        group.setLayoutParams(params2);
+        group.setLayoutParams(parem);
+//        group.setLayoutParams(params2);
         group.setPadding(ConvertDPtoPX(this,25),ConvertDPtoPX(this,25),ConvertDPtoPX(this,25),ConvertDPtoPX(this,25));
         group.setId(e);
 
         TextView view1 = new TextView(this);
+        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        view1.setLayoutParams(params2);
         view1.setText(name);
         view1.setTextColor(Color.parseColor("#42C2FF"));
         view1.setGravity(Gravity.CENTER);
@@ -159,7 +167,7 @@ public class firstmenu extends AppCompatActivity {
         view1.setTextSize(18);
 
         ImageView view2 = new ImageView(this);
-        LinearLayout.LayoutParams ImgParams = new LinearLayout.LayoutParams(ConvertDPtoPX(this,70), ConvertDPtoPX(this,70));
+        LinearLayout.LayoutParams ImgParams = new LinearLayout.LayoutParams( ConvertDPtoPX(this,70), ConvertDPtoPX(this,70));
         ImgParams.setMargins(0,ConvertDPtoPX(this,15),0,0);
         view2.setLayoutParams(ImgParams);
         view2.setImageResource(R.drawable.groups);

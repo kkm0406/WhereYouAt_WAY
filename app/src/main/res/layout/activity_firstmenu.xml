@@ -56,7 +56,7 @@
             android:paddingBottom="20dp">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
                 android:orientation="vertical">
                 <GridLayout
@@ -96,9 +96,12 @@
 
                     <LinearLayout
                         android:id="@+id/edit"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:background="@drawable/frame_dif"
                         android:orientation="vertical"
                         android:layout_columnSpan="1"
+                        android:layout_columnWeight="1"
                         android:gravity="center"
                         android:padding="25dp"
                         android:layout_gravity="fill_horizontal">
@@ -109,6 +112,7 @@
                             android:fontFamily="@font/cafe"
                             android:text="Edit Profile"
                             android:textFontWeight="700"
+                            android:gravity="center"
                             android:textSize="18sp"
                             android:layout_gravity="center"
                             android:paddingTop="10dp"/>
@@ -116,9 +120,9 @@
                             android:layout_width="70dp"
                             android:layout_height="70dp"
                             android:src="@drawable/wrench"
-
                             android:layout_marginTop="15dp"/>
                     </LinearLayout>
+
                 </GridLayout>
             </LinearLayout>
         </ScrollView>
