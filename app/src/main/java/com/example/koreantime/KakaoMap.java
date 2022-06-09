@@ -50,7 +50,6 @@ import java.util.List;
 import java.util.Map;
 
 
-
 class markerGPS {
     double lat;
     double lon;
@@ -105,7 +104,9 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayList<String> memberAddress = new ArrayList<>();
     DTO_user user_info;
-    int is_end=0;
+    int is_end = 0;
+
+    TextView nowAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,26 +120,28 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
         checkAlarm = findViewById(R.id.checkAlarm);
         month = findViewById(R.id.month);
         day = findViewById(R.id.day);
+        nowAddress = findViewById(R.id.nowAddress);
+
+        Calendar c = Calendar.getInstance();
+        month.setText(GetMonth(String.valueOf(c.get(Calendar.MONTH) + 1)));
+        day.setText(String.valueOf(c.get(Calendar.DAY_OF_MONTH)));
 
         TextView Meetingtime = findViewById(R.id.Meetingtime);
 
         OneDayDecorator oneDayDecorator = new OneDayDecorator();
-//        EventDecorator eventDecorator = new EventDecorator();
         SaturdayDecorator saturdayDecorator = new SaturdayDecorator();
         SundayDecorator sundayDecorator = new SundayDecorator();
         calendarView.addDecorator(oneDayDecorator);
-//        calendarView.addDecorator(eventDecorator);
         calendarView.addDecorator(saturdayDecorator);
         calendarView.addDecorator(sundayDecorator);
 
         geocoder = new Geocoder(this);
 
         Intent Intent = getIntent();
-        user_info=(DTO_user) Intent.getSerializableExtra("user_info");
+        user_info = (DTO_user) Intent.getSerializableExtra("user_info");
         groupname = Intent.getStringExtra("groupname");//그룹 이름 받아오기
         groupmember = Intent.getStringArrayExtra("groupmember");//그룹멤버 받아오기
 
-//        Log.d("meetingmake", groupmember[1]);
         for (String email : groupmember) {//그룹멤버의 첫번째 주소 정보 가져옴
             db.collection("user").document(email)
                     .get()
@@ -154,29 +157,28 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
                             } else {
                                 Log.d("add_meeting", "Error getting documents: ", task.getException());
                             }
-                            if(is_end==groupmember.length) {
+                            if (is_end == groupmember.length) {
                                 makelocation();
                             }
                         }
                     });
         }
 
-
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay tmpDate, boolean selected) {
                 date = GetString(tmpDate);
-                Calendar c = Calendar.getInstance();
+
                 int mHour = c.get(Calendar.HOUR);
                 int mMin = c.get(Calendar.MINUTE);
                 TimePickerDialog timePickerDialog = new TimePickerDialog(
                         KakaoMap.this, android.R.style.Theme_Holo, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                        time = i+"-"+i1;
+                        time = i + "-" + i1;
                         LinearLayout setTime = findViewById(R.id.setTime);
                         setTime.setVisibility(View.VISIBLE);
-                        Meetingtime.setText(i+" : "+i1);
+                        Meetingtime.setText(i + " : " + i1);
                     }
                 }, mHour, mMin, false);
                 timePickerDialog.show();
@@ -189,7 +191,6 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
         mapView.setMapViewEventListener(this);
         mapView.setPOIItemEventListener(this);
         relativeLayout.addView(mapView);
-
 
         seekBarVibrate.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -208,7 +209,6 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
             }
         });
 
-
         seekBarAlarm.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -226,12 +226,11 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
             }
         });
 
-
         complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(checkAlarm.isChecked()){
-                    DTO_schecule new_meeting = new DTO_schecule(user_info.getEmail(), meetingLocation,Integer.toString(alarm), Integer.toString(vibrate) , time,date, "첨만드는 회의");
+                if (checkAlarm.isChecked()) {
+                    DTO_schecule new_meeting = new DTO_schecule(user_info.getEmail(), meetingLocation, Integer.toString(alarm), Integer.toString(vibrate), time, date, "첨만드는 회의");
 
                     db.collection("group").document(groupname).collection("schedule")//생성한 회의 DB에 쓰기
                             .add(new_meeting)
@@ -247,8 +246,8 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
                                     Log.w("add_meeting", "Error adding document", e);
                                 }
                             });
-                }else{
-                    DTO_schecule new_meeting = new DTO_schecule(user_info.getEmail(), meetingLocation, "0" ,Integer.toString(vibrate) , time,date, "첨만드는 회의");
+                } else {
+                    DTO_schecule new_meeting = new DTO_schecule(user_info.getEmail(), meetingLocation, "0", Integer.toString(vibrate), time, date, "첨만드는 회의");
 
                     db.collection("group").document(groupname).collection("schedule")//생성한 회의 DB에 쓰기
                             .add(new_meeting)
@@ -276,7 +275,7 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
         relativeLayout.removeAllViews();
     }
 
-    private void makelocation(){
+    private void makelocation() {
         for (int i = 0; i < userLocations.size(); i++) {
             MapPOIItem marker = new MapPOIItem();
             MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(userLocations.get(i).getLat(), userLocations.get(i).getLon());
@@ -343,32 +342,41 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
         }
     }
 
-    public String GetMonth(String num){
-        switch (num){
+    public String GetMonth(String num) {
+        switch (num) {
             case "01":
+            case "1":
                 return "JAN";
             case "02":
+            case "2":
                 return "FEB";
             case "03":
+            case "3":
                 return "MAR";
             case "04":
+            case "4":
                 return "APR";
             case "05":
-                return  "MAY";
+            case "5":
+                return "MAY";
             case "06":
+            case "6":
                 return "JUN";
             case "07":
+            case "7":
                 return "JUL";
             case "08":
+            case "8":
                 return "AUG";
             case "09":
+            case "9":
                 return "SEP";
             case "10":
                 return "OCT";
             case "11":
-                return  "NOV";
+                return "NOV";
             case "12":
-                return  "DEC";
+                return "DEC";
         }
         return "";
     }
@@ -443,6 +451,7 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
                 marker.setItemName(" ");
             } else {
                 marker.setItemName(list.get(0).getAddressLine(0));
+                nowAddress.setText(list.get(0).getAddressLine(0));
             }
 
         }
@@ -455,7 +464,7 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
 
     @Override
     public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) {
-        for(int i=0;i<mapPOIItemArrayList.size();i++){
+        for (int i = 0; i < mapPOIItemArrayList.size(); i++) {
             mapView.removePOIItem(mapPOIItemArrayList.get(i));
         }
 
@@ -481,6 +490,7 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
             } else {
                 marker.setItemName(list.get(0).getAddressLine(0));
                 meetingLocation = list.get(0).getAddressLine(0);
+                nowAddress.setText(list.get(0).getAddressLine(0));
             }
 
         }

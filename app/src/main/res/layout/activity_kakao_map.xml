@@ -35,13 +35,13 @@
                 android:paddingRight="40dp"
                 app:mcv_selectionColor="#d2d2d2"></com.prolificinteractive.materialcalendarview.MaterialCalendarView>
 
-<!--            <TimePicker-->
-<!--                android:id="@+id/timePicker"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="140dp"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:timePickerMode="spinner"-->
-<!--                android:visibility="gone"/>-->
+            <!--            <TimePicker-->
+            <!--                android:id="@+id/timePicker"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="140dp"-->
+            <!--                android:layout_gravity="center"-->
+            <!--                android:timePickerMode="spinner"-->
+            <!--                android:visibility="gone"/>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                     android:layout_weight="2"
                     android:layout_height="match_parent"
                     android:text="회의 시각 :"
-                    android:textSize="23sp"
+                    android:textSize="18sp"
                     android:fontFamily="@font/cafe"
                     android:textFontWeight="650"
                     android:gravity="center"
@@ -88,7 +88,7 @@
                             android:layout_weight="1"
                             android:layout_height="match_parent"
                             android:text="DEC"
-                            android:textSize="21sp"
+                            android:textSize="18sp"
                             android:fontFamily="@font/cafe"
                             android:textFontWeight="650"
                             android:gravity="center"
@@ -99,7 +99,7 @@
                             android:layout_weight="1"
                             android:layout_height="match_parent"
                             android:text="12nd"
-                            android:textSize="21sp"
+                            android:textSize="18sp"
                             android:fontFamily="@font/cafe"
                             android:textFontWeight="650"
                             android:gravity="center"
@@ -115,7 +115,7 @@
                         android:layout_weight="1"
                         android:id="@+id/Meetingtime"
                         android:text="22 : 30"
-                        android:textSize="22sp"
+                        android:textSize="18sp"
                         android:fontFamily="@font/cafe"
                         android:textFontWeight="650"
                         android:gravity="center"
@@ -138,6 +138,32 @@
                     android:orientation="horizontal" />
                 <!--            위치 입력받는 레이아웃-->
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/nowAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Address"
+                    android:textFontWeight="650"
+                    android:fontFamily="@font/cafe"
+                    android:layout_marginHorizontal="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:gravity="center"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="#515151"/>
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"

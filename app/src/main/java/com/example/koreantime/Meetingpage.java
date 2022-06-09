@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.koreantime.DTO.DTO_user;
@@ -50,12 +51,14 @@ public class Meetingpage extends AppCompatActivity implements MapView.POIItemEve
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
+    TextView nowAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meetingpage);
         kakaoMap = findViewById(R.id.kakaoMap);
+//        nowAddress = findViewById(R.id.nowAddress);
         mapView = new MapView(Meetingpage.this);
         mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.5418, 126.9818), true);
         mapView.setZoomLevel(4, true);
