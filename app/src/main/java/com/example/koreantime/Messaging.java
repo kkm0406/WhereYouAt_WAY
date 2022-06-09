@@ -17,14 +17,7 @@ import org.json.JSONObject;
 
 public class Messaging extends AsyncTask<Void, Void, String> {
 
-    Context context;
-    String url = "";
-    ContentValues values;
-
     public Messaging() {
-        this.context = context;
-        this.url = url;
-        this.values = values;
     }
 
     @Override
@@ -105,7 +98,7 @@ public class Messaging extends AsyncTask<Void, Void, String> {
         JSONObject jNotification = new JSONObject();
         JSONObject jdata = new JSONObject();
         try {
-            jNotification.put("to", "dOEz-lAyR16jU6fhp0KzLd:APA91bEPoC5zfntlAaE6ztey2sQwMF8FV24TL59phuLv_4zDFB4mKlBSVhogUqJdkaBWfyTb0R_9BDTd2VJ1-1dbm_NNi8x2Hn0GaEyyWNmV4W-Vz5wKL6gRbA647VmMPNrUJNyss0rs");
+            jNotification.put("to", "dOEz-lAyR16jU6fhp0KzLd:APA91bGvAAqWB8Ymkk5UZzcjJMwlkEaKcWlgcS-xudmM9R_tVLu-OUetz8j3yzPHNfaxqsDxd-OdWha3UySwhQPjsXzEMvBni3OdQs6y_oz8rey261NgmAkb9uaRI3xx-HtNpmt4ImVi");
             jNotification.put("priority", "high");
             jdata.put("title", "Postman");
             jdata.put("message", "Hello, World!");
