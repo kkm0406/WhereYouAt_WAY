@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Spliterator;
 
 
 class markerGPS {
@@ -450,8 +451,8 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
             if (list.size() == 0) {
                 marker.setItemName(" ");
             } else {
-                marker.setItemName(list.get(0).getAddressLine(0));
-                nowAddress.setText(list.get(0).getAddressLine(0));
+                marker.setItemName(SplitAddress(list.get(0).getAddressLine(0)));
+                nowAddress.setText(SplitAddress(list.get(0).getAddressLine(0)));
             }
 
         }
@@ -460,6 +461,10 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
         mapView.addPOIItem(marker);
         mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(Math.abs(finalX), Math.abs(finalY)), true);
         return list.get(0).getAddressLine(0);
+    }
+
+    private String SplitAddress(String addressLine) {
+        return addressLine.substring(5);
     }
 
     @Override
@@ -488,9 +493,9 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
             if (list.size() == 0) {
                 marker.setItemName(" ");
             } else {
-                marker.setItemName(list.get(0).getAddressLine(0));
+                marker.setItemName(SplitAddress(list.get(0).getAddressLine(0)));
                 meetingLocation = list.get(0).getAddressLine(0);
-                nowAddress.setText(list.get(0).getAddressLine(0));
+                nowAddress.setText(SplitAddress(list.get(0).getAddressLine(0)));
             }
         }
 
