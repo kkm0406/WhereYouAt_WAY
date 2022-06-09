@@ -17,7 +17,32 @@ import org.json.JSONObject;
 
 public class Messaging extends AsyncTask<Void, Void, String> {
 
+    String token;
+    String vibrate;
+    String alarm;
+
+    public Messaging(String token, String vibrate, String alarm) {
+        this.token=token;
+        this.vibrate=vibrate;
+        this.alarm=alarm;
+    }
+
     public Messaging() {
+        this.token="";
+        this.vibrate="";
+        this.alarm="";
+    }
+
+    public void setAlarm(String alarm) {
+        this.alarm = alarm;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public void setVibrate(String vibrate) {
+        this.vibrate = vibrate;
     }
 
     @Override
@@ -52,7 +77,7 @@ public class Messaging extends AsyncTask<Void, Void, String> {
         super.onCancelled();
     }
 
-    private static HttpURLConnection getConnection() throws IOException {
+    private HttpURLConnection getConnection() throws IOException {
         // [START use_access_token]
         URL url = new URL("https://fcm.googleapis.com/fcm/send");
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -65,7 +90,7 @@ public class Messaging extends AsyncTask<Void, Void, String> {
         // [END use_access_token]
     }
 
-    private static void sendMessage(JSONObject fcmMessage) throws IOException {
+    private void sendMessage(JSONObject fcmMessage) throws IOException {
         HttpURLConnection connection = getConnection();
         connection.setDoOutput(true);
         DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
@@ -94,14 +119,16 @@ public class Messaging extends AsyncTask<Void, Void, String> {
         return stringBuilder.toString();
     }
 
-    public static JSONObject buildNotificationMessage() {
+    public JSONObject buildNotificationMessage() {
         JSONObject jNotification = new JSONObject();
         JSONObject jdata = new JSONObject();
         try {
-            jNotification.put("to", "dOEz-lAyR16jU6fhp0KzLd:APA91bGvAAqWB8Ymkk5UZzcjJMwlkEaKcWlgcS-xudmM9R_tVLu-OUetz8j3yzPHNfaxqsDxd-OdWha3UySwhQPjsXzEMvBni3OdQs6y_oz8rey261NgmAkb9uaRI3xx-HtNpmt4ImVi");
+            jNotification.put("to", this.token);
             jNotification.put("priority", "high");
-            jdata.put("title", "Postman");
-            jdata.put("message", "Hello, World!");
+            jdata.put("title", "WAY");
+            jdata.put("message", "어디야? 빨리와!!!!!!");
+            jdata.put("vibrate", vibrate);
+            jdata.put("alarm", alarm);
             jNotification.put("data",jdata);
         } catch (JSONException e) {
             e.printStackTrace();
