@@ -140,10 +140,15 @@ public class firstmenu extends AppCompatActivity {
         LinearLayout group = new LinearLayout(this);
         group.setBackgroundResource(R.drawable.frame_shadow);
         group.setOrientation(LinearLayout.VERTICAL);
-        LinearLayout.LayoutParams groupParams = new LinearLayout.LayoutParams(ConvertDPtoPX(this,160), ConvertDPtoPX(this,160),Gravity.CENTER);
-        groupParams.setMargins(ConvertDPtoPX(this,10),ConvertDPtoPX(this,10),ConvertDPtoPX(this,10),ConvertDPtoPX(this,10));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.FILL;
+
+        GridLayout.LayoutParams params2 = new GridLayout.LayoutParams(grid.getLayoutParams());
+        params2.columnSpec = GridLayout.spec(1);
         group.setGravity(Gravity.CENTER);
-        group.setLayoutParams(groupParams);
+        group.setLayoutParams(params);
+        group.setLayoutParams(params2);
+        group.setPadding(ConvertDPtoPX(this,25),ConvertDPtoPX(this,25),ConvertDPtoPX(this,25),ConvertDPtoPX(this,25));
         group.setId(e);
 
         TextView view1 = new TextView(this);
@@ -152,8 +157,6 @@ public class firstmenu extends AppCompatActivity {
         view1.setGravity(Gravity.CENTER);
         view1.setPadding(0,ConvertDPtoPX(this,10),0,0);
         view1.setTextSize(18);
-//        Typeface typeface = getResources().getFont(R.font.cafe);
-//        view1.setTypeface(typeface);
 
         ImageView view2 = new ImageView(this);
         LinearLayout.LayoutParams ImgParams = new LinearLayout.LayoutParams(ConvertDPtoPX(this,70), ConvertDPtoPX(this,70));

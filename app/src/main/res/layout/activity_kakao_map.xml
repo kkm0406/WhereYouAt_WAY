@@ -75,7 +75,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_weight="6.1"
                         android:textFontWeight="650"
-                        android:hint="장소 입력"
+                        android:hint="Enter Location"
                         android:gravity="center"
                         android:textSize="20sp"
                         android:fontFamily="@font/cafe" />

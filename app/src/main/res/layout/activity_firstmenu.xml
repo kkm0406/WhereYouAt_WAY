@@ -57,28 +57,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginHorizontal="5dp"
                 android:orientation="vertical">
                 <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="8"
-                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginHorizontal="5dp"
                     android:orientation="horizontal"
                     android:columnCount="2"
                     android:id="@+id/grid"
                     android:alignmentMode="alignMargins">
 
                     <LinearLayout
-                        android:layout_width="160dp"
-                        android:layout_height="160dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/frame_shadow"
                         android:id="@+id/makeGroup"
                         android:layout_columnSpan="2"
                         android:orientation="vertical"
+                        android:padding="25dp"
                         android:layout_gravity="fill">
                         <TextView
                             android:layout_width="wrap_content"
@@ -88,8 +85,7 @@
                             android:text="Make Group"
                             android:textFontWeight="700"
                             android:textSize="23sp"
-                            android:layout_gravity="center"
-                            android:paddingTop="20dp"/>
+                            android:layout_gravity="center"/>
                         <ImageView
                             android:layout_width="70dp"
                             android:layout_height="60dp"
@@ -100,17 +96,12 @@
 
                     <LinearLayout
                         android:id="@+id/edit"
-                        android:layout_width="160dp"
-                        android:layout_height="160dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
                         android:background="@drawable/frame_dif"
                         android:orientation="vertical"
                         android:layout_columnSpan="1"
                         android:gravity="center"
-                        android:layout_gravity="fill">
+                        android:padding="25dp"
+                        android:layout_gravity="fill_horizontal">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

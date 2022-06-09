@@ -18,7 +18,7 @@
         android:layout_height="0dp"
         android:layout_weight="0.5"
         android:text="FIND PW"
-        android:textFontWeight="600"
+        android:textFontWeight="700"
         android:fontFamily="@font/cafe"
         android:textColor="#42c2ff"
         android:textSize="30sp"
@@ -35,10 +35,12 @@
         android:layout_height="0dp"
         android:layout_weight="0.35"
         android:id="@+id/email"
+        android:textFontWeight="650"
         android:hint="E-mail 입력"
         android:fontFamily="@font/cafe"
         android:gravity="center"
-        android:layout_marginHorizontal="50dp"
+        android:textSize="18sp"
+        android:layout_marginHorizontal="40dp"
         android:singleLine="true" />
 
     <View
@@ -72,12 +74,12 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1.1"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
+        android:layout_weight="0.45"
         android:gravity="center"
         android:paddingHorizontal="20dp"
         android:paddingVertical="10dp">
@@ -98,7 +100,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
+        android:layout_weight="0.45"
         android:gravity="center"
         android:paddingHorizontal="20dp"
         android:paddingVertical="10dp">

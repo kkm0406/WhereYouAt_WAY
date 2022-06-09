@@ -37,8 +37,8 @@
             android:layout_weight="1">
             <ImageView
                 android:layout_marginTop="30dp"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
                 android:src="@drawable/user"
                 android:layout_gravity="center"/>
             <LinearLayout
@@ -96,14 +96,14 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"/>
+                android:layout_weight="0.3"/>
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3.2"
+                android:layout_weight="3.6"
                 android:hint=""
                 android:gravity="center"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:id="@+id/address1"
                 android:fontFamily="@font/cafe"/>
             <View
@@ -111,14 +111,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"/>
             <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:foreground="@drawable/exchange"
                 android:id="@+id/chAd1"/>
             <View
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.6"/>
+                android:layout_weight="0.4"/>
 
 
     </LinearLayout>
@@ -145,14 +145,14 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"/>
+                android:layout_weight="0.3"/>
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3.2"
+                android:layout_weight="3.6"
                 android:hint=""
                 android:gravity="center"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:id="@+id/address2"
                 android:fontFamily="@font/cafe"/>
             <View
@@ -160,14 +160,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"/>
             <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:foreground="@drawable/exchange"
                 android:id="@+id/chAd2"/>
             <View
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.6"/>
+                android:layout_weight="0.4"/>
         </LinearLayout>
 
         <LinearLayout
@@ -193,14 +193,14 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"/>
+                android:layout_weight="0.3"/>
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3.2"
+                android:layout_weight="3.6"
                 android:hint=""
                 android:gravity="center"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:id="@+id/address3"
                 android:fontFamily="@font/cafe"/>
             <View
@@ -208,14 +208,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"/>
             <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:foreground="@drawable/exchange"
                 android:id="@+id/chAd3"/>
             <View
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.6"/>
+                android:layout_weight="0.4"/>
         </LinearLayout>
         <View
             android:layout_width="match_parent"
