@@ -1,6 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".Meetingpage"
+    android:background="#EFFFFD"
+    android:padding="10dp"
+    android:weightSum="20"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:weightSum="5"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/month"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:text="Dec 15th"
+            android:textColor="#4294ff"
+            android:textSize="22sp"
+            android:fontFamily="@font/cafe"
+            android:gravity="left"
+            android:paddingTop="10dp"
+            android:textFontWeight="700"/>
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:weightSum="5"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:text="15 : 20"
+            android:textColor="#4294ff"
+            android:textSize="21sp"
+            android:fontFamily="@font/cafe"
+            android:gravity="left"
+            android:paddingTop="5dp"
+            android:textFontWeight="700"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11"
+        android:orientation="vertical"
+        android:background="@drawable/frame_shadow">
+
+        <RelativeLayout
+            android:id="@+id/kakaoMap"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" />
+        <!--            위치 입력받는 레이아웃-->
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="( 목적지 도착 시, 버튼이 활성화됩니다! )"
+        android:textColor="#676767"
+        android:gravity="center"
+        android:fontFamily="@font/cafe"
+        android:textSize="15sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp">
+
+        <Button
+            android:id="@+id/arrive"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/get_img_btn"
+            android:fontFamily="@font/cafe"
+            android:text="난 도착!"
+            android:textColor="@color/black"
+            android:textFontWeight="650"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="15dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp">
+
+        <Button
+            android:id="@+id/punish"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/punish_btn"
+            android:backgroundTint=""
+            android:fontFamily="@font/cafe"
+            android:text="너 어디야?!"
+            android:visibility="invisible"
+            android:textColor="@color/black"
+            android:textFontWeight="650"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
