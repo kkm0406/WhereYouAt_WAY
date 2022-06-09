@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Spliterator;
 
 
 class markerGPS {
@@ -282,13 +283,11 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
             marker.setItemName("Default Marker");
             marker.setTag(0);
             marker.setMapPoint(MARKER_POINT);
-            marker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 기본으로 제공하는 BluePin 마커 모양.
-            marker.setSelectedMarkerType(MapPOIItem.MarkerType.YellowPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-
+            marker.setMarkerType(MapPOIItem.MarkerType.CustomImage); // 기본으로 제공하는 BluePin 마커 모양.
+            marker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+            marker.setCustomImageResourceId(R.drawable.bluepin);
             mapView.addPOIItem(marker);
         }
-
-
         meetingLocation = GetCenter();
         MakeLine();
     }
@@ -433,8 +432,9 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
         mapView.setZoomLevel(5, true);
         marker.setTag(0);
         marker.setMapPoint(MARKER_POINT);
-        marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
-        marker.setSelectedMarkerType(MapPOIItem.MarkerType.BluePin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+        marker.setMarkerType(MapPOIItem.MarkerType.CustomImage); // 기본으로 제공하는 BluePin 마커 모양.
+        marker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+        marker.setCustomImageResourceId(R.drawable.redpin);
 
         List<Address> list = null;
         try {
@@ -450,16 +450,18 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
             if (list.size() == 0) {
                 marker.setItemName(" ");
             } else {
-                marker.setItemName(list.get(0).getAddressLine(0));
-                nowAddress.setText(list.get(0).getAddressLine(0));
+                marker.setItemName(SplitAddress(list.get(0).getAddressLine(0)));
+                nowAddress.setText(SplitAddress(list.get(0).getAddressLine(0)));
             }
-
         }
-
         mapPOIItemArrayList.add(marker);
         mapView.addPOIItem(marker);
         mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(Math.abs(finalX), Math.abs(finalY)), true);
         return list.get(0).getAddressLine(0);
+    }
+
+    private String SplitAddress(String addressLine) {
+        return addressLine.substring(5);
     }
 
     @Override
@@ -472,8 +474,9 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
                 (mapPoint.getMapPointGeoCoord().latitude, mapPoint.getMapPointGeoCoord().longitude);
         MapPOIItem marker = new MapPOIItem();
         marker.setMapPoint(MARKER_POINT);
-        marker.setMarkerType(MapPOIItem.MarkerType.RedPin); // 기본으로 제공하는 BluePin 마커 모양.
-        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+        marker.setMarkerType(MapPOIItem.MarkerType.CustomImage); // 기본으로 제공하는 BluePin 마커 모양.
+        marker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+        marker.setCustomImageResourceId(R.drawable.redpin);
         List<Address> list = null;
         try {
             list = geocoder.getFromLocation(
@@ -488,9 +491,9 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
             if (list.size() == 0) {
                 marker.setItemName(" ");
             } else {
-                marker.setItemName(list.get(0).getAddressLine(0));
+                marker.setItemName(SplitAddress(list.get(0).getAddressLine(0)));
                 meetingLocation = list.get(0).getAddressLine(0);
-                nowAddress.setText(list.get(0).getAddressLine(0));
+                nowAddress.setText(SplitAddress(list.get(0).getAddressLine(0)));
             }
         }
 
