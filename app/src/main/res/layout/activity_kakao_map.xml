@@ -4,17 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mission10">
+    tools:context=".KakaoMap">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fadingEdge="none"
         android:fillViewport="true"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="-82dp"
-        tools:layout_editor_absoluteY="-16dp">
-
+        tools:ignore="MissingConstraints">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,20 +23,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="20dp"
                 android:background="@drawable/get_img_btn"
                 android:paddingLeft="40dp"
                 android:paddingTop="20dp"
                 android:paddingRight="40dp"
-                app:mcv_selectionColor="#d2d2d2"></com.prolificinteractive.materialcalendarview.MaterialCalendarView>
-
+                app:mcv_selectionColor="#d2d2d2"
+                android:layout_margin="20dp">
+            </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
 
             <TimePicker
-                android:id="@+id/timePicker"
                 android:layout_width="wrap_content"
                 android:layout_height="140dp"
                 android:layout_gravity="center"
-                android:timePickerMode="spinner" />
+                android:timePickerMode="spinner"
+                android:id="@+id/timePicker"/>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -60,24 +58,25 @@
                     android:orientation="horizontal"
                     android:weightSum="7">
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.4" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="위치 :"
+                        android:textSize="20sp"
+                        android:id="@+id/location"
+                        android:layout_weight="0.5"/>
 
                     <EditText
-                        android:id="@+id/locationText"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="6.1"
-                        android:fontFamily="@font/cafe" />
-
-                    <ImageView
-                        android:id="@+id/locationBtn"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/search" />
+                        android:layout_weight="6.5"
+                        android:id="@+id/locationText"/>
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="확인"
+                        android:layout_weight="0"
+                        android:id="@+id/locationBtn"/>
                 </LinearLayout>
                 <!--            위치 입력받는 레이아웃-->
 
@@ -98,13 +97,11 @@
 
 
                     <TextView
-                        android:id="@+id/tmp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="늦기만 해"
-                        android:textFontWeight="650"
-                        android:fontFamily="@font/cafe"
-                        android:textSize="20sp" />
+                        android:text="지각 시 벌칙"
+                        android:textSize="20sp"
+                        android:id="@+id/tmp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -114,16 +111,16 @@
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="50dp"
-                            android:layout_marginRight="10dp"
                             android:checked="true"
-                            android:text="진동" />
+                            android:text="진동"
+                            android:layout_marginRight="10dp"/>
 
                         <SeekBar
-                            android:id="@+id/vibrate"
-                            style="?android:attr/progressBarStyleHorizontal"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:progress="50" />
+                            android:id="@+id/vibrate"
+                            android:progress="50"
+                            style="?android:attr/progressBarStyleHorizontal" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -134,50 +131,41 @@
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="10dp"
-                            android:text="알람" />
+                            android:text="알람"
+                            android:layout_marginRight="10dp"/>
 
                         <SeekBar
-                            android:id="@+id/alarm"
-                            style="?android:attr/progressBarStyleHorizontal"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:max="100"
-                            android:progress="50" />
+                            android:id="@+id/alarm"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:progress="50"/>
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal">
 
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="핸드폰 셧다운" />
+                    </LinearLayout>
 
                 </LinearLayout>
                 <!--            지각 벌칙 선택 레이아웃-->
 
             </LinearLayout>
 
-\
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginBottom="20dp"
-                android:layout_weight="0.5"
-                android:gravity="center"
-                android:paddingHorizontal="20dp"
-                android:paddingVertical="10dp">
-
-                <Button
-                    android:id="@+id/complete"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/get_img_btn"
-                    android:backgroundTint="#4294ff"
-                    android:fontFamily="@font/cafe"
-                    android:text="COMPLETE"
-                    android:textColor="@color/white"
-                    android:textFontWeight="650"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
+            <Button
+                android:id="@+id/complete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="완료" />
         </LinearLayout>
 
     </ScrollView>

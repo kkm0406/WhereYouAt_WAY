@@ -45,7 +45,7 @@ public class GroupMaking extends AppCompatActivity {
     ArrayList<String> joinedMember = new ArrayList<String>();
     LayoutInflater layoutInflater;
     EditText enterName;
-    ImageButton complete;
+    Button complete;
     DTO_group new_group;
 
     @Override
@@ -59,7 +59,7 @@ public class GroupMaking extends AppCompatActivity {
         enterName = findViewById((R.id.enterName));
         listAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, searchList);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        complete=findViewById(R.id.complete);
+        complete = findViewById(R.id.complete);
 
         Intent Intent = getIntent();
         DTO_user user_info = (DTO_user) Intent.getSerializableExtra("user_info");
@@ -107,32 +107,32 @@ public class GroupMaking extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
-                                Log.d("add_group", "DocumentSnapshot written with ID: " + documentReference.getId());
-                                FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                                String email = user_info.getEmail();
-                                ArrayList<String> update_group = (ArrayList<String>) user_info.getGroups_id();
-                                update_group.add(documentReference.getId());
-                                Log.d("add_group", update_group + "");
-                                DocumentReference washingtonRef = db.collection("user").document(email);
-// Set the "isCapital" field of the city 'DC'
-                                washingtonRef
-                                        .update("groups_id", (List<String>) update_group)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Log.d("add_group", "DocumentSnapshot successfully updated!");
-                                                Intent result_intent = new Intent();
-                                                result_intent.putExtra("result_user", user_info);
-                                                setResult(1, result_intent);
-                                                finish();
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Log.w("add_group", "Error updating document", e);
-                                            }
-                                        });
+                                Log.d("add_group", "DocumentSnapshot successfully updated!");
+                                Intent result_intent = new Intent();
+                                setResult(1, result_intent);
+                                finish();
+//                                Log.d("add_group", "DocumentSnapshot written with ID: " + documentReference.getId());
+//                                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+//                                String email = user_info.getEmail();
+//                                ArrayList<String> update_group = (ArrayList<String>) user_info.getGroups_id();
+//                                update_group.add(documentReference.getId());
+//                                Log.d("add_group", update_group + "");
+//                                DocumentReference washingtonRef = db.collection("user").document(email);
+//// Set the "isCapital" field of the city 'DC'
+//                                washingtonRef
+//                                        .update("groups_id", (List<String>) update_group)
+//                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                            @Override
+//                                            public void onSuccess(Void aVoid) {
+//
+//                                            }
+//                                        })
+//                                        .addOnFailureListener(new OnFailureListener() {
+//                                            @Override
+//                                            public void onFailure(@NonNull Exception e) {
+//                                                Log.w("add_group", "Error updating document", e);
+//                                            }
+//                                        });
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
