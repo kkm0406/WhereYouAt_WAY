@@ -97,6 +97,8 @@ public class firstmenu extends AppCompatActivity {
         Intent fcm = new Intent(getApplicationContext(), MyFirebaseMessaging.class);
         startService(fcm);
 
+        name.setText(user_info.getNickname());
+
         db.collection("group").whereArrayContains("participation", user_info.getEmail())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

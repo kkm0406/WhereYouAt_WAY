@@ -20,7 +20,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:windowSoftInputMode ="adjustNothing">
+
         <activity
             android:name=".KakaoMap"
             android:exported="true" />
@@ -40,16 +42,19 @@
 
         <activity
             android:name=".findPW"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity
             android:name=".GroupMeetings"
             android:exported="true" />
         <activity
             android:name=".GroupMaking"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity
             android:name=".SignUp"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity
             android:name=".StartPage"
             android:exported="true"/>
