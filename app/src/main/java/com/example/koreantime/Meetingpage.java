@@ -12,6 +12,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Geocoder;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -45,12 +46,15 @@ public class Meetingpage extends AppCompatActivity implements MapView.POIItemEve
     ArrayList<String> late_member=new ArrayList<String>();
     RelativeLayout kakaoMap;
     MapView mapView;
+    Button arrive;
+    Button punish;
     Geocoder geocoder;
     double initLat = 36.6262;
     double initLon = 127.4526;
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
+    Messaging temp=new Messaging();
     TextView nowAddress;
 
     @Override
@@ -63,6 +67,8 @@ public class Meetingpage extends AppCompatActivity implements MapView.POIItemEve
         mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.5418, 126.9818), true);
         mapView.setZoomLevel(4, true);
         mapView.setPOIItemEventListener(this);
+        arrive=findViewById(R.id.arrive);
+        punish=findViewById(R.id.punish);
         kakaoMap.addView(mapView);
 
         mapView.setMapViewEventListener((MapViewEventListener) this);
@@ -72,6 +78,34 @@ public class Meetingpage extends AppCompatActivity implements MapView.POIItemEve
         }else {
             checkRunTimePermission();
         }
+
+
+
+        arrive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                punish.setVisibility(View.VISIBLE);
+            }
+        });
+        punish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                while (true){
+                    punish.setBackgroundColor(Color.parseColor("#FF2C2C"));
+                    try {
+                        Thread.sleep(16000);
+                        break;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                punish.setBackgroundColor(Color.parseColor("#FFF"));
+                temp.setToken("cZF6ykcGTaC2hRT-qBO5KM:APA91bGDEgSHsXKnxqZ0IvviBdXqyMf0RdZhaRDKPLNxwacaSkQn7QnhRr_JqpL-a2UNBO_OUhHqSXyuPLzefwrRkJVAYvz-IlcehtS5GjExkuXc0ViZa-KIiwJPyV9wr3LFVaT8zuux");
+                temp.execute();
+            }
+        });
+        setContentView(R.layout.activity_meetingpage);
 
     }
     void send_penalty(String token, String vibrate, String alarm){
