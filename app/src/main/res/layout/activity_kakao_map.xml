@@ -51,7 +51,7 @@
                 android:background="@drawable/frame_dif"
                 android:padding="15dp"
                 android:weightSum="6"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/setTime"
                 android:orientation="horizontal">
                 <TextView
@@ -114,7 +114,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:id="@+id/Meetingtime"
-                        android:text="22H 30M"
+                        android:text="22 : 30"
                         android:textSize="22sp"
                         android:fontFamily="@font/cafe"
                         android:textFontWeight="650"
@@ -227,7 +227,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginBottom="15dp"
-                android:layout_weight="0.5"
+                android:layout_weight="1.5"
                 android:gravity="center"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp">
