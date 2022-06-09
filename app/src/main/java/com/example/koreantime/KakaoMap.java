@@ -492,7 +492,6 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
                 meetingLocation = list.get(0).getAddressLine(0);
                 nowAddress.setText(list.get(0).getAddressLine(0));
             }
-
         }
 
         mapPOIItemArrayList.add(marker);
