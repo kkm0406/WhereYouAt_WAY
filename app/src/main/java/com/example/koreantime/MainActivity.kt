@@ -35,13 +35,6 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = DemoAdapter(demoList)
     }
 
-    fun delete_doc(){
-        db.collection("group").document("DC")
-                .delete()
-                .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
-                .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
-    }
-
     fun start(layoutFileId: Int) {
         val intent = Intent(this, CarouselActivity::class.java).apply {
             putExtra("layout_file_id", layoutFileId)

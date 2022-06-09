@@ -26,10 +26,10 @@
             android:exported="true" />
         <activity
             android:name=".edit"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".firstmenu"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".Meetingpage"
             android:exported="true"/>
@@ -40,18 +40,21 @@
 
         <activity
             android:name=".findPW"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".GroupMeetings"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".GroupMaking"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".SignUp"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".StartPage"
+            android:exported="true"/>
+        <activity
+            android:name=".CarouselActivity"
             android:exported="true"/>
         <activity
             android:name=".IntroActivity"
@@ -65,7 +68,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CarouselActivity"/>
+
 
         <service
             android:name=".MyFirebaseMessaging"

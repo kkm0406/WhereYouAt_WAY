@@ -12,6 +12,7 @@ class DemoAdapter(private val demoList: ArrayList<Demo>) :
     data class Demo(val item: String, val layoutId: Int)
 
     class ViewHolder(val layout: ConstraintLayout) : RecyclerView.ViewHolder(layout) {
+
         val item = layout.findViewById<TextView>(R.id.item)
         var layoutId = 0
 
@@ -25,12 +26,14 @@ class DemoAdapter(private val demoList: ArrayList<Demo>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
         val row: ConstraintLayout = LayoutInflater.from(parent.context)
             .inflate(R.layout.row, parent, false) as ConstraintLayout
         return ViewHolder(row);
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         holder.item.text = demoList[position].item
         holder.layoutId = demoList[position].layoutId
     }
