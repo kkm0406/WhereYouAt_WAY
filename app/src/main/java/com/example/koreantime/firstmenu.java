@@ -120,6 +120,9 @@ public class firstmenu extends AppCompatActivity {
             public void onClick(View view) {//임시로 회의만들기 연결
                 Intent intent = new Intent(firstmenu.this, KakaoMap.class);
                 intent.putExtra("user_info", user_info);
+                intent.putExtra("groupname", "9mlRcdQX7Ho2az7jjbkj");
+                String[] groupmember={"123456@naver.com","1@naver.com","123@naver.com"};
+                intent.putExtra("groupmember", groupmember);
                 startActivityForResult(intent,1);
             }
         });

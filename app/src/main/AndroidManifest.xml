@@ -48,7 +48,7 @@
             android:name=".SignUp"
             android:exported="false" />
         <activity
-            android:name=".StartPage"
+            android:name=".MainActivity"
             android:exported="true"/>
         <activity
             android:name=".IntroActivity"
@@ -60,7 +60,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".StartPage"
             android:exported="true">
 
         </activity>
