@@ -60,7 +60,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         RemoteViews remoteViews = new RemoteViews(getApplicationContext().getPackageName(), R.layout.popup);
         remoteViews.setTextViewText(R.id.noti_title, title);
         remoteViews.setTextViewText(R.id.noti_message, message);
-        remoteViews.setImageViewResource(R.id.logo, R.drawable.btn_border);
+        remoteViews.setImageViewResource(R.id.logo, R.drawable.board_border);
         return remoteViews;
     }
     public void showNotification(String title, String message) {
@@ -74,7 +74,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         //기본 사운드로 알림음 설정. 커스텀하려면 소리 파일의 uri 입력
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), channel_id)
-                .setSmallIcon(R.drawable.btn_border)
+                .setSmallIcon(R.drawable.board_border)
                 .setSound(uri)
                 .setAutoCancel(true)//알림시 진동 설정 : 1초 진동, 1초 쉬고, 1초 진동
                 .setOnlyAlertOnce(false) //동일한 알림은 한번만.. : 확인 하면 다시 울림
@@ -85,7 +85,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         } else { //아니면 기본 레이아웃 호출
             builder = builder.setContentTitle(title)
                     .setContentText(message)
-                    .setSmallIcon(R.drawable.btn_border); //커스텀 레이아웃에 사용된 로고 파일과 동일하게..
+                    .setSmallIcon(R.drawable.board_border); //커스텀 레이아웃에 사용된 로고 파일과 동일하게..
         }
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

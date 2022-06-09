@@ -17,8 +17,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="50px"
             android:layout_marginRight="30px"
-            android:padding="3dp"
-            android:src="@drawable/btn_border" />
+            android:padding="3dp" />
 
     </LinearLayout>
 

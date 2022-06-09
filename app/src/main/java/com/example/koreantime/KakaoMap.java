@@ -33,23 +33,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-//class markerGPS {
-//    double lat;
-//    double lon;
-//
-//    markerGPS(double newLat, double newLon) {
-//        this.lat = newLat;
-//        this.lon = newLon;
-//    }
-//
-//    public double getLat() {
-//        return lat;
-//    }
-//
-//    public double getLon() {
-//        return lon;
-//    }
-//}
+class markerGPS {
+    double lat;
+    double lon;
+
+    markerGPS(double newLat, double newLon) {
+        this.lat = newLat;
+        this.lon = newLon;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+}
 
 public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventListener, MapView.POIItemEventListener {
 
