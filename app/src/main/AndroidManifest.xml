@@ -30,10 +30,6 @@
         <activity
             android:name=".firstmenu"
             android:exported="false" />
-        <activity
-            android:name=".MainPageFragment"
-            android:exported="false"
-            tools:ignore="Instantiatable" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
