@@ -143,15 +143,18 @@ public class firstmenu extends AppCompatActivity {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.FILL;
 
-        GridLayout.LayoutParams params2 = new GridLayout.LayoutParams(grid.getLayoutParams());
-        params2.columnSpec = GridLayout.spec(1);
+//        GridLayout.LayoutParams params2 = new GridLayout.LayoutParams(grid.getLayoutParams());
+//        params2.columnSpec = GridLayout.spec(e+2);
         group.setGravity(Gravity.CENTER);
         group.setLayoutParams(params);
-        group.setLayoutParams(params2);
+//        group.setLayoutParams(params2);
         group.setPadding(ConvertDPtoPX(this,25),ConvertDPtoPX(this,25),ConvertDPtoPX(this,25),ConvertDPtoPX(this,25));
         group.setId(e);
 
         TextView view1 = new TextView(this);
+        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        view1.setMinWidth(ConvertDPtoPX(this,120));
+        view1.setLayoutParams(params2);
         view1.setText(name);
         view1.setTextColor(Color.parseColor("#42C2FF"));
         view1.setGravity(Gravity.CENTER);
@@ -159,7 +162,7 @@ public class firstmenu extends AppCompatActivity {
         view1.setTextSize(18);
 
         ImageView view2 = new ImageView(this);
-        LinearLayout.LayoutParams ImgParams = new LinearLayout.LayoutParams(ConvertDPtoPX(this,70), ConvertDPtoPX(this,70));
+        LinearLayout.LayoutParams ImgParams = new LinearLayout.LayoutParams( ConvertDPtoPX(this,70), ConvertDPtoPX(this,70));
         ImgParams.setMargins(0,ConvertDPtoPX(this,15),0,0);
         view2.setLayoutParams(ImgParams);
         view2.setImageResource(R.drawable.groups);
