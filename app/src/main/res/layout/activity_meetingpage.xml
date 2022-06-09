@@ -121,8 +121,9 @@
             android:background="@drawable/punish_btn"
             android:fontFamily="@font/cafe"
             android:text="너 어디야?!"
-            android:visibility="invisible"
+            android:visibility="visible"
             android:textColor="@color/black"
+
             android:textFontWeight="650"
             android:textSize="18sp" />
 

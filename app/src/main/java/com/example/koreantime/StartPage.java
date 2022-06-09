@@ -68,8 +68,7 @@ public class StartPage extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Messaging temp=new Messaging();
-                temp.execute();
+
             }
         });
         Intent fcm = new Intent(StartPage.this, MyFirebaseMessaging.class);

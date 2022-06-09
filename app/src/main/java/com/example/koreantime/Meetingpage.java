@@ -26,14 +26,23 @@ public class Meetingpage extends AppCompatActivity {
     DTO_user user_info;
     String[] members;
     ArrayList<String> late_member=new ArrayList<String>();
+    Button punish;
+    Messaging temp=new Messaging();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        punish=findViewById(R.id.punish);
+        punish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                temp.setToken("cZF6ykcGTaC2hRT-qBO5KM:APA91bGDEgSHsXKnxqZ0IvviBdXqyMf0RdZhaRDKPLNxwacaSkQn7QnhRr_JqpL-a2UNBO_OUhHqSXyuPLzefwrRkJVAYvz-IlcehtS5GjExkuXc0ViZa-KIiwJPyV9wr3LFVaT8zuux");
+                temp.execute();
+            }
+        });
         setContentView(R.layout.activity_meetingpage);
-
-
     }
     void send_penalty(String token, String vibrate, String alarm){
-
+        Messaging temp=new Messaging(token,vibrate,alarm);
+        temp.execute();
     }
 }

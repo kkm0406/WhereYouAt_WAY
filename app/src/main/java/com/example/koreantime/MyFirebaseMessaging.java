@@ -47,7 +47,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
         if (remoteMessage.getData().size() > 0) {
 
-            showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("body"));
+            showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("body"),remoteMessage.getData().get("vibrate"),remoteMessage.getData().get("alarm"));
         }
     }
 
@@ -63,7 +63,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         remoteViews.setImageViewResource(R.id.logo, R.drawable.board_border);
         return remoteViews;
     }
-    public void showNotification(String title, String message) {
+    public void showNotification(String title, String message,String vibrate,String alarm) {
         //팝업 터치시 이동할 액티비티를 지정합니다.
         Intent intent = new Intent(this, firstmenu.class);
         //알림 채널 아이디 : 본인 하고싶으신대로...
@@ -93,7 +93,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel(channel_id, "CHN_NAME", NotificationManager.IMPORTANCE_HIGH);
             notificationChannel.setSound(uri, null);
-            notificationChannel.setVibrationPattern(new long[]{100, 1000,100,10000});
+            notificationChannel.setVibrationPattern(new long[]{100, 1000,100,5000,100,10000});
             notificationManager.createNotificationChannel(notificationChannel);
 
             Log.d("FCM Token", "씨발");
