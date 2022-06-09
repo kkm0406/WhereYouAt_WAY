@@ -11,10 +11,12 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -32,6 +34,11 @@ import java.security.Policy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 class markerGPS {
     double lat;
@@ -64,11 +71,22 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
     RelativeLayout relativeLayout;
     MaterialCalendarView calendarView;
     TimePicker timePicker;
-    String date = "";
-    String time = "";
+
     String meetingLocation;
     double finalX = 0.0;
     double finalY = 0.0;
+    ArrayList<MapPOIItem> mapPOIItemArrayList = new ArrayList<>();
+    SeekBar seekBarVibrate;
+    SeekBar seekBarAlarm;
+    Button complete;
+
+    String date = "";
+    String time = "";
+    int vibrate = 50;
+    int alarm;
+
+    CheckBox checkAlarm;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +97,10 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
         locationBtn = findViewById(R.id.locationBtn);
         relativeLayout = findViewById(R.id.kakaoMap);
         timePicker = findViewById(R.id.timePicker);
+        seekBarVibrate = findViewById(R.id.vibrate);
+        seekBarAlarm = findViewById(R.id.alarm);
+        complete = findViewById(R.id.complete);
+        checkAlarm = findViewById(R.id.checkAlarm);
 
         OneDayDecorator oneDayDecorator = new OneDayDecorator();
 //        EventDecorator eventDecorator = new EventDecorator();
@@ -89,7 +111,6 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
         calendarView.addDecorator(saturdayDecorator);
         calendarView.addDecorator(sundayDecorator);
 
-
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay tmpDate, boolean selected) {
@@ -99,7 +120,6 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
                 } else {
                     timePicker.setVisibility(View.GONE);
                 }
-                Log.d("date", date);
             }
         });
 
@@ -150,7 +170,6 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
             mapView.addPOIItem(marker);
         }
 
-
         geocoder = new Geocoder(this);
         meetingLocation = GetCenter();
         MakeLine();
@@ -167,37 +186,90 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
                     e.printStackTrace();
                 }
                 if (list != null) {
-                    isMarker = true;
-                    double centerLat = list.get(0).getLatitude();
-                    double centerLon = list.get(0).getLongitude();
-                    mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(centerLat, centerLon), true);
-                    mapView.setZoomLevel(4, true);
-                    Log.d("geocoder error", String.valueOf(list.size()));
-                    for (int i = 0; i < list.size(); i++) {
-                        Address address = list.get(i);
-                        double lat = address.getLatitude();
-                        double lon = address.getLongitude();
-                        MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(lat, lon);
-                        MapPOIItem marker = new MapPOIItem();
-                        marker.setItemName(list.get(i).getAddressLine(0));
-                        marker.setMapPoint(MARKER_POINT);
-                        marker.setMarkerType(MapPOIItem.MarkerType.RedPin); // 기본으로 제공하는 BluePin 마커 모양.
-                        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-                        mapView.addPOIItem(marker);
+                    if (list.size() != 0) {
+                        isMarker = true;
+                        double centerLat = list.get(0).getLatitude();
+                        double centerLon = list.get(0).getLongitude();
+                        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(centerLat, centerLon), true);
+                        mapView.setZoomLevel(4, true);
+                        Log.d("geocoder error", String.valueOf(list.size()));
+                        for (int i = 0; i < list.size(); i++) {
+                            Address address = list.get(i);
+                            double lat = address.getLatitude();
+                            double lon = address.getLongitude();
+                            MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(lat, lon);
+                            MapPOIItem marker = new MapPOIItem();
+                            marker.setItemName(list.get(i).getAddressLine(0));
+                            marker.setMapPoint(MARKER_POINT);
+                            marker.setMarkerType(MapPOIItem.MarkerType.RedPin); // 기본으로 제공하는 BluePin 마커 모양.
+                            marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+                            mapView.addPOIItem(marker);
 
-                        markerGPS newMarker = new markerGPS(lat, lon);
-                        markerList.add(newMarker);
+                            markerGPS newMarker = new markerGPS(lat, lon);
+                            markerList.add(newMarker);
+                        }
+                    } else {
+                        Toast.makeText(KakaoMap.this, "정확한 지명을 입력해주세요", Toast.LENGTH_SHORT).show();
                     }
-                    //여기서부터 주소 입력하면 마커생기게
                 } else {
                     Toast.makeText(KakaoMap.this, "검색 결과가 존재하지 않습니다", Toast.LENGTH_SHORT).show();
+                }
+
+                MapPoint mapPoint = null;
+                MapPoint.PlainCoordinate map = mapPoint.getMapPointScreenLocation();
+            }
+        });
+
+        seekBarVibrate.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                vibrate = seekBar.getProgress();
+            }
+        });
+
+
+        seekBarAlarm.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                    alarm = seekBar.getProgress();
+            }
+        });
+
+
+        complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(checkAlarm.isChecked()){
+                    Log.d("go to db", date+", "+time+", "+vibrate+", "+alarm+", "+meetingLocation);
+                }else{
+                    Log.d("go to db", date+", "+time+", "+vibrate+", "+meetingLocation);
                 }
             }
         });
     }
 
     private void MakeLine() {
-        for (markerGPS item:userLocations) {
+        for (markerGPS item : userLocations) {
             double lat = item.getLat();
             double lon = item.getLon();
             MapPolyline polyline = new MapPolyline();
@@ -225,8 +297,7 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
     }
 
     public String GetCenter() {
-        double area = 0;
-        double centerX = 0, centerY = 0;
+        double area = 0, centerX = 0, centerY = 0;
         double x1, x2, y1, y2;
         for (int i = 0; i < userLocations.size(); i++) {
             int j = (i + 1) % userLocations.size();
@@ -254,7 +325,6 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
         MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(Math.abs(finalX), Math.abs(finalY));
 
         MapPOIItem marker = new MapPOIItem();
-        marker.setItemName("Meeting Place");
 
         mapView.setZoomLevel(5, true);
         marker.setTag(0);
@@ -281,6 +351,7 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
 
         }
 
+        mapPOIItemArrayList.add(marker);
         mapView.addPOIItem(marker);
         mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(Math.abs(finalX), Math.abs(finalY)), true);
         return list.get(0).getAddressLine(0);
@@ -288,6 +359,10 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
 
     @Override
     public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) {
+        for(int i=0;i<mapPOIItemArrayList.size();i++){
+            mapView.removePOIItem(mapPOIItemArrayList.get(i));
+        }
+
         MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord
                 (mapPoint.getMapPointGeoCoord().latitude, mapPoint.getMapPointGeoCoord().longitude);
         MapPOIItem marker = new MapPOIItem();
@@ -309,15 +384,18 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
                 marker.setItemName(" ");
             } else {
                 marker.setItemName(list.get(0).getAddressLine(0));
+                meetingLocation = list.get(0).getAddressLine(0);
             }
 
         }
+
+        mapPOIItemArrayList.add(marker);
         mapView.addPOIItem(marker);
 
         markerGPS markerGPS = new markerGPS(mapPoint.getMapPointGeoCoord().latitude, mapPoint.getMapPointGeoCoord().longitude);
         markerList.add(markerGPS);
         mapView.removeAllPolylines();
-        for (markerGPS item:userLocations) {
+        for (markerGPS item : userLocations) {
             double lat = item.getLat();
             double lon = item.getLon();
             MapPolyline polyline = new MapPolyline();
