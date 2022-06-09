@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.koreantime.DTO.DTO_group;
 import com.example.koreantime.DTO.DTO_user;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -31,10 +32,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 public class firstmenu extends AppCompatActivity {
 
     DTO_user user_info;
     FirebaseFirestore db= FirebaseFirestore.getInstance();
+    ArrayList<String> group_id=new ArrayList<String>(0);
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {//그룹만들고서 그룹리스트 업데이트
         super.onActivityResult(requestCode, resultCode, data);
@@ -90,6 +95,7 @@ public class firstmenu extends AppCompatActivity {
 
         Intent Intent = getIntent();
         user_info=(DTO_user) Intent.getSerializableExtra("user_info");
+
         LinearLayout edit = findViewById(R.id.edit);
         LinearLayout makeGroup = findViewById(R.id.makeGroup);
         TextView name = findViewById(R.id.name);
@@ -108,7 +114,9 @@ public class firstmenu extends AppCompatActivity {
                                 createNew(num,document.getData().get("name").toString());
                                 Log.d("added_group", document.getId() + " => " + document.getData());
                                 num++;
+                                group_id.add(document.getId().toString());
                             }
+
                         } else {
                             Log.d("added_group", "Error getting documents: ", task.getException());
                         }
@@ -138,6 +146,7 @@ public class firstmenu extends AppCompatActivity {
     }
 
     private void createNew(int e, String name){
+        int num=e;
         GridLayout grid = findViewById(R.id.grid);
 
         LinearLayout group = new LinearLayout(this);
@@ -178,15 +187,36 @@ public class firstmenu extends AppCompatActivity {
 
         group.addView(view1);
         group.addView(view2);
-
-        grid.addView(group);
-        grid.setOnClickListener(new View.OnClickListener() {
+        group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(firstmenu.this, MainActivity.class);
-                startActivity(intent);
+                db.collection("group").document(group_id.get(num))
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                DTO_group temp;
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    temp=document.toObject(DTO_group.class);
+                                    Log.d("add_meeting", temp.getParticipation().toString());
+                                    Log.d("add_meeting", temp.getName());
+                                    Intent intent = new Intent(firstmenu.this, CarouselActivity.class);
+                                    intent.putExtra("groupname",name);
+                                    intent.putExtra("membernick",(ArrayList)temp.getParticipation());
+                                    startActivity(intent);
+                                } else {
+                                    Log.d("add_meeting", "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
+
             }
         });
+
+
+        grid.addView(group);
+
     }
     public static int ConvertDPtoPX(Context context, int dp) {
         float density = context.getResources().getDisplayMetrics().density;

@@ -12,6 +12,7 @@ import android.widget.ImageView
 import kotlinx.android.synthetic.main.views.*
 
 import android.widget.Toast
+import com.example.koreantime.DTO.DTO_group
 import com.example.koreantime.databinding.Demo1Binding
 import com.example.koreantime.databinding.ViewsBinding
 
@@ -22,6 +23,14 @@ class CarouselActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val secondIntent = intent
+        val groupname = secondIntent.getStringExtra("groupname")
+        val membernick=secondIntent.getStringArrayListExtra("membernick")
+        Log.d("inner group",groupname.toString());
+        Log.d("inner group",membernick.toString());
+
+
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
