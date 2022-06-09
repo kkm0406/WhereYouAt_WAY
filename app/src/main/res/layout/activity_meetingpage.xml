@@ -93,6 +93,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/get_img_btn"
             android:fontFamily="@font/cafe"
+            android:enabled="false"
             android:text="난 도착!"
             android:textColor="@color/black"
             android:textFontWeight="650"
@@ -121,9 +122,8 @@
             android:background="@drawable/punish_btn"
             android:fontFamily="@font/cafe"
             android:text="너 어디야?!"
-            android:visibility="visible"
+            android:visibility="invisible"
             android:textColor="@color/black"
-
             android:textFontWeight="650"
             android:textSize="18sp" />
 
