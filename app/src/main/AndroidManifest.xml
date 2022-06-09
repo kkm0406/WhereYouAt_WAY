@@ -52,17 +52,15 @@
             android:exported="true"/>
         <activity
             android:name=".IntroActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".StartPage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".StartPage"
-            android:exported="true">
-
         </activity>
         <activity android:name=".CarouselActivity"/>
 

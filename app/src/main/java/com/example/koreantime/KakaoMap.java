@@ -3,7 +3,7 @@ package com.example.koreantime;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
+import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
@@ -23,15 +23,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.koreantime.DTO.DTO_schecule;
-import com.example.koreantime.DTO.DTO_user;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
@@ -44,6 +35,7 @@ import net.daum.mf.map.api.MapView;
 import java.io.IOException;
 import java.security.Policy;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -71,17 +63,14 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
 
     MapView mapView;
     Geocoder geocoder;
-    LinearLayout setTime;
-    TextView month;
-    TextView day;
-    TextView Meetingtime;
+
+    EditText locationText;
     ImageView locationBtn;
     ArrayList<markerGPS> markerList = new ArrayList<>();
     ArrayList<markerGPS> userLocations = new ArrayList<>();
     boolean isMarker = false;
     RelativeLayout relativeLayout;
     MaterialCalendarView calendarView;
-    TimePicker timePicker;
 
     String meetingLocation;
     double finalX = 0.0;
@@ -97,29 +86,23 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
     int alarm;
 
     CheckBox checkAlarm;
-
-    String[] groupmember;
-    String groupname;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    ArrayList<String> memberAddress = new ArrayList<>();
-    DTO_user user_info;
-    int is_end=0;
+    TextView month;
+    TextView day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kakao_map);
         calendarView = findViewById(R.id.calendar);
-        setTime = findViewById(R.id.setTime);
-        month = findViewById(R.id.month);
-        day = findViewById(R.id.day);
-        Meetingtime = findViewById(R.id.Meetingtime);
         relativeLayout = findViewById(R.id.kakaoMap);
-        timePicker = findViewById(R.id.timePicker);
         seekBarVibrate = findViewById(R.id.vibrate);
         seekBarAlarm = findViewById(R.id.alarm);
         complete = findViewById(R.id.complete);
         checkAlarm = findViewById(R.id.checkAlarm);
+        month = findViewById(R.id.month);
+        day = findViewById(R.id.day);
+
+        TextView Meetingtime = findViewById(R.id.Meetingtime);
 
         OneDayDecorator oneDayDecorator = new OneDayDecorator();
 //        EventDecorator eventDecorator = new EventDecorator();
@@ -130,64 +113,24 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
         calendarView.addDecorator(saturdayDecorator);
         calendarView.addDecorator(sundayDecorator);
 
-        geocoder = new Geocoder(this);
-
-        Intent Intent = getIntent();
-        user_info=(DTO_user) Intent.getSerializableExtra("user_info");
-        groupname = Intent.getStringExtra("groupname");//그룹 이름 받아오기
-        groupmember = Intent.getStringArrayExtra("groupmember");//그룹멤버 받아오기
-
-        Log.d("meetingmake", groupmember[1]);
-        for (String email : groupmember) {//그룹멤버의 첫번째 주소 정보 가져옴
-            db.collection("user").document(email)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot document = task.getResult();
-                                memberAddress.add(document.getData().get("addr1").toString());
-                                AddressToGPS(document.getData().get("addr1").toString());
-                                Log.d("add_meeting", document.getData().get("addr1").toString());
-                                is_end++;
-                            } else {
-                                Log.d("add_meeting", "Error getting documents: ", task.getException());
-                            }
-                            if(is_end==groupmember.length) {
-                                makelocation();
-                            }
-                        }
-                    });
-        }
-
-
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay tmpDate, boolean selected) {
                 date = GetString(tmpDate);
-                if (!date.equals("")) {
-                    timePicker.setVisibility(View.VISIBLE);
-                } else {
-                    timePicker.setVisibility(View.GONE);
-                }
-            }
-        });
-
-        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-            @Override
-            public void onTimeChanged(TimePicker timePicker, int i, int i1) {
-                String str = "", str1 = "";
-                if (i <= 9) {
-                    str = '0' + String.valueOf(i);
-                } else {
-                    str = String.valueOf(i);
-                }
-                if (i1 <= 9) {
-                    str1 = '0' + String.valueOf(i1);
-                } else {
-                    str1 = String.valueOf(i1);
-                }
-                time = str + "-" + str1;
+                Calendar c = Calendar.getInstance();
+                int mHour = c.get(Calendar.HOUR);
+                int mMin = c.get(Calendar.MINUTE);
+                TimePickerDialog timePickerDialog = new TimePickerDialog(
+                        KakaoMap.this, android.R.style.Theme_DeviceDefault_Dialog, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        time = i+"-"+i1;
+                        LinearLayout setTime = findViewById(R.id.setTime);
+                        setTime.setVisibility(View.VISIBLE);
+                        Meetingtime.setText(i+"H "+i1+"M");
+                    }
+                }, mHour, mMin, false);
+                timePickerDialog.show();
             }
         });
 
@@ -198,59 +141,77 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
         mapView.setPOIItemEventListener(this);
         relativeLayout.addView(mapView);
 
-//        userLocations.add(new markerGPS(37.5418, 126.9738));
-//        userLocations.add(new markerGPS(37.5437, 126.9627));
-//        userLocations.add(new markerGPS(37.5256, 126.9926));
-//        userLocations.add(new markerGPS(37.5525, 126.9875));
-//        userLocations.add(new markerGPS(37.5384, 126.9214));
-//        userLocations.add(new markerGPS(37.5203, 126.9343));
-//        userLocations.add(new markerGPS(37.5372, 126.9542));
-//        userLocations.add(new markerGPS(37.5481, 126.9422));
+        userLocations.add(new markerGPS(37.5418, 126.9738));
+        userLocations.add(new markerGPS(37.5437, 126.9627));
+        userLocations.add(new markerGPS(37.5256, 126.9926));
+        userLocations.add(new markerGPS(37.5525, 126.9875));
+        userLocations.add(new markerGPS(37.5384, 126.9214));
+        userLocations.add(new markerGPS(37.5203, 126.9343));
+        userLocations.add(new markerGPS(37.5372, 126.9542));
+        userLocations.add(new markerGPS(37.5481, 126.9422));
 
+        for (int i = 0; i < userLocations.size(); i++) {
+            MapPOIItem marker = new MapPOIItem();
+            MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord
+                    (userLocations.get(i).getLat(), userLocations.get(i).getLon());
+            marker.setItemName("Default Marker");
+            marker.setTag(0);
+            marker.setMapPoint(MARKER_POINT);
+            marker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 기본으로 제공하는 BluePin 마커 모양.
+            marker.setSelectedMarkerType(MapPOIItem.MarkerType.YellowPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
 
+            mapView.addPOIItem(marker);
+        }
 
-        locationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String tmpLocation = locationText.getText().toString();
-                List<Address> list = null;
-                try {
-                    list = geocoder.getFromLocationName(tmpLocation, 10);
-                } catch (IOException e) {
-                    Log.d("geocoder error", String.valueOf(e));
-                    e.printStackTrace();
-                }
-                if (list != null) {
-                    if (list.size() != 0) {
-                        isMarker = true;
-                        double centerLat = list.get(0).getLatitude();
-                        double centerLon = list.get(0).getLongitude();
-                        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(centerLat, centerLon), true);
-                        mapView.setZoomLevel(4, true);
-                        Log.d("geocoder error", String.valueOf(list.size()));
-                        for (int i = 0; i < list.size(); i++) {
-                            Address address = list.get(i);
-                            double lat = address.getLatitude();
-                            double lon = address.getLongitude();
-                            MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(lat, lon);
-                            MapPOIItem marker = new MapPOIItem();
-                            marker.setItemName(list.get(i).getAddressLine(0));
-                            marker.setMapPoint(MARKER_POINT);
-                            marker.setMarkerType(MapPOIItem.MarkerType.RedPin); // 기본으로 제공하는 BluePin 마커 모양.
-                            marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-                            mapView.addPOIItem(marker);
+        geocoder = new Geocoder(this);
+        meetingLocation = GetCenter();
+        MakeLine();
 
-                            markerGPS newMarker = new markerGPS(lat, lon);
-                            markerList.add(newMarker);
-                        }
-                    } else {
-                        Toast.makeText(KakaoMap.this, "정확한 지명을 입력해주세요", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(KakaoMap.this, "검색 결과가 존재하지 않습니다", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        locationBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String tmpLocation = locationText.getText().toString();
+//                List<Address> list = null;
+//                try {
+//                    list = geocoder.getFromLocationName(tmpLocation, 10);
+//                } catch (IOException e) {
+//                    Log.d("geocoder error", String.valueOf(e));
+//                    e.printStackTrace();
+//                }
+//                if (list != null) {
+//                    if (list.size() != 0) {
+//                        isMarker = true;
+//                        double centerLat = list.get(0).getLatitude();
+//                        double centerLon = list.get(0).getLongitude();
+//                        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(centerLat, centerLon), true);
+//                        mapView.setZoomLevel(4, true);
+//                        Log.d("geocoder error", String.valueOf(list.size()));
+//                        for (int i = 0; i < list.size(); i++) {
+//                            Address address = list.get(i);
+//                            double lat = address.getLatitude();
+//                            double lon = address.getLongitude();
+//                            MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(lat, lon);
+//                            MapPOIItem marker = new MapPOIItem();
+//                            marker.setItemName(list.get(i).getAddressLine(0));
+//                            marker.setMapPoint(MARKER_POINT);
+//                            marker.setMarkerType(MapPOIItem.MarkerType.RedPin); // 기본으로 제공하는 BluePin 마커 모양.
+//                            marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+//                            mapView.addPOIItem(marker);
+//
+//                            markerGPS newMarker = new markerGPS(lat, lon);
+//                            markerList.add(newMarker);
+//                        }
+//                    } else {
+//                        Toast.makeText(KakaoMap.this, "정확한 지명을 입력해주세요", Toast.LENGTH_SHORT).show();
+//                    }
+//                } else {
+//                    Toast.makeText(KakaoMap.this, "검색 결과가 존재하지 않습니다", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                MapPoint mapPoint = null;
+//                MapPoint.PlainCoordinate map = mapPoint.getMapPointScreenLocation();
+//            }
+//        });
 
         seekBarVibrate.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -293,99 +254,11 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
             public void onClick(View view) {
                 if(checkAlarm.isChecked()){
                     Log.d("go to db", date+", "+time+", "+vibrate+", "+alarm+", "+meetingLocation);
-                    DTO_schecule new_meeting = new DTO_schecule(user_info.getEmail(), meetingLocation,Integer.toString(alarm), Integer.toString(vibrate) , time,date, "첨만드는 회의");
-
-                    db.collection("group").document(groupname).collection("schedule")//생성한 회의 DB에 쓰기
-                            .add(new_meeting)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Log.d("add_meeting", "DocumentSnapshot successfully updated!");
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w("add_meeting", "Error adding document", e);
-                                }
-                            });
                 }else{
                     Log.d("go to db", date+", "+time+", "+vibrate+", "+meetingLocation);
-                    DTO_schecule new_meeting = new DTO_schecule(user_info.getEmail(), meetingLocation, "0" ,Integer.toString(vibrate) , time,date, "첨만드는 회의");
-
-                    db.collection("group").document(groupname).collection("schedule")//생성한 회의 DB에 쓰기
-                            .add(new_meeting)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Log.d("add_meeting", "DocumentSnapshot successfully updated!");
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w("add_meeting", "Error adding document", e);
-                                }
-                            });
                 }
-
             }
         });
-    }
-
-    private void makelocation(){
-        for (int i = 0; i < userLocations.size(); i++) {
-            MapPOIItem marker = new MapPOIItem();
-            MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(userLocations.get(i).getLat(), userLocations.get(i).getLon());
-            marker.setItemName("Default Marker");
-            marker.setTag(0);
-            marker.setMapPoint(MARKER_POINT);
-            marker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 기본으로 제공하는 BluePin 마커 모양.
-            marker.setSelectedMarkerType(MapPOIItem.MarkerType.YellowPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-
-            mapView.addPOIItem(marker);
-        }
-
-
-        meetingLocation = GetCenter();
-        MakeLine();
-    }
-
-    private void AddressToGPS(String tmpLocation) {
-        List<Address> list = null;
-        try {
-            list = geocoder.getFromLocationName(tmpLocation, 10);
-        } catch (IOException e) {
-            Log.d("init geocoder error", String.valueOf(e));
-            e.printStackTrace();
-        }
-        if (list != null) {
-            double centerLat = list.get(0).getLatitude();
-            double centerLon = list.get(0).getLongitude();
-            mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(centerLat, centerLon), true);
-            mapView.setZoomLevel(5, true);
-            Log.d("geocoder error", String.valueOf(list.size()));
-            Address address = list.get(0);
-            double lat = address.getLatitude();
-            double lon = address.getLongitude();
-            userLocations.add(new markerGPS(lat, lon));
-//            for (int i = 0; i < list.size(); i++) {
-//                Address address = list.get(i);
-//                double lat = address.getLatitude();
-//                double lon = address.getLongitude();
-//                userLocations.add(new markerGPS(lat, lon));
-//                    MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(lat, lon);
-//                    MapPOIItem marker = new MapPOIItem();
-//                    marker.setItemName(list.get(i).getAddressLine(0));
-//                    marker.setMapPoint(MARKER_POINT);
-//                    marker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 기본으로 제공하는 BluePin 마커 모양.
-//                    marker.setSelectedMarkerType(MapPOIItem.MarkerType.YellowPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-//                    mapView.addPOIItem(marker);
-//
-//                    markerGPS newMarker = new markerGPS(lat, lon);
-//                    markerList.add(newMarker);
-//            }
-        }
     }
 
     private void MakeLine() {
@@ -398,6 +271,36 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
             polyline.setLineColor(Color.argb(100, 255, 0, 0));
             mapView.addPolyline(polyline);
         }
+    }
+
+    public String GetMonth(String num){
+        switch (num){
+            case "01":
+                return "JAN";
+            case "02":
+                return "FEB";
+            case "03":
+                return "MAR";
+            case "04":
+                return "APR";
+            case "05":
+                return  "MAY";
+            case "06":
+                return "JUN";
+            case "07":
+                return "JUL";
+            case "08":
+                return "AUG";
+            case "09":
+                return "SEP";
+            case "10":
+                return "OCT";
+            case "11":
+                return  "NOV";
+            case "12":
+                return  "DEC";
+        }
+        return "";
     }
 
     public String GetString(CalendarDay tmpDate) {
@@ -413,11 +316,13 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
             tmpNum += 1;
             newDate[1] = String.valueOf(tmpNum);
         }
+        Log.d("MONTH",GetMonth(newDate[1]));
+        month.setText(GetMonth(newDate[1]));
+        day.setText(newDate[2]);
         return newDate[0] + "-" + newDate[1] + "-" + newDate[2];
     }
 
     public String GetCenter() {
-
         double area = 0, centerX = 0, centerY = 0;
         double x1, x2, y1, y2;
         for (int i = 0; i < userLocations.size(); i++) {
@@ -431,25 +336,19 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
             area -= y1 * x2;
 
             centerX += ((x1 + x2) * ((x1 * y2) - (x2 * y1)));
-            Log.d("hihihihihihihi", String.valueOf((x2))+", "+String.valueOf((y2)) );
             centerY += ((y1 + y2) * ((x1 * y2) - (x2 * y1)));
-            Log.d("hihihihihihihi", String.valueOf((x1))+", "+String.valueOf((y1)) );
-            Log.d("hihihihihihihi", String.valueOf((centerX))+", "+String.valueOf((centerY)) );
         }
-
 
         area /= 2.0;
         area = Math.abs(area);
-        Log.d("hihihihihihihi", String.valueOf((centerX))+", "+String.valueOf((centerY)) );
+
         finalX = (centerX / (6.0 * area));
         finalY = (centerY / (6.0 * area));
 
-        Log.d("hihihihihihihi", String.valueOf((finalX))+", "+String.valueOf((finalY)) );
         finalX = Math.abs(finalX);
         finalY = Math.abs(finalY);
 
         MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(Math.abs(finalX), Math.abs(finalY));
-
 
         MapPOIItem marker = new MapPOIItem();
 
@@ -481,7 +380,6 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
         mapPOIItemArrayList.add(marker);
         mapView.addPOIItem(marker);
         mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(Math.abs(finalX), Math.abs(finalY)), true);
-
         return list.get(0).getAddressLine(0);
     }
 
