@@ -141,15 +141,19 @@ public class firstmenu extends AppCompatActivity {
         group.setBackgroundResource(R.drawable.frame_shadow);
         group.setOrientation(LinearLayout.VERTICAL);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.FILL;
+        params.gravity = Gravity.FILL_HORIZONTAL;
+//        params.setMargins(ConvertDPtoPX(this,10),0,ConvertDPtoPX(this,10),0);
+        GridLayout.LayoutParams parem = new GridLayout.LayoutParams(GridLayout.spec(
+                GridLayout.UNDEFINED,1f),
+                GridLayout.spec(GridLayout.UNDEFINED, 1f));
+        parem.setMargins(ConvertDPtoPX(this,10),0,ConvertDPtoPX(this,10),0);
 
 //        GridLayout.LayoutParams params2 = new GridLayout.LayoutParams(grid.getLayoutParams());
 //        params2.columnSpec = GridLayout.spec(e+2);
         group.setGravity(Gravity.CENTER);
         group.setLayoutParams(params);
+        group.setLayoutParams(parem);
 //        group.setLayoutParams(params2);
-        group.setMinimumHeight(ConvertDPtoPX(this,160));
-        group.setMinimumWidth(ConvertDPtoPX(this,160));
         group.setPadding(ConvertDPtoPX(this,25),ConvertDPtoPX(this,25),ConvertDPtoPX(this,25),ConvertDPtoPX(this,25));
         group.setId(e);
 
