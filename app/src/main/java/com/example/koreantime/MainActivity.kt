@@ -1,8 +1,9 @@
 package com.example.koreantime
 
+import android.app.ActionBar
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main)
 
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
 
         val layoutList = arrayListOf(R.layout.demo1)
         val demoList = arrayListOf<DemoAdapter.Demo>()
@@ -35,12 +40,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = DemoAdapter(demoList)
     }
 
-    fun delete_doc(){
-        db.collection("group").document("DC")
-                .delete()
-                .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
-                .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
-    }
+
 
     fun start(layoutFileId: Int) {
         val intent = Intent(this, CarouselActivity::class.java).apply {

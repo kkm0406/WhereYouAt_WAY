@@ -5,7 +5,9 @@ import android.util.Log
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
+import android.widget.Toast
 import com.example.koreantime.databinding.Demo1Binding
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -17,6 +19,11 @@ class CarouselActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = Demo1Binding.inflate(layoutInflater)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+
         val view = binding.root
         setContentView(view)
 
@@ -26,9 +33,7 @@ class CarouselActivity : AppCompatActivity() {
         val slidePanel = binding.mainFrame
         slidePanel.addPanelSlideListener(PanelEventListener())
 
-
         val motionLayout = findViewById<MotionLayout>(R.id.motion_container)
-
 
         val v1 = findViewById<View>(R.id.v1)
         val v2 = findViewById<View>(R.id.v2)
@@ -40,34 +45,30 @@ class CarouselActivity : AppCompatActivity() {
         binding.btnToggle.setOnClickListener {
             val state = slidePanel.panelState
 
-            Log.d("ssibal","clicked")
-
             if (state == SlidingUpPanelLayout.PanelState.COLLAPSED) {
-                binding.mainFrame.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
+                slidePanel.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
             }
 
             else if (state == SlidingUpPanelLayout.PanelState.EXPANDED) {
-                binding.mainFrame.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+                slidePanel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
             }
         }
 
         btn1.setOnClickListener {
             val state = slidePanel.panelState
             // 닫힌 상태일 경우 열기
-            Log.d("ssibal","clicked")
-            Log.d("ssibal",state.toString())
             if (state == SlidingUpPanelLayout.PanelState.COLLAPSED) {
                 binding.mainFrame.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
             }
             // 열린 상태일 경우 닫기
             else if (state == SlidingUpPanelLayout.PanelState.ANCHORED) {
-                Log.d("ssibal","hihi")
                 binding.mainFrame.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
             }
         }
         btn2.setOnClickListener {
             val state = slidePanel.panelState
             // 닫힌 상태일 경우 열기
+
             if (state == SlidingUpPanelLayout.PanelState.COLLAPSED) {
                 slidePanel.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
             }
