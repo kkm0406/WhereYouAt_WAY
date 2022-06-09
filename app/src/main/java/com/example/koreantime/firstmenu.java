@@ -148,12 +148,13 @@ public class firstmenu extends AppCompatActivity {
         group.setGravity(Gravity.CENTER);
         group.setLayoutParams(params);
 //        group.setLayoutParams(params2);
+        group.setMinimumHeight(ConvertDPtoPX(this,160));
+        group.setMinimumWidth(ConvertDPtoPX(this,160));
         group.setPadding(ConvertDPtoPX(this,25),ConvertDPtoPX(this,25),ConvertDPtoPX(this,25),ConvertDPtoPX(this,25));
         group.setId(e);
 
         TextView view1 = new TextView(this);
         LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        view1.setMinWidth(ConvertDPtoPX(this,120));
         view1.setLayoutParams(params2);
         view1.setText(name);
         view1.setTextColor(Color.parseColor("#42C2FF"));

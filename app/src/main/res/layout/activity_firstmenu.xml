@@ -99,13 +99,14 @@
                         android:background="@drawable/frame_dif"
                         android:orientation="vertical"
                         android:layout_columnSpan="1"
+                        android:minWidth="160dp"
+                        android:minHeight="160dp"
                         android:gravity="center"
                         android:padding="25dp"
                         android:layout_gravity="fill">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:minWidth="120dp"
                             android:textColor="#BE8FFF"
                             android:fontFamily="@font/cafe"
                             android:text="Edit Profile"
