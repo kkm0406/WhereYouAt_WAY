@@ -7,7 +7,7 @@
     tools:context=".Meetingpage"
     android:background="#EFFFFD"
     android:padding="10dp"
-    android:weightSum="20"
+    android:weightSum="18"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,16 +33,24 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        android:weightSum="5"
         android:layout_weight="1">
         <TextView
             android:id="@+id/time"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="2"
             android:text="15 : 20"
             android:textColor="#4294ff"
             android:textSize="21sp"
+            android:fontFamily="@font/cafe"
+            android:gravity="right"
+            android:paddingTop="5dp"
+            android:textFontWeight="700"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="까지"
+            android:textColor="#4294ff"
+            android:textSize="20sp"
             android:fontFamily="@font/cafe"
             android:gravity="left"
             android:paddingTop="5dp"
@@ -57,7 +65,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="11"
+        android:layout_weight="10"
         android:orientation="vertical"
         android:background="@drawable/frame_shadow">
 
@@ -67,6 +75,32 @@
             android:layout_height="match_parent"
             android:orientation="horizontal" />
         <!--            위치 입력받는 레이아웃-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/nowAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Address"
+            android:textFontWeight="650"
+            android:fontFamily="@font/cafe"
+            android:layout_marginHorizontal="20dp"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:layout_marginBottom="3dp"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="#515151"/>
+
     </LinearLayout>
 
     <TextView
@@ -93,6 +127,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/get_img_btn"
             android:fontFamily="@font/cafe"
+            android:enabled="false"
             android:text="난 도착!"
             android:textColor="@color/black"
             android:textFontWeight="650"
@@ -121,9 +156,8 @@
             android:background="@drawable/punish_btn"
             android:fontFamily="@font/cafe"
             android:text="너 어디야?!"
-            android:visibility="visible"
+            android:visibility="invisible"
             android:textColor="@color/black"
-
             android:textFontWeight="650"
             android:textSize="18sp" />
 
