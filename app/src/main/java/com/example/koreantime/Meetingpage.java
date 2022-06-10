@@ -8,6 +8,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -39,23 +40,23 @@ import net.daum.mf.map.api.MapView;
 
 import java.util.ArrayList;
 
-public class Meetingpage extends AppCompatActivity implements MapView.CurrentLocationEventListener{
+public class Meetingpage extends AppCompatActivity implements MapView.CurrentLocationEventListener {
 
-    FirebaseFirestore db= FirebaseFirestore.getInstance();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     DTO_user user_info;
     String[] members;
-    ArrayList<String> late_member=new ArrayList<String>();
+    ArrayList<String> late_member = new ArrayList<String>();
     RelativeLayout kakaoMap;
     MapView mapView;
     Button arrive;
     Button punish;
     Geocoder geocoder;
-    double initLat = 36.6262;
+    double initLat = 36.6259;
     double initLon = 127.4526;
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
-    String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
-    Messaging temp=new Messaging();
+    String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION};
+    Messaging temp = new Messaging();
     TextView nowAddress;
     MapPOIItem initMarker;
 
@@ -64,11 +65,11 @@ public class Meetingpage extends AppCompatActivity implements MapView.CurrentLoc
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meetingpage);
 
-//        nowAddress = findViewById(R.id.nowAddress);
+        nowAddress = findViewById(R.id.nowAddress);
 
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting();
-        }else {
+        } else {
             checkRunTimePermission();
         }
 
@@ -78,11 +79,12 @@ public class Meetingpage extends AppCompatActivity implements MapView.CurrentLoc
         mapView.setZoomLevel(3, true);
         kakaoMap.addView(mapView);
 
-        arrive=findViewById(R.id.arrive);
-        punish=findViewById(R.id.punish);
+        arrive = findViewById(R.id.arrive);
+        punish = findViewById(R.id.punish);
 
 
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+        mapView.setCurrentLocationEventListener(this);
 
         arrive.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,11 +92,12 @@ public class Meetingpage extends AppCompatActivity implements MapView.CurrentLoc
                 punish.setVisibility(View.VISIBLE);
             }
         });
+
         punish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                while (true){
+                while (true) {
                     punish.setBackgroundColor(Color.parseColor("#FF2C2C"));
                     try {
                         Thread.sleep(16000);
@@ -116,23 +119,21 @@ public class Meetingpage extends AppCompatActivity implements MapView.CurrentLoc
         initMarker.setMapPoint(MARKER_POINT);
         initMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 기본으로 제공하는 BluePin 마커 모양.
         mapView.addPOIItem(initMarker);
-
-
     }
-    void send_penalty(String token, String vibrate, String alarm){
+
+    void send_penalty(String token, String vibrate, String alarm) {
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.d("finish", "kakapmap remove");
         kakaoMap.removeAllViews();
     }
 
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float accuracyInMeters) {
-        Toast.makeText(Meetingpage.this, "real-time GPS", Toast.LENGTH_SHORT).show();
-
         MapPoint.GeoCoordinate mapPointGeo = currentLocation.getMapPointGeoCoord();
         Check10M(mapPointGeo.latitude, mapPointGeo.longitude);
     }
@@ -144,15 +145,13 @@ public class Meetingpage extends AppCompatActivity implements MapView.CurrentLoc
         dist = rad2deg(dist);
         dist = dist * 60 * 1.1515;
         dist = dist * 1609.344;
-        Toast.makeText(Meetingpage.this, "checking distance: "+dist, Toast.LENGTH_SHORT).show();
-        if(dist >=10){
+        if (dist >= 50) {
             Log.d("distance", "아직 멀음");
-            Toast.makeText(Meetingpage.this, "아직 멀음: "+dist, Toast.LENGTH_SHORT).show();
-        }else{
-            Log.d("distance", "거의 도착");
-            Toast.makeText(Meetingpage.this, "거의 도착: "+dist, Toast.LENGTH_SHORT).show();
+            arrive.setBackgroundResource(R.drawable.get_img_btn1);
+            punish.setVisibility(View.VISIBLE);
         }
     }
+
     private static double deg2rad(double deg) {
         return (deg * Math.PI / 180.0);
     }
@@ -160,7 +159,6 @@ public class Meetingpage extends AppCompatActivity implements MapView.CurrentLoc
     private static double rad2deg(double rad) {
         return (rad * 180 / Math.PI);
     }
-
 
     @Override
     public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float v) {
@@ -220,14 +218,14 @@ public class Meetingpage extends AppCompatActivity implements MapView.CurrentLoc
         }
     }
 
-    void checkRunTimePermission(){
+    void checkRunTimePermission() {
 
         //런타임 퍼미션 처리
         // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
         int hasFineLocationPermission = ContextCompat.checkSelfPermission(Meetingpage.this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
 
-        if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED ) {
+        if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED) {
             // 2. 이미 퍼미션을 가지고 있다면
             // ( 안드로이드 6.0 이하 버전은 런타임 퍼미션이 필요없기 때문에 이미 허용된 걸로 인식합니다.)
             // 3.  위치 값을 가져올 수 있음
@@ -294,5 +292,6 @@ public class Meetingpage extends AppCompatActivity implements MapView.CurrentLoc
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
+
 
 }

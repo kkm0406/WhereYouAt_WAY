@@ -130,7 +130,8 @@
             android:text="난 도착!"
             android:textColor="@color/black"
             android:textFontWeight="650"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            />
 
     </LinearLayout>
 
@@ -155,9 +156,8 @@
             android:background="@drawable/punish_btn"
             android:fontFamily="@font/cafe"
             android:text="너 어디야?!"
-            android:visibility="visible"
+            android:visibility="invisible"
             android:textColor="@color/black"
-
             android:textFontWeight="650"
             android:textSize="18sp" />
 
