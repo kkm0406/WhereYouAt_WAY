@@ -7,13 +7,14 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.ImageView
+import android.widget.*
 import kotlinx.android.synthetic.main.views.*
 
-import android.widget.Toast
+import com.example.koreantime.DTO.DTO_group
+import com.example.koreantime.DTO.DTO_schecule
 import com.example.koreantime.databinding.Demo1Binding
 import com.example.koreantime.databinding.ViewsBinding
+import com.google.firebase.firestore.FirebaseFirestore
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
@@ -22,6 +23,48 @@ class CarouselActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val secondIntent = intent
+        val groupname = secondIntent.getStringExtra("groupname")
+        val membernick=secondIntent.getStringArrayListExtra("membernick")
+        val groupid=secondIntent.getStringExtra("groupid")
+
+        val memberssssss=ArrayList<String>()
+        val meetingssss=ArrayList<DTO_schecule>()
+        val db=FirebaseFirestore.getInstance()
+        if (membernick != null) {
+            for(i in 0 .. membernick.size-1 step (1)){
+                db.collection("user").document(membernick.get(i)).get()
+                        .addOnSuccessListener { document ->
+                            if (document != null) {
+                                Log.d("hihiii", document.data!!.get("nickname") as String)
+                                memberssssss.add(document.data!!.get("nickname") as String)
+                                if(i+1==membernick.size){
+                                    val members = findViewById<TextView>(R.id.members)
+                                    var temp=""
+                                    if (memberssssss != null) {
+                                        for(i in 0 .. memberssssss.size-1 step (1)){
+                                            temp=temp+" "+memberssssss.get(i)
+                                            Log.d("hihiisdsi", temp)
+                                        }
+                                        members.text = temp
+                                    }
+
+                                }
+                            } else {
+                                Log.d("hihiii", "No such document")
+                            }
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.d("hihiii", "get failed with ", exception)
+                        }
+            }
+        }
+
+        Log.d("inner group",groupname.toString());
+        Log.d("inner group",membernick.toString());
+
+
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -35,8 +78,43 @@ class CarouselActivity : AppCompatActivity() {
         val v1 = findViewById<View>(R.id.v1)
         val v2 = findViewById<View>(R.id.v2)
         val v3 = findViewById<View>(R.id.v3)
+        val groupName = findViewById<TextView>(R.id.textView)
+        val delbtn = findViewById<ImageButton>(R.id.delete)
 
 
+       db.collection("group").document(groupid.toString()).collection("schedule")
+               .get()
+               .addOnSuccessListener { result ->
+                   for (document in result) {
+                       val meeting= DTO_schecule(document.data.get("host").toString(),
+                               document.data.get("location").toString()
+                               ,document.data.get("punishment_alarm").toString()
+                               ,document.data.get("punishment_vibrate").toString()
+                               ,document.data.get("time").toString()
+                               ,document.data.get("date").toString()
+                               ,document.data.get("name").toString())
+                       Log.d("meeitngfdff", meeting.date)
+                       meetingssss.add(meeting)
+                   }
+               }
+               .addOnFailureListener { exception ->
+                   Log.d("meeitngfdff", "Error getting documents: ", exception)
+               }
+
+
+
+        groupName.setText(groupname);
+        delbtn.setOnClickListener {
+            db.collection("group").document(groupid.toString())
+                    .delete()
+                    .addOnSuccessListener {
+                        Log.d("삭제 성공", "DocumentSnapshot successfully deleted!")
+                        val result_intent = intent
+                        setResult(1, result_intent);
+                        finish()
+                    }
+                    .addOnFailureListener { e -> Log.w("삭제 실패", "Error deleting document", e) }
+        }
         Map_image1.setOnClickListener{
             val btn1intent = Intent(this, IntroActivity::class.java) //카카오 맵 넣으시고요
             startActivity(btn1intent)
