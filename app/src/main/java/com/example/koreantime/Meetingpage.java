@@ -59,6 +59,8 @@ public class Meetingpage extends AppCompatActivity implements MapView.CurrentLoc
     Messaging temp = new Messaging();
     TextView nowAddress;
     MapPOIItem initMarker;
+    boolean arriveFlag = false;
+    boolean punishFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,31 +88,35 @@ public class Meetingpage extends AppCompatActivity implements MapView.CurrentLoc
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
         mapView.setCurrentLocationEventListener(this);
 
-        arrive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                punish.setVisibility(View.VISIBLE);
-            }
-        });
-
-        punish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                while (true) {
-                    punish.setBackgroundColor(Color.parseColor("#FF2C2C"));
-                    try {
-                        Thread.sleep(16000);
-                        break;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        if (arriveFlag) {
+            arrive.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    punish.setVisibility(View.VISIBLE);
                 }
-                punish.setBackgroundColor(Color.parseColor("#FFF"));
-                temp.setToken("cZF6ykcGTaC2hRT-qBO5KM:APA91bGDEgSHsXKnxqZ0IvviBdXqyMf0RdZhaRDKPLNxwacaSkQn7QnhRr_JqpL-a2UNBO_OUhHqSXyuPLzefwrRkJVAYvz-IlcehtS5GjExkuXc0ViZa-KIiwJPyV9wr3LFVaT8zuux");
-                temp.execute();
-            }
-        });
+            });
+        }
+
+        if (punishFlag) {
+            punish.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    while (true) {
+                        punish.setBackgroundColor(Color.parseColor("#FF2C2C"));
+                        try {
+                            Thread.sleep(16000);
+                            break;
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    punish.setBackgroundColor(Color.parseColor("#FFF"));
+                    temp.setToken("cZF6ykcGTaC2hRT-qBO5KM:APA91bGDEgSHsXKnxqZ0IvviBdXqyMf0RdZhaRDKPLNxwacaSkQn7QnhRr_JqpL-a2UNBO_OUhHqSXyuPLzefwrRkJVAYvz-IlcehtS5GjExkuXc0ViZa-KIiwJPyV9wr3LFVaT8zuux");
+                    temp.execute();
+                }
+            });
+        }
 
         initMarker = new MapPOIItem();
         MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(initLat, initLon);
@@ -145,10 +151,17 @@ public class Meetingpage extends AppCompatActivity implements MapView.CurrentLoc
         dist = rad2deg(dist);
         dist = dist * 60 * 1.1515;
         dist = dist * 1609.344;
-        if (dist >= 50) {
+        if (dist <= 50) {
             Log.d("distance", "아직 멀음");
-            arrive.setBackgroundResource(R.drawable.get_img_btn1);
+            arrive.setBackgroundResource(R.drawable.get_img_btn);
             punish.setVisibility(View.VISIBLE);
+            arriveFlag = true;
+            punishFlag = true;
+        }else{
+            arrive.setBackgroundResource(R.drawable.get_img_btn1);
+            punish.setVisibility(View.INVISIBLE);
+            arriveFlag = false;
+            punishFlag = false;
         }
     }
 
@@ -162,25 +175,18 @@ public class Meetingpage extends AppCompatActivity implements MapView.CurrentLoc
 
     @Override
     public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float v) {
-        Toast.makeText(Meetingpage.this, "deviceheadingupdate", Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
     public void onCurrentLocationUpdateFailed(MapView mapView) {
-        Toast.makeText(Meetingpage.this, "locationupdatefail", Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
     public void onCurrentLocationUpdateCancelled(MapView mapView) {
-        Toast.makeText(Meetingpage.this, "locationupdatecancelld", Toast.LENGTH_SHORT).show();
-
     }
 
 
     private void onFinishReverseGeoCoding(String result) {
-//        Toast.makeText(LocationDemoActivity.this, "Reverse Geo-coding : " + result, Toast.LENGTH_SHORT).show();
     }
 
     @Override
