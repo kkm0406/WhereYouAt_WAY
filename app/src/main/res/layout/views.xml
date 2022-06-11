@@ -108,7 +108,7 @@
             android:layout_width="match_parent"
             android:layout_height="240dp"
             android:layout_gravity="center"
-            android:padding="20dp">
+            android:padding="40dp">
 
             <ImageView
                 android:id="@+id/Map_image1"
@@ -174,7 +174,7 @@
             android:layout_height="240dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:padding="20dp">
+            android:padding="40dp">
 
             <ImageView
                 android:id="@+id/Map_image2"
@@ -240,7 +240,7 @@
             android:layout_height="240dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:padding="20dp">
+            android:padding="40dp">
 
             <ImageView
                 android:id="@+id/Map_image3"

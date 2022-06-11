@@ -78,6 +78,7 @@ public class Meetingpage extends AppCompatActivity {
     boolean punishFlag = false;
     DTO_schecule meetingclass;
     String tttkk;
+    String[] member_id;
 
     ArrayList<MapPOIItem> mapPOIItems = new ArrayList<>();
 
@@ -104,6 +105,7 @@ public class Meetingpage extends AppCompatActivity {
         String m_id = Intent.getStringExtra("id");
         String g_id = Intent.getStringExtra("gid");
         String[] members_token = Intent.getStringArrayExtra("tokens");
+        member_id = Intent.getStringArrayExtra("member_id");
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("group").document(g_id).collection("schedule").document(m_id)
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -155,8 +157,29 @@ public class Meetingpage extends AppCompatActivity {
             public void onLocationChanged(Location location) {
                 double longitude = location.getLongitude();
                 double latitude = location.getLatitude();
-                RemoveAllMarkers();
-                MakeMarker(latitude, longitude);
+                for(String id:member_id){
+                    db.collection("user").document(id)
+                            .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    Log.d("ssivl", document.getData().get("latitude").toString());
+
+                                    Log.d("ssivl", document.getData().get("longitude").toString());
+                                    RemoveAllMarkers();
+                                    MakeMarker(Double.parseDouble(document.getData().get("latitude").toString()) , Double.parseDouble(document.getData().get("longitude").toString()) );
+                                } else {
+                                    Log.d("inter meeing", "No such document");
+                                }
+                            } else {
+                                Log.d("inter meeing", "get failed with ", task.getException());
+                            }
+                        }
+                    });
+                }
+
                 Check10M(latitude, longitude);
             }
 
@@ -186,6 +209,8 @@ public class Meetingpage extends AppCompatActivity {
             public void onClick(View view) {
                 if (arriveFlag) {
                     punish.setVisibility(View.VISIBLE);
+                }else{
+                    punish.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -372,12 +397,13 @@ public class Meetingpage extends AppCompatActivity {
         dist = dist * 60 * 1.1515;
         dist = dist * 1609.344;
         if (dist <= 50) {
-            arrive.setBackgroundResource(R.drawable.get_img_btn1);
+            arrive.setBackgroundResource(R.drawable.get_img_btn);
             punish.setVisibility(View.INVISIBLE);
+            arriveFlag = true;
         } else {
             Log.d("distance", "아직 멀음");
-            arriveFlag = true;
-            arrive.setBackgroundResource(R.drawable.get_img_btn);
+            arriveFlag = false;
+            arrive.setBackgroundResource(R.drawable.get_img_btn1);
         }
     }
 
