@@ -79,6 +79,8 @@ public class Meetingpage extends AppCompatActivity {
     DTO_schecule meetingclass;
     String tttkk;
 
+    ArrayList<MapPOIItem> mapPOIItems = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,22 +150,13 @@ public class Meetingpage extends AppCompatActivity {
             return;
         }
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        MapPOIItem marker = new MapPOIItem();
+
         final LocationListener gpsLocationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 double longitude = location.getLongitude();
                 double latitude = location.getLatitude();
-
-                mapView.removePOIItem(marker);
-                MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(latitude, longitude);
-                marker.setItemName("Default Marker");
-                marker.setTag(0);
-                marker.setMapPoint(MARKER_POINT);
-                marker.setMarkerType(MapPOIItem.MarkerType.CustomImage); // 기본으로 제공하는 BluePin 마커 모양.
-                marker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-                marker.setCustomImageResourceId(R.drawable.bluepin);
-                mapView.addPOIItem(marker);
-
+                RemoveAllMarkers();
+                MakeMarker(latitude, longitude);
                 Check10M(latitude, longitude);
             }
 
@@ -251,6 +244,25 @@ public class Meetingpage extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void MakeMarker(double latitude, double longitude) {
+        MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(latitude, longitude);
+        MapPOIItem marker = new MapPOIItem();
+        marker.setItemName("Default Marker");
+        marker.setTag(0);
+        marker.setMapPoint(MARKER_POINT);
+        marker.setMarkerType(MapPOIItem.MarkerType.CustomImage); // 기본으로 제공하는 BluePin 마커 모양.
+        marker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+        marker.setCustomImageResourceId(R.drawable.bluepin);
+        mapView.addPOIItem(marker);
+        mapPOIItems.add(marker);
+    }
+
+    private void RemoveAllMarkers() {
+        for(int i=0;i<mapPOIItems.size();i++){
+            mapView.removePOIItem(mapPOIItems.get(i));
+        }
     }
 
     private String SplitDate(String date) {
@@ -360,12 +372,12 @@ public class Meetingpage extends AppCompatActivity {
         dist = dist * 60 * 1.1515;
         dist = dist * 1609.344;
         if (dist <= 50) {
-            arrive.setBackgroundResource(R.drawable.get_img_btn);
+            arrive.setBackgroundResource(R.drawable.get_img_btn1);
             punish.setVisibility(View.INVISIBLE);
         } else {
             Log.d("distance", "아직 멀음");
             arriveFlag = true;
-            arrive.setBackgroundResource(R.drawable.get_img_btn1);
+            arrive.setBackgroundResource(R.drawable.get_img_btn);
         }
     }
 
