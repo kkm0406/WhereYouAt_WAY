@@ -289,10 +289,12 @@ public class Meetingpage extends AppCompatActivity {
         }
         initMarker = new MapPOIItem();
         MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(initLat, initLon);
-        initMarker.setItemName("Final Location");
+        initMarker.setItemName("여기서 봐");
         initMarker.setTag(0);
         initMarker.setMapPoint(MARKER_POINT);
-        initMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 기본으로 제공하는 BluePin 마커 모양.
+        initMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage); // 기본으로 제공하는 BluePin 마커 모양.
+        initMarker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+        initMarker.setCustomImageResourceId(R.drawable.redpin);// 기본으로 제공하는 BluePin 마커 모양.
         mapView.addPOIItem(initMarker);
         mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(initLat, initLon), true);
         mapView.setZoomLevel(5, true);

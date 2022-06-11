@@ -8,6 +8,7 @@ import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.core.view.marginBottom
 import com.example.koreantime.DTO.DTO_schecule
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.views.*
@@ -52,6 +53,9 @@ class CarouselActivity : AppCompatActivity() {
                             timebox2.text=""
                             datebox3.text=""
                             timebox3.text=""
+
+                            Map_image1.setImageResource(R.drawable.meeting1)
+
                             btn_toggle1.setOnClickListener{
                                 val tg1intent = Intent(this, Meetingpage::class.java)// 여기서부턴 Meetingpage
                                 tg1intent.putExtra("id",meetings_id.get(0))
@@ -88,6 +92,10 @@ class CarouselActivity : AppCompatActivity() {
                             timebox2.text=meetingssss.get(1).time
                             datebox3.text=""
                             timebox3.text=""
+
+                            Map_image1.setImageResource(R.drawable.meeting1)
+                            Map_image2.setImageResource(R.drawable.meeting2)
+
                             btn_toggle1.setOnClickListener{
                                 val tg1intent = Intent(this, Meetingpage::class.java)// 여기서부턴 Meetingpage
                                 tg1intent.putExtra("id",meetings_id.get(0))
@@ -124,6 +132,11 @@ class CarouselActivity : AppCompatActivity() {
                             timebox2.text=meetingssss.get(1).time
                             datebox3.text=meetingssss.get(2).date
                             timebox3.text=meetingssss.get(2).time
+
+                            Map_image1.setImageResource(R.drawable.meeting1)
+                            Map_image2.setImageResource(R.drawable.meeting2)
+                            Map_image3.setImageResource(R.drawable.meeting3)
+
                             btn_toggle1.setOnClickListener{
                                 val tg1intent = Intent(this, Meetingpage::class.java)// 여기서부턴 Meetingpage
                                 tg1intent.putExtra("id",meetings_id.get(0))
@@ -162,6 +175,11 @@ class CarouselActivity : AppCompatActivity() {
                         timebox2.text=""
                         datebox3.text=""
                         timebox3.text=""
+
+                        Map_image1.setImageResource(R.drawable.plus)
+                        Map_image1.setImageResource(R.drawable.plus)
+                        Map_image1.setImageResource(R.drawable.plus)
+
                         Map_image1.setOnClickListener{
                             val btn1intent = Intent(this, KakaoMap::class.java) //카카오 맵 넣으시고요
                             btn1intent.putExtra("useremail", useremail)
@@ -255,8 +273,8 @@ class CarouselActivity : AppCompatActivity() {
 
 
         window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
         val layout = intent.getIntExtra("layout_file_id", R.layout.demo1)
