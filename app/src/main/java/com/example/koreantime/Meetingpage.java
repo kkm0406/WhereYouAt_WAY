@@ -84,7 +84,6 @@ public class Meetingpage extends AppCompatActivity implements MapView.CurrentLoc
         arrive = findViewById(R.id.arrive);
         punish = findViewById(R.id.punish);
 
-
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
         mapView.setCurrentLocationEventListener(this);
 

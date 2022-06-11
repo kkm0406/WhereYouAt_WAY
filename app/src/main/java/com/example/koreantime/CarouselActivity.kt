@@ -81,6 +81,9 @@ class CarouselActivity : AppCompatActivity() {
         val groupName = findViewById<TextView>(R.id.textView)
         val delbtn = findViewById<ImageButton>(R.id.delete)
 
+        val kakaoIntent = secondIntent.getIntExtra("success", 0)
+        Log.d("success ? ? ", kakaoIntent.toString());
+
 
        db.collection("group").document(groupid.toString()).collection("schedule")
                .get()
@@ -101,8 +104,6 @@ class CarouselActivity : AppCompatActivity() {
                    Log.d("meeitngfdff", "Error getting documents: ", exception)
                }
 
-
-
         groupName.setText(groupname);
         delbtn.setOnClickListener {
             db.collection("group").document(groupid.toString())
@@ -115,31 +116,33 @@ class CarouselActivity : AppCompatActivity() {
                     }
                     .addOnFailureListener { e -> Log.w("삭제 실패", "Error deleting document", e) }
         }
+
         Map_image1.setOnClickListener{
-            val btn1intent = Intent(this, IntroActivity::class.java) //카카오 맵 넣으시고요
+            val btn1intent = Intent(this, KakaoMap::class.java) //카카오 맵 넣으시고요
+
             startActivity(btn1intent)
         }
         Map_image2.setOnClickListener {
-            val btn2intent = Intent(this, IntroActivity::class.java)
+            val btn2intent = Intent(this, KakaoMap::class.java)
             startActivity(btn2intent)
         }
         Map_image3.setOnClickListener{
-            val btn3intent = Intent(this, IntroActivity::class.java)// 요기까지
+            val btn3intent = Intent(this, KakaoMap::class.java)// 요기까지
             startActivity(btn3intent)
         }
 
         btn_toggle1.setOnClickListener{
-            val tg1intent = Intent(this, IntroActivity::class.java)// 여기서부턴 Meetingpage
+            val tg1intent = Intent(this, Meetingpage::class.java)// 여기서부턴 Meetingpage
             startActivity(tg1intent)
         }
 
         btn_toggle2.setOnClickListener{
-            val tg2intent = Intent(this, IntroActivity::class.java)
+            val tg2intent = Intent(this, Meetingpage::class.java)
             startActivity(tg2intent)
         }
 
         btn_toggle3.setOnClickListener{
-            val tg3intent = Intent(this, IntroActivity::class.java) // 여기까지
+            val tg3intent = Intent(this, Meetingpage::class.java) // 여기까지
             startActivity(tg3intent)
         }
 
@@ -176,3 +179,5 @@ class CarouselActivity : AppCompatActivity() {
     }
 
 }
+
+

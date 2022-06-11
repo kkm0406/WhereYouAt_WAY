@@ -265,7 +265,9 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
                                 }
                             });
                 }
-
+                Intent intent = new Intent(KakaoMap.this, CarouselActivity.class);
+                intent.putExtra("success", 1);
+                startActivity(intent);
             }
         });
     }
