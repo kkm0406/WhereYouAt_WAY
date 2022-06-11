@@ -284,7 +284,7 @@ public class Meetingpage extends AppCompatActivity {
             arriveFlag = true;
             punishFlag = true;
         } else {
-            arrive.setBackgroundResource(R.drawable.get_img_btn1);
+            arrive.setBackgroundResource(R.drawable.get_img_btn);
             punish.setVisibility(View.INVISIBLE);
             arriveFlag = false;
             punishFlag = false;
