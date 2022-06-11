@@ -200,7 +200,9 @@ public class Meetingpage extends AppCompatActivity {
                 marker.setCustomImageResourceId(R.drawable.redpin);
                 mapView.addPOIItem(marker);
 
-                Check10M(latitude, longitude);
+                if(!arriveFlag){
+                    Check10M(latitude, longitude);
+                }
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -416,7 +418,7 @@ public class Meetingpage extends AppCompatActivity {
         dist = rad2deg(dist);
         dist = dist * 60 * 1.1515;
         dist = dist * 1609.344;
-        if (dist <= 50) {
+        if (dist <= 30) {
             arrive.setBackgroundResource(R.drawable.get_img_btn1);
             punish.setVisibility(View.INVISIBLE);
             arriveFlag = true;
