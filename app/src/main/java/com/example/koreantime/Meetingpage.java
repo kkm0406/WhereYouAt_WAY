@@ -10,11 +10,14 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,7 +43,7 @@ import net.daum.mf.map.api.MapView;
 
 import java.util.ArrayList;
 
-public class Meetingpage extends AppCompatActivity implements MapView.CurrentLocationEventListener {
+public class Meetingpage extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     DTO_user user_info;
@@ -68,12 +71,51 @@ public class Meetingpage extends AppCompatActivity implements MapView.CurrentLoc
         setContentView(R.layout.activity_meetingpage);
 
         nowAddress = findViewById(R.id.nowAddress);
-
-        if (!checkLocationServicesStatus()) {
-            showDialogForLocationServiceSetting();
-        } else {
-            checkRunTimePermission();
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
         }
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        final LocationListener gpsLocationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+
+                String provider = location.getProvider();
+                double longitude = location.getLongitude();
+                double latitude = location.getLatitude();
+                double altitude = location.getAltitude();
+
+
+                nowAddress.setText("위치정보 : " + provider + "" +
+                        "위도 : " + longitude + "" +
+                        "경도 : " + latitude + "" +
+                        "고도  : " + altitude);
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            public void onProviderEnabled(String provider) {
+            }
+
+            public void onProviderDisabled(String provider) {
+            }
+        };
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                1000,
+                1,
+                gpsLocationListener);
+        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                1000,
+                1,
+                gpsLocationListener);
+
 
         kakaoMap = findViewById(R.id.kakaoMap);
         mapView = new MapView(Meetingpage.this);
@@ -81,12 +123,17 @@ public class Meetingpage extends AppCompatActivity implements MapView.CurrentLoc
         mapView.setZoomLevel(3, true);
         kakaoMap.addView(mapView);
 
+        if (!checkLocationServicesStatus()) {
+            showDialogForLocationServiceSetting();
+        } else {
+            checkRunTimePermission();
+        }
+
         arrive = findViewById(R.id.arrive);
         punish = findViewById(R.id.punish);
 
 
-        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
-        mapView.setCurrentLocationEventListener(this);
+
 
         if (arriveFlag) {
             arrive.setOnClickListener(new View.OnClickListener() {
@@ -138,11 +185,6 @@ public class Meetingpage extends AppCompatActivity implements MapView.CurrentLoc
         kakaoMap.removeAllViews();
     }
 
-    @Override
-    public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float accuracyInMeters) {
-        MapPoint.GeoCoordinate mapPointGeo = currentLocation.getMapPointGeoCoord();
-        Check10M(mapPointGeo.latitude, mapPointGeo.longitude);
-    }
 
     private void Check10M(double latitude, double longitude) {
         double theta = initLon - longitude;
@@ -173,17 +215,7 @@ public class Meetingpage extends AppCompatActivity implements MapView.CurrentLoc
         return (rad * 180 / Math.PI);
     }
 
-    @Override
-    public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float v) {
-    }
 
-    @Override
-    public void onCurrentLocationUpdateFailed(MapView mapView) {
-    }
-
-    @Override
-    public void onCurrentLocationUpdateCancelled(MapView mapView) {
-    }
 
 
     private void onFinishReverseGeoCoding(String result) {
