@@ -20,6 +20,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -66,7 +67,10 @@ public class Meetingpage extends AppCompatActivity {
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION};
-    Messaging temp = new Messaging();
+    Messaging temp1 = new Messaging();
+    Messaging temp2 = new Messaging();
+    Messaging temp3 = new Messaging();
+    Messaging temp4 = new Messaging();
     TextView nowAddress;
     MapPOIItem initMarker;
     boolean arriveFlag = false;
@@ -183,19 +187,49 @@ public class Meetingpage extends AppCompatActivity {
         punish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                while (true) {
-                    punish.setBackgroundColor(Color.parseColor("#FF2C2C"));
-                    try {
-                        Thread.sleep(16000);
-                        break;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+//                while (true) {
+//                    punish.setBackgroundColor(Color.parseColor("#FF2C2C"));
+//                    try {
+//                        Thread.sleep(16000);
+//                        break;
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                punish.setBackgroundColor(Color.parseColor("#FFF"));
+                try {
+                    if (temp1.getStatus() == AsyncTask.Status.RUNNING) {
+                        temp1.cancel(true);
                     }
+                    if (temp2.getStatus() == AsyncTask.Status.RUNNING) {
+                        temp1.cancel(true);
+                    }
+                    if (temp3.getStatus() == AsyncTask.Status.RUNNING) {
+                        temp1.cancel(true);
+                    }
+                    if (temp4.getStatus() == AsyncTask.Status.RUNNING) {
+                        temp1.cancel(true);
+                    }
+                } catch (Exception e) {
                 }
-                punish.setBackgroundColor(Color.parseColor("#FFF"));
-                for (String token : members_token) {
-                    temp.setToken(token);
-                    temp.execute();
+                if(members_token.length<1){
+
+                }
+                if(members_token.length>0){
+                    temp1.setToken(members_token[0]);
+                    temp1.execute();
+                }
+                if(members_token.length>1){
+                    temp2.setToken(members_token[1]);
+                    temp2.execute();
+                }
+                if(members_token.length>2){
+                    temp3.setToken(members_token[2]);
+                    temp3.execute();
+                }
+                if(members_token.length>3){
+                    temp4.setToken(members_token[3]);
+                    temp4.execute();
                 }
             }
         });

@@ -64,15 +64,6 @@ public class StartPage extends AppCompatActivity {
         TextView findPw = findViewById(R.id.findPw);
         TextView signUp = findViewById(R.id.signUp);
         TextView logIn = findViewById(R.id.login);
-        Button button=findViewById(R.id.debug_btn);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-        Intent fcm = new Intent(StartPage.this, MyFirebaseMessaging.class);
-        startService(fcm);
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override

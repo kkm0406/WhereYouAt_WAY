@@ -1,28 +1,42 @@
 package com.example.koreantime;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.PowerManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import net.daum.mf.map.api.MapPOIItem;
+import net.daum.mf.map.api.MapPoint;
 
 public class MyFirebaseMessaging extends FirebaseMessagingService {
     public MyFirebaseMessaging() {
@@ -37,7 +51,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
         if (remoteMessage.getData().size() > 0) {
 
-            showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("body"),remoteMessage.getData().get("vibrate"),remoteMessage.getData().get("alarm"));
+            showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("message"),remoteMessage.getData().get("vibrate"),remoteMessage.getData().get("alarm"));
         }
     }
 
@@ -50,7 +64,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         RemoteViews remoteViews = new RemoteViews(getApplicationContext().getPackageName(), R.layout.popup);
         remoteViews.setTextViewText(R.id.noti_title, title);
         remoteViews.setTextViewText(R.id.noti_message, message);
-        remoteViews.setImageViewResource(R.id.logo, R.drawable.board_border);
         return remoteViews;
     }
     public void showNotification(String title, String message,String vibrate,String alarm) {
@@ -64,18 +77,18 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         //기본 사운드로 알림음 설정. 커스텀하려면 소리 파일의 uri 입력
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), channel_id)
-                .setSmallIcon(R.drawable.board_border)
+                .setSmallIcon(R.drawable.way)
                 .setSound(uri)
-                .setAutoCancel(true)//알림시 진동 설정 : 1초 진동, 1초 쉬고, 1초 진동
+                .setAutoCancel(true)
                 .setOnlyAlertOnce(false) //동일한 알림은 한번만.. : 확인 하면 다시 울림
                 .setContentIntent(pendingIntent);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) { //안드로이드 버전이 커스텀 알림을 불러올 수 있는 버전이면
             //커스텀 레이아웃 호출
-            builder = builder.setContent(getCustomDesign(title, message));
+            builder = builder.setContent(getCustomDesign(title, "빨리 와!!!!!"));
         } else { //아니면 기본 레이아웃 호출
             builder = builder.setContentTitle(title)
-                    .setContentText(message)
-                    .setSmallIcon(R.drawable.board_border); //커스텀 레이아웃에 사용된 로고 파일과 동일하게..
+                    .setContentText("빨리 와!!!!!")
+                    .setSmallIcon(R.drawable.way); //커스텀 레이아웃에 사용된 로고 파일과 동일하게..
         }
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -91,4 +104,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         //알림 표시 !
         notificationManager.notify(0, builder.build());
     }
+
+
 }

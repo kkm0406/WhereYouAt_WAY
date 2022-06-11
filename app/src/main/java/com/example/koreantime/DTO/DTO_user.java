@@ -11,14 +11,28 @@ public class DTO_user implements Serializable {
     String addr2;
     String addr3;
     String push_token;
+    Double latitude;
+    Double longitude;
 
     public DTO_user(){}
+    public DTO_user(String email,String nickname,String addr1, String addr2, String addr3,String push_token,Double latitude,Double longitude){
+        this.email=email;
+        this.nickname=nickname;
+        this.addr1=addr1;
+        this.addr2=addr2;
+        this.addr3=addr3;
+        this.latitude=latitude;
+        this.longitude=longitude;
+        this.push_token=push_token;
+    }
     public DTO_user(String email,String nickname,String addr1, String addr2, String addr3,String push_token){
         this.email=email;
         this.nickname=nickname;
         this.addr1=addr1;
         this.addr2=addr2;
         this.addr3=addr3;
+        this.latitude=0.0;
+        this.longitude=0.0;
         this.push_token=push_token;
     }
     public DTO_user(String email,String nickname,String addr1, String addr2, String addr3){
@@ -51,6 +65,14 @@ public class DTO_user implements Serializable {
         return push_token;
     }
 
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
     public void setEmail(String email){
         this.email=email;
     }
@@ -71,5 +93,13 @@ public class DTO_user implements Serializable {
 
     public void setPush_token(String push_token) {
         this.push_token = push_token;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 }

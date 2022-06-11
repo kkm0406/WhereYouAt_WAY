@@ -77,6 +77,9 @@ class CarouselActivity : AppCompatActivity() {
                                 btn1intent.putExtra("groupmember", items)
                                 startActivityForResult(btn1intent, 1)
                             }
+                            btn_toggle1.visibility=View.VISIBLE
+                            btn_toggle2.visibility=View.INVISIBLE
+                            btn_toggle3.visibility=View.INVISIBLE
                         }
                         if(meetingssss.size==2){
                             datebox1.text=meetingssss.get(0).date
@@ -110,6 +113,9 @@ class CarouselActivity : AppCompatActivity() {
                                 btn1intent.putExtra("groupmember", items)
                                 startActivityForResult(btn1intent, 1)
                             }
+                            btn_toggle1.visibility=View.VISIBLE
+                            btn_toggle2.visibility=View.VISIBLE
+                            btn_toggle3.visibility=View.INVISIBLE
                         }
                         if(meetingssss.size==3){
                             datebox1.text=meetingssss.get(0).date
@@ -144,6 +150,9 @@ class CarouselActivity : AppCompatActivity() {
                                 tg1intent.putExtra("tokens", items)
                                 startActivity(tg1intent)
                             }
+                            btn_toggle1.visibility=View.VISIBLE
+                            btn_toggle2.visibility=View.VISIBLE
+                            btn_toggle3.visibility=View.VISIBLE
                         }
                     }
                     else{
@@ -177,6 +186,9 @@ class CarouselActivity : AppCompatActivity() {
                             btn1intent.putExtra("groupmember", items)
                             startActivityForResult(btn1intent, 1)
                         }
+                        btn_toggle1.visibility=View.INVISIBLE
+                        btn_toggle2.visibility=View.INVISIBLE
+                        btn_toggle3.visibility=View.INVISIBLE
                     }
                 }
                 .addOnFailureListener { exception ->
@@ -208,16 +220,16 @@ class CarouselActivity : AppCompatActivity() {
 
         db=FirebaseFirestore.getInstance()
         if (membernick != null) {
+            var aaa=0
             for(i in 0 .. membernick.size-1 step (1)){
                 db!!.collection("user").document(membernick.get(i)).get()
                         .addOnSuccessListener { document ->
                             if (document != null) {
-                                Log.d("hihiii", document.data!!.get("nickname") as String)
                                 memberssssss.add(document.data!!.get("nickname") as String)
                                 members_token.add(document.data!!.get("push_token")as String)
                                 Log.d("hihiii", memberssssss.toString())
-                                Log.d("hihiii", membernick.size.toString())
-                                if(i+2==membernick.size){//
+                                aaa+=1
+                                if(aaa==membernick.size){//
                                     val members = findViewById<TextView>(R.id.members)
                                     var temp=""
                                     if (memberssssss != null) {
@@ -227,7 +239,6 @@ class CarouselActivity : AppCompatActivity() {
                                         }
                                         members.text = temp
                                     }
-
                                 }
                             } else {
                                 Log.d("hihiii", "No such document")
@@ -257,12 +268,6 @@ class CarouselActivity : AppCompatActivity() {
         val v2 = findViewById<View>(R.id.v2)
         val v3 = findViewById<View>(R.id.v3)
         val groupName = findViewById<TextView>(R.id.textView)
-        val datebox1 = findViewById<TextView>(R.id.datebox1)
-        val timebox1 = findViewById<TextView>(R.id.timebox1)
-        val datebox2 = findViewById<TextView>(R.id.datebox2)
-        val timebox2 = findViewById<TextView>(R.id.timebox2)
-        val datebox3 = findViewById<TextView>(R.id.datebox3)
-        val timebox3 = findViewById<TextView>(R.id.timebox3)
         val delbtn = findViewById<ImageButton>(R.id.delete)
 
 

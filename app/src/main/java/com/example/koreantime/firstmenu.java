@@ -3,13 +3,19 @@ package com.example.koreantime;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.fonts.Font;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -25,6 +31,7 @@ import android.widget.Toast;
 import com.example.koreantime.DTO.DTO_group;
 import com.example.koreantime.DTO.DTO_user;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -40,6 +47,8 @@ public class firstmenu extends AppCompatActivity {
     DTO_user user_info;
     FirebaseFirestore db= FirebaseFirestore.getInstance();
     ArrayList<String> group_id=new ArrayList<String>(0);
+    private double latitu;
+    private double longti;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {//그룹만들고서 그룹리스트 업데이트
         super.onActivityResult(requestCode, resultCode, data);
@@ -171,6 +180,7 @@ public class firstmenu extends AppCompatActivity {
                 startActivityForResult(intent,0);
             }
         });
+        start_real();
     }
 
     private void createNew(int e, String name){
@@ -248,6 +258,75 @@ public class firstmenu extends AppCompatActivity {
 
         grid.addView(group);
 
+    }
+    private void start_real(){
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        final LocationListener gpsLocationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                latitu = location.getLongitude();
+                longti = location.getLatitude();
+                Log.d("update location", String.valueOf(latitu));
+                updateGPS();
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            public void onProviderEnabled(String provider) {
+            }
+
+            public void onProviderDisabled(String provider) {
+            }
+        };
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                5000,
+                5,
+                gpsLocationListener);
+        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                5000,
+                5,
+                gpsLocationListener);
+    }
+    private void updateGPS(){
+        db.collection("user").document(user_info.getEmail())
+                .update("latitude", latitu)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("qq", "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("qq", "Error updating document", e);
+                    }
+                });
+        db.collection("user").document(user_info.getEmail())
+                .update("longitude", longti)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("qq", "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("qq", "Error updating document", e);
+                    }
+                });
     }
     public static int ConvertDPtoPX(Context context, int dp) {
         float density = context.getResources().getDisplayMetrics().density;

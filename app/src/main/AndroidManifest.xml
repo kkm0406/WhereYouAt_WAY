@@ -21,7 +21,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
-        android:windowSoftInputMode ="adjustNothing">
+        android:windowSoftInputMode="adjustNothing">
+        <service
+            android:name=".update"
+            android:enabled="true"
+            android:exported="true"></service>
 
         <activity
             android:name=".KakaoMap"
@@ -34,7 +38,7 @@
             android:exported="true" />
         <activity
             android:name=".Meetingpage"
-            android:exported="true"/>
+            android:exported="true" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -43,25 +47,24 @@
         <activity
             android:name=".findPW"
             android:exported="true"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".GroupMeetings"
             android:exported="true" />
         <activity
             android:name=".GroupMaking"
             android:exported="true"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".SignUp"
             android:exported="true"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".StartPage"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".CarouselActivity"
-            android:exported="true"/>
-
+            android:exported="true" />
         <activity
             android:name=".IntroActivity"
             android:exported="true">
@@ -71,7 +74,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
 
         <service
             android:name=".MyFirebaseMessaging"
