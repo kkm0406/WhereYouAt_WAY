@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +30,7 @@ import java.util.Map;
 public class SignUp extends AppCompatActivity {
     private FirebaseAuth mAuth;
     final String TAG = getClass().getSimpleName();
+    String pushtoken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,18 @@ public class SignUp extends AppCompatActivity {
         EditText pw = findViewById(R.id.pw);
         EditText address = findViewById(R.id.address);
         TextView signUp = findViewById(R.id.signUp);
+        Task<String> token = FirebaseMessaging.getInstance().getToken();
+
+        token.addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if(task.isSuccessful()){
+                    Log.d("FCM Token", task.getResult().toString());
+                    pushtoken=task.getResult().toString();
+                }
+            }
+        });
+
 
 
         signUp.setOnClickListener(new View.OnClickListener() {
@@ -69,13 +83,13 @@ public class SignUp extends AppCompatActivity {
                 if (signFlag) {
                     mAuth= FirebaseAuth.getInstance();
                     Log.d("signup", "다적음");
-                    Toast.makeText(SignUp.this, "db에 저장해야됨", Toast.LENGTH_SHORT).show();
+
                     mAuth.createUserWithEmailAndPassword(email.getText().toString().trim(), pw.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 FirebaseFirestore db= FirebaseFirestore.getInstance();
-                                DTO_user new_user = new DTO_user(email.getText().toString(),name.getText().toString(),address.getText().toString(),"","");
+                                DTO_user new_user = new DTO_user(email.getText().toString(),name.getText().toString(),address.getText().toString(),"","",pushtoken);
                                 Log.d("signup", ""+new_user);
 
                                 db.collection("user").document(email.getText().toString())
@@ -84,6 +98,7 @@ public class SignUp extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 Log.d("signup", "DocumentSnapshot successfully written!");
+                                                Toast.makeText(SignUp.this, "회원가입 성공!", Toast.LENGTH_SHORT).show();
                                                 finish();
                                             }
                                         })

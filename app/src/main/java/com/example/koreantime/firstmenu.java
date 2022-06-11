@@ -235,6 +235,8 @@ public class firstmenu extends AppCompatActivity {
                                     Intent intent = new Intent(firstmenu.this, CarouselActivity.class);
                                     intent.putExtra("groupid",group_id.get(num));
                                     intent.putExtra("groupname",name);
+                                    intent.putExtra("useremail",user_info.getEmail());
+
                                     intent.putExtra("membernick",(ArrayList)temp.getParticipation());
                                     startActivityForResult(intent,2);
                                 } else {

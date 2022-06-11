@@ -94,6 +94,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/datebox1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/cafe"
@@ -117,6 +118,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/timebox1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -156,6 +158,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/datebox2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/cafe"
@@ -179,6 +182,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/timebox2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -218,6 +222,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/datebox3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/cafe"
@@ -242,6 +247,7 @@
 
 
         <TextView
+            android:id="@+id/timebox3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"

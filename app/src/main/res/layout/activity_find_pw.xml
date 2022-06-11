@@ -23,7 +23,9 @@
         android:textColor="#42c2ff"
         android:textSize="30sp"
         android:layout_gravity="center"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:inputType="textEmailAddress"
+        />
 
     <View
         android:layout_width="match_parent"

@@ -104,7 +104,7 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
     String groupname;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayList<String> memberAddress = new ArrayList<>();
-    DTO_user user_info;
+    String useremail;
     int is_end = 0;
 
     TextView nowAddress;
@@ -139,7 +139,7 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
         geocoder = new Geocoder(this);
 
         Intent Intent = getIntent();
-        user_info = (DTO_user) Intent.getSerializableExtra("user_info");
+        useremail=Intent.getStringExtra("useremail");//그룹 이름 받아오기
         groupname = Intent.getStringExtra("groupname");//그룹 이름 받아오기
         groupmember = Intent.getStringArrayExtra("groupmember");//그룹멤버 받아오기
 
@@ -231,7 +231,7 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
             @Override
             public void onClick(View view) {
                 if (checkAlarm.isChecked()) {
-                    DTO_schecule new_meeting = new DTO_schecule(user_info.getEmail(), meetingLocation, Integer.toString(alarm), Integer.toString(vibrate), time, date, "첨만드는 회의");
+                    DTO_schecule new_meeting = new DTO_schecule(useremail, meetingLocation, Integer.toString(alarm), Integer.toString(vibrate), time, date, "첨만드는 회의");
 
                     db.collection("group").document(groupname).collection("schedule")//생성한 회의 DB에 쓰기
                             .add(new_meeting)
@@ -239,6 +239,9 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
                                     Log.d("add_meeting", "DocumentSnapshot successfully updated!");
+                                    Intent result_intent = new Intent();
+                                    setResult(1, result_intent);
+                                    finish();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -248,7 +251,7 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
                                 }
                             });
                 } else {
-                    DTO_schecule new_meeting = new DTO_schecule(user_info.getEmail(), meetingLocation, "0", Integer.toString(vibrate), time, date, "첨만드는 회의");
+                    DTO_schecule new_meeting = new DTO_schecule(useremail, meetingLocation, "0", Integer.toString(vibrate), time, date, "첨만드는 회의");
 
                     db.collection("group").document(groupname).collection("schedule")//생성한 회의 DB에 쓰기
                             .add(new_meeting)
@@ -256,6 +259,9 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
                                     Log.d("add_meeting", "DocumentSnapshot successfully updated!");
+                                    Intent result_intent = new Intent();
+                                    setResult(1, result_intent);
+                                    finish();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -286,7 +292,9 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
             marker.setMarkerType(MapPOIItem.MarkerType.CustomImage); // 기본으로 제공하는 BluePin 마커 모양.
             marker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
             marker.setCustomImageResourceId(R.drawable.bluepin);
+            Log.d("makepoint", "hihihihihi");
             mapView.addPOIItem(marker);
+            Log.d("makepoint", "pointt");
         }
         meetingLocation = GetCenter();
         MakeLine();

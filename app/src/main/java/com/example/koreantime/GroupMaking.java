@@ -37,6 +37,7 @@ import java.util.List;
 public class GroupMaking extends AppCompatActivity {
 
     ArrayList<String> searchList = new ArrayList<>();
+    ArrayList<String> memberemail = new ArrayList<>();
     ArrayAdapter<String> listAdapter;
     ListView searchListView;
     ImageButton searchBtn;
@@ -64,7 +65,7 @@ public class GroupMaking extends AppCompatActivity {
         Intent Intent = getIntent();
         DTO_user user_info = (DTO_user) Intent.getSerializableExtra("user_info");
         joinedMember.add(user_info.getEmail());
-        MakeMemberView(user_info.getEmail());
+        MakeMemberView(user_info.getNickname());
 
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +81,7 @@ public class GroupMaking extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         searchList.add(document.getId());
+                                        memberemail.add(document.getData().get("nickname").toString());
                                     }
                                     searchListView.setAdapter(listAdapter);
                                 } else {
@@ -94,7 +96,7 @@ public class GroupMaking extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 joinedMember.add(searchList.get(i));
-                MakeMemberView(searchList.get(i));
+                MakeMemberView(memberemail.get(i));
             }
         });
         complete.setOnClickListener(new View.OnClickListener() {
@@ -111,28 +113,6 @@ public class GroupMaking extends AppCompatActivity {
                                 Intent result_intent = new Intent();
                                 setResult(1, result_intent);
                                 finish();
-//                                Log.d("add_group", "DocumentSnapshot written with ID: " + documentReference.getId());
-//                                FirebaseAuth mAuth = FirebaseAuth.getInstance();
-//                                String email = user_info.getEmail();
-//                                ArrayList<String> update_group = (ArrayList<String>) user_info.getGroups_id();
-//                                update_group.add(documentReference.getId());
-//                                Log.d("add_group", update_group + "");
-//                                DocumentReference washingtonRef = db.collection("user").document(email);
-//// Set the "isCapital" field of the city 'DC'
-//                                washingtonRef
-//                                        .update("groups_id", (List<String>) update_group)
-//                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                            @Override
-//                                            public void onSuccess(Void aVoid) {
-//
-//                                            }
-//                                        })
-//                                        .addOnFailureListener(new OnFailureListener() {
-//                                            @Override
-//                                            public void onFailure(@NonNull Exception e) {
-//                                                Log.w("add_group", "Error updating document", e);
-//                                            }
-//                                        });
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {

@@ -10,16 +10,16 @@ public class DTO_user implements Serializable {
     String addr1;
     String addr2;
     String addr3;
-    List<String> groups_id;
+    String push_token;
 
     public DTO_user(){}
-    public DTO_user(String email,String nickname,String addr1, String addr2, String addr3,List<String> groups_id){
+    public DTO_user(String email,String nickname,String addr1, String addr2, String addr3,String push_token){
         this.email=email;
         this.nickname=nickname;
         this.addr1=addr1;
         this.addr2=addr2;
         this.addr3=addr3;
-        this.groups_id=groups_id;
+        this.push_token=push_token;
     }
     public DTO_user(String email,String nickname,String addr1, String addr2, String addr3){
         this.email=email;
@@ -27,7 +27,7 @@ public class DTO_user implements Serializable {
         this.addr1=addr1;
         this.addr2=addr2;
         this.addr3=addr3;
-        this.groups_id=new ArrayList<>(1);
+        this.push_token="";
     }
     public String getEmail(){
         return email;
@@ -46,9 +46,11 @@ public class DTO_user implements Serializable {
     public String getAddr3(){
         return addr3;
     }
-    public List<String> getGroups_id(){
-        return groups_id;
+
+    public String getPush_token() {
+        return push_token;
     }
+
     public void setEmail(String email){
         this.email=email;
     }
@@ -66,7 +68,8 @@ public class DTO_user implements Serializable {
     public void setAddr3(String addr3){
         this.addr3=addr3;
     }
-    public void setGroups_id(List<String> groups_id){
-        this.groups_id=groups_id;
+
+    public void setPush_token(String push_token) {
+        this.push_token = push_token;
     }
 }

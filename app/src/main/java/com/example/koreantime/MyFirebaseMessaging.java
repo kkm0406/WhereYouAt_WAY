@@ -28,16 +28,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
     public MyFirebaseMessaging() {
         super();
         Log.d("FCM Token", "FCM start");
-        Task<String> token = FirebaseMessaging.getInstance().getToken();
-        token.addOnCompleteListener(new OnCompleteListener<String>() {
-            @Override
-            public void onComplete(@NonNull Task<String> task) {
-                if(task.isSuccessful()){
-                    Log.d("FCM Token", task.getResult());
-                }
-            }
-        });
-
     }
 
     @Override
