@@ -93,9 +93,9 @@ public class Meetingpage extends AppCompatActivity {
         }
 
         Intent Intent = getIntent();
-        String m_id =  Intent.getStringExtra("id");
-        String g_id =  Intent.getStringExtra("gid");
-        String[] members_token=Intent.getStringArrayExtra("tokens");
+        String m_id = Intent.getStringExtra("id");
+        String g_id = Intent.getStringExtra("gid");
+        String[] members_token = Intent.getStringArrayExtra("tokens");
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("group").document(g_id).collection("schedule").document(m_id)
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -105,10 +105,10 @@ public class Meetingpage extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         meetingclass = document.toObject(DTO_schecule.class);
-                        date.setText(meetingclass.getDate());
+                        date.setText(SplitDate(meetingclass.getDate()));
                         time.setText(meetingclass.getTime());
                         GeoCoding(meetingclass.getLocation());
-                        Log.d("initlat, initlon", initLat+", "+initLon);
+                        GPSToAddress(initLat, initLon);
                     } else {
                         Log.d("inter meeing", "No such document");
                     }
@@ -118,16 +118,6 @@ public class Meetingpage extends AppCompatActivity {
             }
         });
 
-
-        initMarker = new MapPOIItem();
-        MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(initLat, initLon);
-        initMarker.setItemName("Final Location");
-        initMarker.setTag(0);
-        initMarker.setMapPoint(MARKER_POINT);
-        initMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 기본으로 제공하는 BluePin 마커 모양.
-        mapView.addPOIItem(initMarker);
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(initLat, initLon), true);
-        mapView.setZoomLevel(5, true);
 
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -158,7 +148,6 @@ public class Meetingpage extends AppCompatActivity {
                 mapView.addPOIItem(marker);
 
                 Check10M(latitude, longitude);
-                GPSToAddress(latitude, longitude);
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -185,34 +174,67 @@ public class Meetingpage extends AppCompatActivity {
         arrive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (arriveFlag){
+                if (arriveFlag) {
                     punish.setVisibility(View.VISIBLE);
                 }
             }
         });
 
-        if (punishFlag) {
-            punish.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    while (true) {
-                        punish.setBackgroundColor(Color.parseColor("#FF2C2C"));
-                        try {
-                            Thread.sleep(16000);
-                            break;
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+        punish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                while (true) {
+                    punish.setBackgroundColor(Color.parseColor("#FF2C2C"));
+                    try {
+                        Thread.sleep(16000);
+                        break;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                    punish.setBackgroundColor(Color.parseColor("#FFF"));
-                    for (String token:members_token){
-                        temp.setToken(token);
-                        temp.execute();
-                    };
                 }
-            });
+                punish.setBackgroundColor(Color.parseColor("#FFF"));
+                for (String token : members_token) {
+                    temp.setToken(token);
+                    temp.execute();
+                }
+            }
+        });
+    }
+
+    private String SplitDate(String date) {
+        String tmpDate = date.substring(5);
+        String[] newDate = tmpDate.split("-");
+        return GetMonth(newDate[0])+"."+newDate[1];
+    }
+
+    public String GetMonth(String num) {
+        switch (num) {
+            case "01":
+                return "JAN";
+            case "02":
+                return "FEB";
+            case "03":
+                return "MAR";
+            case "04":
+                return "APR";
+            case "05":
+                return "MAY";
+            case "06":
+                return "JUN";
+            case "07":
+                return "JUL";
+            case "08":
+                return "AUG";
+            case "09":
+                return "SEP";
+            case "10":
+                return "OCT";
+            case "11":
+                return "NOV";
+            case "12":
+                return "DEC";
         }
+        return "";
     }
 
     private void GeoCoding(String location) {
@@ -231,7 +253,15 @@ public class Meetingpage extends AppCompatActivity {
                 initLon = list.get(0).getLongitude();
             }
         }
-
+        initMarker = new MapPOIItem();
+        MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(initLat, initLon);
+        initMarker.setItemName("Final Location");
+        initMarker.setTag(0);
+        initMarker.setMapPoint(MARKER_POINT);
+        initMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 기본으로 제공하는 BluePin 마커 모양.
+        mapView.addPOIItem(initMarker);
+        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(initLat, initLon), true);
+        mapView.setZoomLevel(5, true);
     }
 
     private String SplitAddress(String addressLine) {
@@ -265,10 +295,8 @@ public class Meetingpage extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("finish", "kakapmap remove");
         kakaoMap.removeAllViews();
     }
-
 
     private void Check10M(double latitude, double longitude) {
         double theta = initLon - longitude;
@@ -277,13 +305,13 @@ public class Meetingpage extends AppCompatActivity {
         dist = rad2deg(dist);
         dist = dist * 60 * 1.1515;
         dist = dist * 1609.344;
-        if (dist >= 50) {
-            Log.d("distance", "아직 멀음");
-            arrive.setBackgroundColor(Color.parseColor("#4294ff"));
+        if (dist <= 50) {
+            arrive.setBackgroundResource(R.drawable.get_img_btn);
             punish.setVisibility(View.INVISIBLE);
         } else {
+            Log.d("distance", "아직 멀음");
             arriveFlag = true;
-            arrive.setBackgroundColor(Color.parseColor("#fff"));
+            arrive.setBackgroundResource(R.drawable.get_img_btn1);
         }
     }
 

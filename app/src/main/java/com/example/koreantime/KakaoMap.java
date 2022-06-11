@@ -44,8 +44,11 @@ import net.daum.mf.map.api.MapView;
 
 import java.io.IOException;
 import java.security.Policy;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Currency;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Spliterator;
@@ -122,12 +125,13 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
         month = findViewById(R.id.month);
         day = findViewById(R.id.day);
         nowAddress = findViewById(R.id.nowAddress);
+        Meetingtime = findViewById(R.id.Meetingtime);
 
         Calendar c = Calendar.getInstance();
         month.setText(GetMonth(String.valueOf(c.get(Calendar.MONTH) + 1)));
         day.setText(String.valueOf(c.get(Calendar.DAY_OF_MONTH)));
-
-        TextView Meetingtime = findViewById(R.id.Meetingtime);
+        String tmp_time = c.get(Calendar.HOUR)+" : "+c.get(Calendar.MINUTE);
+        Meetingtime.setText(tmp_time);
 
         OneDayDecorator oneDayDecorator = new OneDayDecorator();
         SaturdayDecorator saturdayDecorator = new SaturdayDecorator();
@@ -173,13 +177,13 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
                 int mHour = c.get(Calendar.HOUR);
                 int mMin = c.get(Calendar.MINUTE);
                 TimePickerDialog timePickerDialog = new TimePickerDialog(
-                        KakaoMap.this, android.R.style.Theme_Holo, new TimePickerDialog.OnTimeSetListener() {
+                        KakaoMap.this, android.R.style.Theme_Holo_Light_Dialog, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                        time = i + "-" + i1;
+                        time = NewInteger(i) + " : " + NewInteger(i1);
                         LinearLayout setTime = findViewById(R.id.setTime);
                         setTime.setVisibility(View.VISIBLE);
-                        Meetingtime.setText(i + " : " + i1);
+                        Meetingtime.setText(time);
                     }
                 }, mHour, mMin, false);
                 timePickerDialog.show();
@@ -274,6 +278,31 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
 
             }
         });
+    }
+
+    private String NewInteger(int i) {
+        switch (i){
+            case 1:
+                return "01";
+            case 2:
+                return "02";
+            case 3:
+                return "03";
+            case 4:
+                return "04";
+            case 5:
+                return "05";
+            case 6:
+                return "06";
+            case 7:
+                return "07";
+            case 8:
+                return "08";
+            case 9:
+                return "09";
+            default:
+                return String.valueOf(i);
+        }
     }
 
     @Override
