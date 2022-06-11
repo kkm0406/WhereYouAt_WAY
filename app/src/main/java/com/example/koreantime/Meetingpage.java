@@ -93,9 +93,8 @@ public class Meetingpage extends AppCompatActivity {
         }
 
         Intent Intent = getIntent();
-        String m_id =  Intent.getStringExtra("id");
-        String g_id =  Intent.getStringExtra("gid");
-        String[] members_token=Intent.getStringArrayExtra("tokens");
+        String m_id = Intent.getStringExtra("id");
+        String g_id = Intent.getStringExtra("gid");
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("group").document(g_id).collection("schedule").document(m_id)
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -108,7 +107,7 @@ public class Meetingpage extends AppCompatActivity {
                         date.setText(meetingclass.getDate());
                         time.setText(meetingclass.getTime());
                         GeoCoding(meetingclass.getLocation());
-                        Log.d("initlat, initlon", initLat+", "+initLon);
+                        Log.d("initlat, initlon", initLat + ", " + initLon);
                     } else {
                         Log.d("inter meeing", "No such document");
                     }
@@ -182,14 +181,14 @@ public class Meetingpage extends AppCompatActivity {
         arrive = findViewById(R.id.arrive);
         punish = findViewById(R.id.punish);
 
-        if (arriveFlag) {
-            arrive.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        arrive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (arriveFlag){
                     punish.setVisibility(View.VISIBLE);
                 }
-            });
-        }
+            }
+        });
 
         if (punishFlag) {
             punish.setOnClickListener(new View.OnClickListener() {
@@ -206,10 +205,8 @@ public class Meetingpage extends AppCompatActivity {
                         }
                     }
                     punish.setBackgroundColor(Color.parseColor("#FFF"));
-                    for (String token:members_token){
-                        temp.setToken(token);
-                        temp.execute();
-                    };
+                    temp.setToken("cZF6ykcGTaC2hRT-qBO5KM:APA91bGDEgSHsXKnxqZ0IvviBdXqyMf0RdZhaRDKPLNxwacaSkQn7QnhRr_JqpL-a2UNBO_OUhHqSXyuPLzefwrRkJVAYvz-IlcehtS5GjExkuXc0ViZa-KIiwJPyV9wr3LFVaT8zuux");
+                    temp.execute();
                 }
             });
         }
@@ -277,17 +274,13 @@ public class Meetingpage extends AppCompatActivity {
         dist = rad2deg(dist);
         dist = dist * 60 * 1.1515;
         dist = dist * 1609.344;
-        if (dist <= 50) {
+        if (dist >= 50) {
             Log.d("distance", "아직 멀음");
-            arrive.setBackgroundResource(R.drawable.get_img_btn);
-            punish.setVisibility(View.VISIBLE);
-            arriveFlag = true;
-            punishFlag = true;
-        } else {
-            arrive.setBackgroundResource(R.drawable.get_img_btn1);
+            arrive.setBackgroundColor(Color.parseColor("#4294ff"));
             punish.setVisibility(View.INVISIBLE);
-            arriveFlag = false;
-            punishFlag = false;
+        } else {
+            arriveFlag = true;
+            arrive.setBackgroundColor(Color.parseColor("#fff"));
         }
     }
 
