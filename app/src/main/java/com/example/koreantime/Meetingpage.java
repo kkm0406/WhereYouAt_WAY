@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -41,7 +42,9 @@ import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapPolyline;
 import net.daum.mf.map.api.MapView;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Meetingpage extends AppCompatActivity {
 
@@ -71,6 +74,26 @@ public class Meetingpage extends AppCompatActivity {
         setContentView(R.layout.activity_meetingpage);
 
         nowAddress = findViewById(R.id.nowAddress);
+        geocoder = new Geocoder(this);
+        kakaoMap = findViewById(R.id.kakaoMap);
+        mapView = new MapView(Meetingpage.this);
+        mapView.setZoomLevel(3, true);
+        kakaoMap.addView(mapView);
+
+        if (!checkLocationServicesStatus()) {
+            showDialogForLocationServiceSetting();
+        } else {
+            checkRunTimePermission();
+        }
+
+        initMarker = new MapPOIItem();
+        MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(initLat, initLon);
+        initMarker.setItemName("Final Location");
+        initMarker.setTag(0);
+        initMarker.setMapPoint(MARKER_POINT);
+        initMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 기본으로 제공하는 BluePin 마커 모양.
+        mapView.addPOIItem(initMarker);
+
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -85,17 +108,24 @@ public class Meetingpage extends AppCompatActivity {
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         final LocationListener gpsLocationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
-
-                String provider = location.getProvider();
                 double longitude = location.getLongitude();
                 double latitude = location.getLatitude();
-                double altitude = location.getAltitude();
 
+                MapPOIItem marker = new MapPOIItem();
+                MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(latitude, longitude);
+                marker.setItemName("Default Marker");
+                marker.setTag(0);
+                marker.setMapPoint(MARKER_POINT);
+                marker.setMarkerType(MapPOIItem.MarkerType.CustomImage); // 기본으로 제공하는 BluePin 마커 모양.
+                marker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+                marker.setCustomImageResourceId(R.drawable.bluepin);
+                mapView.addPOIItem(marker);
 
-                nowAddress.setText("위치정보 : " + provider + "" +
-                        "위도 : " + longitude + "" +
-                        "경도 : " + latitude + "" +
-                        "고도  : " + altitude);
+                Check10M(latitude, longitude);
+                GPSToAddress(latitude, longitude);
+
+                mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
+
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -116,24 +146,8 @@ public class Meetingpage extends AppCompatActivity {
                 1,
                 gpsLocationListener);
 
-
-        kakaoMap = findViewById(R.id.kakaoMap);
-        mapView = new MapView(Meetingpage.this);
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.5418, 126.9818), true);
-        mapView.setZoomLevel(3, true);
-        kakaoMap.addView(mapView);
-
-        if (!checkLocationServicesStatus()) {
-            showDialogForLocationServiceSetting();
-        } else {
-            checkRunTimePermission();
-        }
-
         arrive = findViewById(R.id.arrive);
         punish = findViewById(R.id.punish);
-
-
-
 
         if (arriveFlag) {
             arrive.setOnClickListener(new View.OnClickListener() {
@@ -164,14 +178,30 @@ public class Meetingpage extends AppCompatActivity {
                 }
             });
         }
+    }
 
-        initMarker = new MapPOIItem();
-        MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(initLat, initLon);
-        initMarker.setItemName("Final Location");
-        initMarker.setTag(0);
-        initMarker.setMapPoint(MARKER_POINT);
-        initMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 기본으로 제공하는 BluePin 마커 모양.
-        mapView.addPOIItem(initMarker);
+    private String SplitAddress(String addressLine) {
+        return addressLine.substring(5);
+    }
+
+    private void GPSToAddress(double latitude, double longitude) {
+        List<Address> list = null;
+        try {
+            list = geocoder.getFromLocation(
+                    latitude, // 위도
+                    longitude, // 경도
+                    10); // 얻어올 값의 개수
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("test", "입출력 오류");
+        }
+        if (list != null) {
+            if (list.size() == 0) {
+//                marker.setItemName(" ");
+            } else {
+                nowAddress.setText(SplitAddress(list.get(0).getAddressLine(0)));
+            }
+        }
     }
 
     void send_penalty(String token, String vibrate, String alarm) {
@@ -199,7 +229,7 @@ public class Meetingpage extends AppCompatActivity {
             punish.setVisibility(View.VISIBLE);
             arriveFlag = true;
             punishFlag = true;
-        }else{
+        } else {
             arrive.setBackgroundResource(R.drawable.get_img_btn1);
             punish.setVisibility(View.INVISIBLE);
             arriveFlag = false;
@@ -214,8 +244,6 @@ public class Meetingpage extends AppCompatActivity {
     private static double rad2deg(double rad) {
         return (rad * 180 / Math.PI);
     }
-
-
 
 
     private void onFinishReverseGeoCoding(String result) {
