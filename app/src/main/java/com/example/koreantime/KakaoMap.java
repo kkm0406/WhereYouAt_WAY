@@ -130,7 +130,7 @@ public class KakaoMap extends AppCompatActivity implements MapView.MapViewEventL
         Calendar c = Calendar.getInstance();
         month.setText(GetMonth(String.valueOf(c.get(Calendar.MONTH) + 1)));
         day.setText(String.valueOf(c.get(Calendar.DAY_OF_MONTH)));
-        String tmp_time = c.get(Calendar.HOUR)+" : "+c.get(Calendar.MINUTE);
+        String tmp_time = c.get(Calendar.HOUR_OF_DAY)+" : "+c.get(Calendar.MINUTE);
         Meetingtime.setText(tmp_time);
 
         OneDayDecorator oneDayDecorator = new OneDayDecorator();
