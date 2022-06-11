@@ -50,6 +50,7 @@ import net.daum.mf.map.api.MapView;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Meetingpage extends AppCompatActivity {
@@ -104,8 +105,16 @@ public class Meetingpage extends AppCompatActivity {
         Intent Intent = getIntent();
         String m_id = Intent.getStringExtra("id");
         String g_id = Intent.getStringExtra("gid");
+        String email = Intent.getStringExtra("email");
         String[] members_token = Intent.getStringArrayExtra("tokens");
+        Log.d("plz", email);
         member_id = Intent.getStringArrayExtra("member_id");
+        ArrayList<String> other_id=new ArrayList<String>();
+        for ( int i=0; i < member_id.length; i++ ) {
+            if(member_id[i]!=email){
+                other_id.add(member_id[i]);
+            }
+        }
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("group").document(g_id).collection("schedule").document(m_id)
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -153,11 +162,12 @@ public class Meetingpage extends AppCompatActivity {
         }
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
+        MapPOIItem marker = new MapPOIItem();
         final LocationListener gpsLocationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 double longitude = location.getLongitude();
                 double latitude = location.getLatitude();
-                for(String id:member_id){
+                for(String id:other_id){
                     RemoveAllMarkers();
                     db.collection("user").document(id)
                             .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -179,7 +189,16 @@ public class Meetingpage extends AppCompatActivity {
                             }
                         }
                     });
+
                 }
+                mapView.removePOIItem(marker);
+                MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(latitude, longitude);
+                marker.setItemName("It's Me!!");
+                marker.setTag(0);
+                marker.setMapPoint(MARKER_POINT);
+                marker.setMarkerType(MapPOIItem.MarkerType.CustomImage); // 기본으로 제공하는 BluePin 마커 모양.
+                marker.setCustomImageResourceId(R.drawable.redpin);
+                mapView.addPOIItem(marker);
 
                 Check10M(latitude, longitude);
             }
@@ -350,7 +369,7 @@ public class Meetingpage extends AppCompatActivity {
         initMarker.setMapPoint(MARKER_POINT);
         initMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage); // 기본으로 제공하는 BluePin 마커 모양.
         initMarker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-        initMarker.setCustomImageResourceId(R.drawable.redpin);// 기본으로 제공하는 BluePin 마커 모양.
+        initMarker.setCustomImageResourceId(R.drawable.mymarker);// 기본으로 제공하는 BluePin 마커 모양.
         mapView.addPOIItem(initMarker);
         mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(initLat, initLon), true);
         mapView.setZoomLevel(5, true);
@@ -398,13 +417,13 @@ public class Meetingpage extends AppCompatActivity {
         dist = dist * 60 * 1.1515;
         dist = dist * 1609.344;
         if (dist <= 50) {
-            arrive.setBackgroundResource(R.drawable.get_img_btn);
+            arrive.setBackgroundResource(R.drawable.get_img_btn1);
             punish.setVisibility(View.INVISIBLE);
             arriveFlag = true;
         } else {
             Log.d("distance", "아직 멀음");
             arriveFlag = false;
-            arrive.setBackgroundResource(R.drawable.get_img_btn1);
+            arrive.setBackgroundResource(R.drawable.get_img_btn);
         }
     }
 

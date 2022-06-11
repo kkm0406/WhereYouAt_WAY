@@ -67,6 +67,8 @@ class CarouselActivity : AppCompatActivity() {
                                 val tg1intent = Intent(this, Meetingpage::class.java)// 여기서부턴 Meetingpage
                                 tg1intent.putExtra("id",meetings_id.get(0))
                                 tg1intent.putExtra("gid",groupid)
+                                tg1intent.putExtra("email",useremail)
+
 
                                 val items2 = membernick?.toArray(arrayOfNulls<String>(membernick.size))
                                 tg1intent.putExtra("member_id", items2)
@@ -109,6 +111,7 @@ class CarouselActivity : AppCompatActivity() {
                                 val tg1intent = Intent(this, Meetingpage::class.java)// 여기서부턴 Meetingpage
                                 tg1intent.putExtra("id",meetings_id.get(0))
                                 tg1intent.putExtra("gid",groupid)
+                                tg1intent.putExtra("email",useremail)
                                 val items2 = membernick?.toArray(arrayOfNulls<String>(membernick.size))
                                 tg1intent.putExtra("member_id", items2)
                                 val items = members_token?.toArray(arrayOfNulls<String>(members_token.size))
@@ -120,6 +123,7 @@ class CarouselActivity : AppCompatActivity() {
                                 val tg1intent = Intent(this, Meetingpage::class.java)// 여기서부턴 Meetingpage
                                 tg1intent.putExtra("id",meetings_id.get(1))
                                 tg1intent.putExtra("gid",groupid)
+                                tg1intent.putExtra("email",useremail)
                                 val items2 = membernick?.toArray(arrayOfNulls<String>(membernick.size))
                                 tg1intent.putExtra("member_id", items2)
                                 val items = members_token?.toArray(arrayOfNulls<String>(members_token.size))
@@ -154,6 +158,7 @@ class CarouselActivity : AppCompatActivity() {
                                 val tg1intent = Intent(this, Meetingpage::class.java)// 여기서부턴 Meetingpage
                                 tg1intent.putExtra("id",meetings_id.get(0))
                                 tg1intent.putExtra("gid",groupid)
+                                tg1intent.putExtra("email",useremail)
                                 val items2 = membernick?.toArray(arrayOfNulls<String>(membernick.size))
                                 tg1intent.putExtra("member_id", items2)
                                 val items = members_token?.toArray(arrayOfNulls<String>(members_token.size))
@@ -165,6 +170,7 @@ class CarouselActivity : AppCompatActivity() {
                                 val tg1intent = Intent(this, Meetingpage::class.java)// 여기서부턴 Meetingpage
                                 tg1intent.putExtra("id",meetings_id.get(1))
                                 tg1intent.putExtra("gid",groupid)
+                                tg1intent.putExtra("email",useremail)
                                 val items2 = membernick?.toArray(arrayOfNulls<String>(membernick.size))
                                 tg1intent.putExtra("member_id", items2)
                                 val items = members_token?.toArray(arrayOfNulls<String>(members_token.size))
@@ -176,6 +182,7 @@ class CarouselActivity : AppCompatActivity() {
                                 val tg1intent = Intent(this, Meetingpage::class.java)// 여기서부턴 Meetingpage
                                 tg1intent.putExtra("id",meetings_id.get(2))
                                 tg1intent.putExtra("gid",groupid)
+                                tg1intent.putExtra("email",useremail)
                                 val items2 = membernick?.toArray(arrayOfNulls<String>(membernick.size))
                                 tg1intent.putExtra("member_id", items2)
                                 val items = members_token?.toArray(arrayOfNulls<String>(members_token.size))
