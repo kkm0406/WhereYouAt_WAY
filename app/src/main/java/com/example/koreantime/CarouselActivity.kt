@@ -20,6 +20,8 @@ class CarouselActivity : AppCompatActivity() {
     var membernick=ArrayList<String>()
     var useremail=""
     var meetings_id=ArrayList<String>()
+    var members_token=ArrayList<String>()
+
 
     fun update_list(){
         db!!.collection("group").document(groupid).collection("schedule")
@@ -54,6 +56,9 @@ class CarouselActivity : AppCompatActivity() {
                                 val tg1intent = Intent(this, Meetingpage::class.java)// 여기서부턴 Meetingpage
                                 tg1intent.putExtra("id",meetings_id.get(0))
                                 tg1intent.putExtra("gid",groupid)
+
+                                val items = members_token?.toArray(arrayOfNulls<String>(members_token.size))
+                                tg1intent.putExtra("tokens", items)
                                 startActivity(tg1intent)
                             }
                             Map_image2.setOnClickListener{
@@ -84,6 +89,8 @@ class CarouselActivity : AppCompatActivity() {
                                 val tg1intent = Intent(this, Meetingpage::class.java)// 여기서부턴 Meetingpage
                                 tg1intent.putExtra("id",meetings_id.get(0))
                                 tg1intent.putExtra("gid",groupid)
+                                val items = members_token?.toArray(arrayOfNulls<String>(members_token.size))
+                                tg1intent.putExtra("tokens", items)
                                 startActivity(tg1intent)
                             }
 
@@ -91,6 +98,8 @@ class CarouselActivity : AppCompatActivity() {
                                 val tg1intent = Intent(this, Meetingpage::class.java)// 여기서부턴 Meetingpage
                                 tg1intent.putExtra("id",meetings_id.get(1))
                                 tg1intent.putExtra("gid",groupid)
+                                val items = members_token?.toArray(arrayOfNulls<String>(members_token.size))
+                                tg1intent.putExtra("tokens", items)
                                 startActivity(tg1intent)
                             }
                             Map_image3.setOnClickListener{
@@ -113,6 +122,8 @@ class CarouselActivity : AppCompatActivity() {
                                 val tg1intent = Intent(this, Meetingpage::class.java)// 여기서부턴 Meetingpage
                                 tg1intent.putExtra("id",meetings_id.get(0))
                                 tg1intent.putExtra("gid",groupid)
+                                val items = members_token?.toArray(arrayOfNulls<String>(members_token.size))
+                                tg1intent.putExtra("tokens", items)
                                 startActivity(tg1intent)
                             }
 
@@ -120,6 +131,8 @@ class CarouselActivity : AppCompatActivity() {
                                 val tg1intent = Intent(this, Meetingpage::class.java)// 여기서부턴 Meetingpage
                                 tg1intent.putExtra("id",meetings_id.get(1))
                                 tg1intent.putExtra("gid",groupid)
+                                val items = members_token?.toArray(arrayOfNulls<String>(members_token.size))
+                                tg1intent.putExtra("tokens", items)
                                 startActivity(tg1intent)
                             }
 
@@ -127,6 +140,8 @@ class CarouselActivity : AppCompatActivity() {
                                 val tg1intent = Intent(this, Meetingpage::class.java)// 여기서부턴 Meetingpage
                                 tg1intent.putExtra("id",meetings_id.get(2))
                                 tg1intent.putExtra("gid",groupid)
+                                val items = members_token?.toArray(arrayOfNulls<String>(members_token.size))
+                                tg1intent.putExtra("tokens", items)
                                 startActivity(tg1intent)
                             }
                         }
@@ -199,6 +214,7 @@ class CarouselActivity : AppCompatActivity() {
                             if (document != null) {
                                 Log.d("hihiii", document.data!!.get("nickname") as String)
                                 memberssssss.add(document.data!!.get("nickname") as String)
+                                members_token.add(document.data!!.get("push_token")as String)
                                 Log.d("hihiii", memberssssss.toString())
                                 Log.d("hihiii", membernick.size.toString())
                                 if(i+2==membernick.size){//

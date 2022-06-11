@@ -95,6 +95,7 @@ public class Meetingpage extends AppCompatActivity {
         Intent Intent = getIntent();
         String m_id =  Intent.getStringExtra("id");
         String g_id =  Intent.getStringExtra("gid");
+        String[] members_token=Intent.getStringArrayExtra("tokens");
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("group").document(g_id).collection("schedule").document(m_id)
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -205,8 +206,10 @@ public class Meetingpage extends AppCompatActivity {
                         }
                     }
                     punish.setBackgroundColor(Color.parseColor("#FFF"));
-                    temp.setToken("cZF6ykcGTaC2hRT-qBO5KM:APA91bGDEgSHsXKnxqZ0IvviBdXqyMf0RdZhaRDKPLNxwacaSkQn7QnhRr_JqpL-a2UNBO_OUhHqSXyuPLzefwrRkJVAYvz-IlcehtS5GjExkuXc0ViZa-KIiwJPyV9wr3LFVaT8zuux");
-                    temp.execute();
+                    for (String token:members_token){
+                        temp.setToken(token);
+                        temp.execute();
+                    };
                 }
             });
         }
