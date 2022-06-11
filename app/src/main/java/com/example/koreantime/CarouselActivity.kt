@@ -19,6 +19,7 @@ class CarouselActivity : AppCompatActivity() {
     val meetingssss=ArrayList<DTO_schecule>()
     var membernick=ArrayList<String>()
     var useremail=""
+    var meetings_id=ArrayList<String>()
 
     fun update_list(){
         db!!.collection("group").document(groupid).collection("schedule")
@@ -26,6 +27,7 @@ class CarouselActivity : AppCompatActivity() {
                 .addOnSuccessListener { result ->
                     var meeting_count=0
                     meetingssss.clear()
+                    meetings_id.clear()
                     for (document in result) {
                         val meeting= DTO_schecule(document.data.get("host").toString(),
                                 document.data.get("location").toString()
@@ -36,6 +38,7 @@ class CarouselActivity : AppCompatActivity() {
                                 ,document.data.get("name").toString())
                         Log.d("meeitngfdff", meeting.date)
                         meetingssss.add(meeting)//스케줄 다 가져와서 저장
+                        meetings_id.add(document.id)
                         meeting_count += 1
                     }
                     Log.d("temptemp","tejote")
@@ -49,6 +52,8 @@ class CarouselActivity : AppCompatActivity() {
                             timebox3.text=""
                             btn_toggle1.setOnClickListener{
                                 val tg1intent = Intent(this, Meetingpage::class.java)// 여기서부턴 Meetingpage
+                                tg1intent.putExtra("id",meetings_id.get(0))
+                                tg1intent.putExtra("gid",groupid)
                                 startActivity(tg1intent)
                             }
                             Map_image2.setOnClickListener{
