@@ -135,6 +135,7 @@
             android:layout_height="35dp"
             android:layout_gravity="bottom"
             android:layout_marginLeft="25dp"
+            android:visibility="invisible"
             android:layout_marginBottom="13dp"
             android:background="@drawable/get_img_btn"
             android:backgroundTint="#4294ff"
@@ -197,6 +198,7 @@
             android:id="@+id/btn_toggle2"
             android:layout_width="190dp"
             android:layout_height="35dp"
+            android:visibility="invisible"
             android:layout_gravity="bottom"
             android:layout_marginLeft="25dp"
             android:layout_marginBottom="13dp"
@@ -261,6 +263,7 @@
         <Button
             android:id="@+id/btn_toggle3"
             android:layout_width="190dp"
+            android:visibility="invisible"
             android:layout_height="35dp"
             android:layout_gravity="bottom"
             android:layout_marginLeft="25dp"
