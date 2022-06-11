@@ -29,10 +29,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.koreantime.DTO.DTO_schecule;
 import com.example.koreantime.DTO.DTO_user;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import net.daum.android.map.MapViewEventListener;
@@ -64,11 +68,36 @@ public class Meetingpage extends AppCompatActivity {
     MapPOIItem initMarker;
     boolean arriveFlag = false;
     boolean punishFlag = false;
+    DTO_schecule meetingclass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meetingpage);
+        TextView date=findViewById(R.id.month);
+        TextView time=findViewById(R.id.time);
+        Intent Intent = getIntent();
+        String m_id =  Intent.getStringExtra("id");
+        String g_id =  Intent.getStringExtra("gid");
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("group").document(g_id).collection("schedule").document(m_id)
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        meetingclass = document.toObject(DTO_schecule.class);
+                        date.setText(meetingclass.getDate());
+                        time.setText(meetingclass.getTime());
+                    } else {
+                        Log.d("inter meeing", "No such document");
+                    }
+                } else {
+                    Log.d("inter meeing", "get failed with ", task.getException());
+                }
+            }
+        });
 
         nowAddress = findViewById(R.id.nowAddress);
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
