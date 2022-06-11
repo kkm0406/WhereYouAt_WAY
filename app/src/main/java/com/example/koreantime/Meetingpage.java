@@ -158,6 +158,7 @@ public class Meetingpage extends AppCompatActivity {
                 double longitude = location.getLongitude();
                 double latitude = location.getLatitude();
                 for(String id:member_id){
+                    RemoveAllMarkers();
                     db.collection("user").document(id)
                             .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
@@ -168,8 +169,8 @@ public class Meetingpage extends AppCompatActivity {
                                     Log.d("ssivl", document.getData().get("latitude").toString());
 
                                     Log.d("ssivl", document.getData().get("longitude").toString());
-                                    RemoveAllMarkers();
-                                    MakeMarker(Double.parseDouble(document.getData().get("latitude").toString()) , Double.parseDouble(document.getData().get("longitude").toString()) );
+
+                                    MakeMarker(Double.parseDouble(document.getData().get("longitude").toString()) , Double.parseDouble(document.getData().get("latitude").toString()) );
                                 } else {
                                     Log.d("inter meeing", "No such document");
                                 }
@@ -272,13 +273,13 @@ public class Meetingpage extends AppCompatActivity {
     }
 
     private void MakeMarker(double latitude, double longitude) {
+        Log.d("MakeMarker", latitude+"< "+longitude);
         MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(latitude, longitude);
         MapPOIItem marker = new MapPOIItem();
         marker.setItemName("Default Marker");
         marker.setTag(0);
         marker.setMapPoint(MARKER_POINT);
         marker.setMarkerType(MapPOIItem.MarkerType.CustomImage); // 기본으로 제공하는 BluePin 마커 모양.
-        marker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
         marker.setCustomImageResourceId(R.drawable.bluepin);
         mapView.addPOIItem(marker);
         mapPOIItems.add(marker);
