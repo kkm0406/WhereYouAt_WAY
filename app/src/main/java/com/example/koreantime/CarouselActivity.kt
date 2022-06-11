@@ -46,6 +46,12 @@ class CarouselActivity : AppCompatActivity() {
                         meeting_count += 1
                     }
                     Log.d("temptemp","tejote")
+                    Map_image1.setOnClickListener{
+                    }
+                    Map_image2.setOnClickListener{
+                    }
+                    Map_image3.setOnClickListener{
+                    }
                     if(meeting_count>0){
                         if(meetingssss.size==1){
                             datebox1.text=meetingssss.get(0).date

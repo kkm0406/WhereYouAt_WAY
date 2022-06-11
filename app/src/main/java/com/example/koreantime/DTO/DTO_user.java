@@ -35,14 +35,6 @@ public class DTO_user implements Serializable {
         this.longitude=0.0;
         this.push_token=push_token;
     }
-    public DTO_user(String email,String nickname,String addr1, String addr2, String addr3){
-        this.email=email;
-        this.nickname=nickname;
-        this.addr1=addr1;
-        this.addr2=addr2;
-        this.addr3=addr3;
-        this.push_token="";
-    }
     public String getEmail(){
         return email;
     }

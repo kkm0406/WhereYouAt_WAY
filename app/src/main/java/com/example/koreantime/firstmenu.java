@@ -84,19 +84,23 @@ public class firstmenu extends AppCompatActivity {
                                 }
                             });
                 }
+                break;
             }case 1:
             {
-                if(resultCode==1){
-                    String searchemail=user_info.getEmail();
-                    db.collection("user").document(searchemail)
-                            .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            user_info = documentSnapshot.toObject(DTO_user.class);
-                            Log.d("성공", user_info.getNickname());
-                        }
-                    });
+                {
+                    if(resultCode==1){
+                        String searchemail=user_info.getEmail();
+                        db.collection("user").document(searchemail)
+                                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                user_info = documentSnapshot.toObject(DTO_user.class);
+                                Log.d("성공", user_info.getNickname());
+                            }
+                        });
+                    }
                 }
+                break;
             }
             case 2:
             {
@@ -108,13 +112,15 @@ public class firstmenu extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                     if (task.isSuccessful()) {
-                                        Log.d("added_group222", Integer.toString(task.getResult().size()) );
+                                        group_id.clear();
+                                        Log.d("added_group222", Integer.toString(task.getResult().size())+1 );
                                         GridLayout grid = findViewById(R.id.grid);
-                                        grid.removeViewsInLayout(2,task.getResult().size());
+                                        grid.removeViewsInLayout(2,task.getResult().size()+1);
                                         int num=0;
                                         for (QueryDocumentSnapshot document : task.getResult()) {//유저가 소속되어있는 그룹들 리턴
                                             createNew(num,document.getData().get("name").toString());
                                             Log.d("added_group222", document.getId() + " => " + document.getData());
+                                            group_id.add(document.getId().toString());
                                             num++;
                                         }
                                     } else {
@@ -123,6 +129,7 @@ public class firstmenu extends AppCompatActivity {
                                 }
                             });
                 }
+                break;
             }
         }
     }
