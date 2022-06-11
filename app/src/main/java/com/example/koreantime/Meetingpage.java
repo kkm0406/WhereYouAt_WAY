@@ -61,8 +61,8 @@ public class Meetingpage extends AppCompatActivity {
     Button arrive;
     Button punish;
     Geocoder geocoder;
-    double initLat = 36.6287;
-    double initLon = 127.4605;
+    double initLat = 36.6259;
+    double initLon = 127.4526;
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION};
@@ -94,8 +94,8 @@ public class Meetingpage extends AppCompatActivity {
         }
 
         Intent Intent = getIntent();
-        String m_id = Intent.getStringExtra("id");
-        String g_id = Intent.getStringExtra("gid");
+        String m_id =  Intent.getStringExtra("id");
+        String g_id =  Intent.getStringExtra("gid");
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("group").document(g_id).collection("schedule").document(m_id)
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

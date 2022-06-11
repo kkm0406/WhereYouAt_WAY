@@ -12,15 +12,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.koreantime.DTO.DTO_user;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class edit extends AppCompatActivity {
 
     FirebaseFirestore db= FirebaseFirestore.getInstance();
     DTO_user user_info;
+    String pushtoken;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +45,17 @@ public class edit extends AppCompatActivity {
         address1.setText(user_info.getAddr1());
         address2.setText(user_info.getAddr2());
         address3.setText(user_info.getAddr3());
+        Task<String> token = FirebaseMessaging.getInstance().getToken();
+
+        token.addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if(task.isSuccessful()){
+                    Log.d("FCM Token", task.getResult().toString());
+                    pushtoken=task.getResult().toString();
+                }
+            }
+        });
 
         name.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +88,7 @@ public class edit extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DTO_user new_user=new DTO_user(user_info.getEmail(),name.getText().toString(),address1.getText().toString(),address2.getText().toString(),address3.getText().toString());
+                DTO_user new_user=new DTO_user(user_info.getEmail(),name.getText().toString(),address1.getText().toString(),address2.getText().toString(),address3.getText().toString(),pushtoken);
                 db.collection("user").document(user_info.getEmail())
                         .set(new_user)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
