@@ -8,6 +8,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,95 +35,144 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import net.daum.android.map.MapViewEventListener;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapPolyline;
 import net.daum.mf.map.api.MapView;
 
 import java.util.ArrayList;
 
-public class Meetingpage extends AppCompatActivity implements MapView.POIItemEventListener, MapView.MapViewEventListener, MapView.CurrentLocationEventListener{
+public class Meetingpage extends AppCompatActivity implements MapView.CurrentLocationEventListener {
 
-    FirebaseFirestore db= FirebaseFirestore.getInstance();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     DTO_user user_info;
     String[] members;
-    ArrayList<String> late_member=new ArrayList<String>();
+    ArrayList<String> late_member = new ArrayList<String>();
     RelativeLayout kakaoMap;
     MapView mapView;
     Button arrive;
     Button punish;
     Geocoder geocoder;
-    double initLat = 36.6262;
+    double initLat = 36.6259;
     double initLon = 127.4526;
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
-    String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
-    Messaging temp=new Messaging();
+    String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION};
+    Messaging temp = new Messaging();
     TextView nowAddress;
+    MapPOIItem initMarker;
+    boolean arriveFlag = false;
+    boolean punishFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meetingpage);
-        kakaoMap = findViewById(R.id.kakaoMap);
-//        nowAddress = findViewById(R.id.nowAddress);
-        mapView = new MapView(Meetingpage.this);
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.5418, 126.9818), true);
-        mapView.setZoomLevel(4, true);
-        mapView.setPOIItemEventListener(this);
-        arrive=findViewById(R.id.arrive);
-        punish=findViewById(R.id.punish);
-        kakaoMap.addView(mapView);
 
-        mapView.setMapViewEventListener((MapViewEventListener) this);
-        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
+        nowAddress = findViewById(R.id.nowAddress);
+
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting();
-        }else {
+        } else {
             checkRunTimePermission();
         }
 
+        kakaoMap = findViewById(R.id.kakaoMap);
+        mapView = new MapView(Meetingpage.this);
+        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.5418, 126.9818), true);
+        mapView.setZoomLevel(3, true);
+        kakaoMap.addView(mapView);
+
+        arrive = findViewById(R.id.arrive);
+        punish = findViewById(R.id.punish);
 
 
-        arrive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                punish.setVisibility(View.VISIBLE);
-            }
-        });
-        punish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+        mapView.setCurrentLocationEventListener(this);
 
-                while (true){
-                    punish.setBackgroundColor(Color.parseColor("#FF2C2C"));
-                    try {
-                        Thread.sleep(16000);
-                        break;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        if (arriveFlag) {
+            arrive.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    punish.setVisibility(View.VISIBLE);
                 }
-                punish.setBackgroundColor(Color.parseColor("#FFF"));
-                temp.setToken("cZF6ykcGTaC2hRT-qBO5KM:APA91bGDEgSHsXKnxqZ0IvviBdXqyMf0RdZhaRDKPLNxwacaSkQn7QnhRr_JqpL-a2UNBO_OUhHqSXyuPLzefwrRkJVAYvz-IlcehtS5GjExkuXc0ViZa-KIiwJPyV9wr3LFVaT8zuux");
-                temp.execute();
-            }
-        });
-        setContentView(R.layout.activity_meetingpage);
+            });
+        }
 
+        if (punishFlag) {
+            punish.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    while (true) {
+                        punish.setBackgroundColor(Color.parseColor("#FF2C2C"));
+                        try {
+                            Thread.sleep(16000);
+                            break;
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    punish.setBackgroundColor(Color.parseColor("#FFF"));
+                    temp.setToken("cZF6ykcGTaC2hRT-qBO5KM:APA91bGDEgSHsXKnxqZ0IvviBdXqyMf0RdZhaRDKPLNxwacaSkQn7QnhRr_JqpL-a2UNBO_OUhHqSXyuPLzefwrRkJVAYvz-IlcehtS5GjExkuXc0ViZa-KIiwJPyV9wr3LFVaT8zuux");
+                    temp.execute();
+                }
+            });
+        }
+
+        initMarker = new MapPOIItem();
+        MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(initLat, initLon);
+        initMarker.setItemName("Final Location");
+        initMarker.setTag(0);
+        initMarker.setMapPoint(MARKER_POINT);
+        initMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 기본으로 제공하는 BluePin 마커 모양.
+        mapView.addPOIItem(initMarker);
     }
-    void send_penalty(String token, String vibrate, String alarm){
+
+    void send_penalty(String token, String vibrate, String alarm) {
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.d("finish", "kakapmap remove");
         kakaoMap.removeAllViews();
     }
 
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float accuracyInMeters) {
         MapPoint.GeoCoordinate mapPointGeo = currentLocation.getMapPointGeoCoord();
-        Log.i("my real-time location", String.format("MapView onCurrentLocationUpdate (%f,%f) accuracy (%f)", mapPointGeo.latitude, mapPointGeo.longitude, accuracyInMeters));
+        Check10M(mapPointGeo.latitude, mapPointGeo.longitude);
     }
+
+    private void Check10M(double latitude, double longitude) {
+        double theta = initLon - longitude;
+        double dist = Math.sin(deg2rad(latitude)) * Math.sin(deg2rad(initLat)) + Math.cos(deg2rad(latitude)) * Math.cos(deg2rad(initLat)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        dist = dist * 1609.344;
+        if (dist <= 50) {
+            Log.d("distance", "아직 멀음");
+            arrive.setBackgroundResource(R.drawable.get_img_btn);
+            punish.setVisibility(View.VISIBLE);
+            arriveFlag = true;
+            punishFlag = true;
+        }else{
+            arrive.setBackgroundResource(R.drawable.get_img_btn1);
+            punish.setVisibility(View.INVISIBLE);
+            arriveFlag = false;
+            punishFlag = false;
+        }
+    }
+
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private static double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
+    }
+
     @Override
     public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float v) {
     }
@@ -137,7 +187,6 @@ public class Meetingpage extends AppCompatActivity implements MapView.POIItemEve
 
 
     private void onFinishReverseGeoCoding(String result) {
-//        Toast.makeText(LocationDemoActivity.this, "Reverse Geo-coding : " + result, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -175,14 +224,14 @@ public class Meetingpage extends AppCompatActivity implements MapView.POIItemEve
         }
     }
 
-    void checkRunTimePermission(){
+    void checkRunTimePermission() {
 
         //런타임 퍼미션 처리
         // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
         int hasFineLocationPermission = ContextCompat.checkSelfPermission(Meetingpage.this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
 
-        if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED ) {
+        if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED) {
             // 2. 이미 퍼미션을 가지고 있다면
             // ( 안드로이드 6.0 이하 버전은 런타임 퍼미션이 필요없기 때문에 이미 허용된 걸로 인식합니다.)
             // 3.  위치 값을 가져올 수 있음
@@ -233,17 +282,13 @@ public class Meetingpage extends AppCompatActivity implements MapView.POIItemEve
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        switch (requestCode) {
-            case GPS_ENABLE_REQUEST_CODE:
-                //사용자가 GPS 활성 시켰는지 검사
+        if (requestCode == GPS_ENABLE_REQUEST_CODE) {//사용자가 GPS 활성 시켰는지 검사
+            if (checkLocationServicesStatus()) {
                 if (checkLocationServicesStatus()) {
-                    if (checkLocationServicesStatus()) {
-                        Log.d("@@@", "onActivityResult : GPS 활성화 되있음");
-                        checkRunTimePermission();
-                        return;
-                    }
+                    Log.d("@@@", "onActivityResult : GPS 활성화 되있음");
+                    checkRunTimePermission();
                 }
-                break;
+            }
         }
     }
 
@@ -254,68 +299,5 @@ public class Meetingpage extends AppCompatActivity implements MapView.POIItemEve
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
-    @Override
-    public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
 
-    }
-
-    @Override
-    public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
-
-    }
-
-    @Override
-    public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
-
-    }
-
-    @Override
-    public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewInitialized(MapView mapView) {
-
-    }
-
-    @Override
-    public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewZoomLevelChanged(MapView mapView, int i) {
-
-    }
-
-    @Override
-    public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewDoubleTapped(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewDragStarted(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewDragEnded(MapView mapView, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
-
-    }
 }
