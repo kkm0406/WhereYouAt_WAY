@@ -61,8 +61,8 @@ public class Meetingpage extends AppCompatActivity {
     Button arrive;
     Button punish;
     Geocoder geocoder;
-    double initLat = 36.6259;
-    double initLon = 127.4526;
+    double initLat = 36.6287;
+    double initLon = 127.4605;
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION};
@@ -77,30 +77,8 @@ public class Meetingpage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meetingpage);
-        TextView date=findViewById(R.id.month);
-        TextView time=findViewById(R.id.time);
-        Intent Intent = getIntent();
-        String m_id =  Intent.getStringExtra("id");
-        String g_id =  Intent.getStringExtra("gid");
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("group").document(g_id).collection("schedule").document(m_id)
-                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        meetingclass = document.toObject(DTO_schecule.class);
-                        date.setText(meetingclass.getDate());
-                        time.setText(meetingclass.getTime());
-                    } else {
-                        Log.d("inter meeing", "No such document");
-                    }
-                } else {
-                    Log.d("inter meeing", "get failed with ", task.getException());
-                }
-            }
-        });
+        TextView date = findViewById(R.id.month);
+        TextView time = findViewById(R.id.time);
 
         nowAddress = findViewById(R.id.nowAddress);
         geocoder = new Geocoder(this);
@@ -114,6 +92,32 @@ public class Meetingpage extends AppCompatActivity {
         } else {
             checkRunTimePermission();
         }
+
+        Intent Intent = getIntent();
+        String m_id = Intent.getStringExtra("id");
+        String g_id = Intent.getStringExtra("gid");
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("group").document(g_id).collection("schedule").document(m_id)
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        meetingclass = document.toObject(DTO_schecule.class);
+                        date.setText(meetingclass.getDate());
+                        time.setText(meetingclass.getTime());
+                        GeoCoding(meetingclass.getLocation());
+                        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(initLat, initLon), true);
+                    } else {
+                        Log.d("inter meeing", "No such document");
+                    }
+                } else {
+                    Log.d("inter meeing", "get failed with ", task.getException());
+                }
+            }
+        });
+
 
         initMarker = new MapPOIItem();
         MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(initLat, initLon);
@@ -135,12 +139,13 @@ public class Meetingpage extends AppCompatActivity {
             return;
         }
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        MapPOIItem marker = new MapPOIItem();
         final LocationListener gpsLocationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 double longitude = location.getLongitude();
                 double latitude = location.getLatitude();
 
-                MapPOIItem marker = new MapPOIItem();
+                mapView.removePOIItem(marker);
                 MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(latitude, longitude);
                 marker.setItemName("Default Marker");
                 marker.setTag(0);
@@ -152,9 +157,6 @@ public class Meetingpage extends AppCompatActivity {
 
                 Check10M(latitude, longitude);
                 GPSToAddress(latitude, longitude);
-
-                mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
-
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -207,6 +209,25 @@ public class Meetingpage extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void GeoCoding(String location) {
+        List<Address> list = null;
+        try {
+            list = geocoder.getFromLocationName(location, 10);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (list != null) {
+            if (list.size() == 0) {
+                initLat = 36.6287;
+                initLon = 127.4605;
+            } else {
+                initLat = list.get(0).getLatitude();
+                initLon = list.get(0).getLongitude();
+            }
+        }
+
     }
 
     private String SplitAddress(String addressLine) {
