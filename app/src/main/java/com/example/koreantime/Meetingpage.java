@@ -215,12 +215,12 @@ public class Meetingpage extends AppCompatActivity {
             }
         };
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                1000,
-                1,
+                5000,
+                5,
                 gpsLocationListener);
         lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                1000,
-                1,
+                5000,
+                5,
                 gpsLocationListener);
 
         arrive = findViewById(R.id.arrive);
