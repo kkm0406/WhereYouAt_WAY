@@ -182,14 +182,14 @@ public class Meetingpage extends AppCompatActivity {
         arrive = findViewById(R.id.arrive);
         punish = findViewById(R.id.punish);
 
-        if (arriveFlag) {
-            arrive.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        arrive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (arriveFlag){
                     punish.setVisibility(View.VISIBLE);
                 }
-            });
-        }
+            }
+        });
 
         if (punishFlag) {
             punish.setOnClickListener(new View.OnClickListener() {
@@ -277,17 +277,13 @@ public class Meetingpage extends AppCompatActivity {
         dist = rad2deg(dist);
         dist = dist * 60 * 1.1515;
         dist = dist * 1609.344;
-        if (dist <= 50) {
+        if (dist >= 50) {
             Log.d("distance", "아직 멀음");
-            arrive.setBackgroundResource(R.drawable.get_img_btn);
-            punish.setVisibility(View.VISIBLE);
-            arriveFlag = true;
-            punishFlag = true;
-        } else {
-            arrive.setBackgroundResource(R.drawable.get_img_btn);
+            arrive.setBackgroundColor(Color.parseColor("#4294ff"));
             punish.setVisibility(View.INVISIBLE);
-            arriveFlag = false;
-            punishFlag = false;
+        } else {
+            arriveFlag = true;
+            arrive.setBackgroundColor(Color.parseColor("#fff"));
         }
     }
 
