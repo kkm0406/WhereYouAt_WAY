@@ -4,13 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.view.marginBottom
 import com.example.koreantime.DTO.DTO_schecule
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.views.*
 
 class CarouselActivity : AppCompatActivity() {
@@ -271,11 +272,6 @@ class CarouselActivity : AppCompatActivity() {
         Log.d("inner group",groupname.toString());
         Log.d("inner group",membernick.toString());
 
-
-        window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
 
         val layout = intent.getIntExtra("layout_file_id", R.layout.demo1)
         setContentView(layout)

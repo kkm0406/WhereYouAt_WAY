@@ -40,6 +40,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import net.daum.android.map.MapViewEventListener;
 import net.daum.mf.map.api.MapPOIItem;
@@ -76,6 +77,7 @@ public class Meetingpage extends AppCompatActivity {
     boolean arriveFlag = false;
     boolean punishFlag = false;
     DTO_schecule meetingclass;
+    String tttkk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +124,17 @@ public class Meetingpage extends AppCompatActivity {
             }
         });
 
+        Task<String> token = FirebaseMessaging.getInstance().getToken();
+
+        token.addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if(task.isSuccessful()){
+                    Log.d("FCM Token", task.getResult().toString());
+                    tttkk=task.getResult().toString();
+                }
+            }
+        });
 
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -212,24 +225,29 @@ public class Meetingpage extends AppCompatActivity {
                     }
                 } catch (Exception e) {
                 }
-                if(members_token.length<1){
-
-                }
                 if(members_token.length>0){
-                    temp1.setToken(members_token[0]);
-                    temp1.execute();
+                    if(tttkk!=members_token[0]){
+                        temp1.setToken(members_token[0]);
+                        temp1.execute();
+                    }
                 }
                 if(members_token.length>1){
-                    temp2.setToken(members_token[1]);
-                    temp2.execute();
+                    if(tttkk!=members_token[1]) {
+                        temp2.setToken(members_token[1]);
+                        temp2.execute();
+                    }
                 }
                 if(members_token.length>2){
-                    temp3.setToken(members_token[2]);
-                    temp3.execute();
+                    if(tttkk!=members_token[2]) {
+                        temp3.setToken(members_token[2]);
+                        temp3.execute();
+                    }
                 }
                 if(members_token.length>3){
-                    temp4.setToken(members_token[3]);
-                    temp4.execute();
+                    if(tttkk!=members_token[3]) {
+                        temp4.setToken(members_token[3]);
+                        temp4.execute();
+                    }
                 }
             }
         });

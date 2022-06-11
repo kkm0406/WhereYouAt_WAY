@@ -52,6 +52,7 @@ public class firstmenu extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {//그룹만들고서 그룹리스트 업데이트
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("addedg", "onActivityResult: "+Integer.toString(requestCode));
         switch (requestCode){
             case 0:
             {
@@ -63,7 +64,8 @@ public class firstmenu extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                     if (task.isSuccessful()) {
-                                        Log.d("added_group", Integer.toString(task.getResult().size()) );
+                                        group_id.clear();
+                                        Log.d("added_group000", Integer.toString(task.getResult().size()));
                                         GridLayout grid = findViewById(R.id.grid);
 //                                        for (int i=0;i<task.getResult().size()-2;i++) {//유저가 소속되어있는 그룹들 리턴
 //
@@ -72,11 +74,12 @@ public class firstmenu extends AppCompatActivity {
                                         int num=0;
                                         for (QueryDocumentSnapshot document : task.getResult()) {//유저가 소속되어있는 그룹들 리턴
                                             createNew(num,document.getData().get("name").toString());
-                                            Log.d("added_group", document.getId() + " => " + document.getData());
+                                            Log.d("added_group000", document.getId() + " => " + document.getData());
+                                            group_id.add(document.getId().toString());
                                             num++;
                                         }
                                     } else {
-                                        Log.d("added_group", "Error getting documents: ", task.getException());
+                                        Log.d("added_group000", "Error getting documents: ", task.getException());
                                     }
                                 }
                             });
@@ -105,20 +108,17 @@ public class firstmenu extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                     if (task.isSuccessful()) {
-                                        Log.d("added_group", Integer.toString(task.getResult().size()) );
+                                        Log.d("added_group222", Integer.toString(task.getResult().size()) );
                                         GridLayout grid = findViewById(R.id.grid);
-//                                        for (int i=0;i<task.getResult().size()-2;i++) {//유저가 소속되어있는 그룹들 리턴
-//
-//                                        }
                                         grid.removeViewsInLayout(2,task.getResult().size());
                                         int num=0;
                                         for (QueryDocumentSnapshot document : task.getResult()) {//유저가 소속되어있는 그룹들 리턴
                                             createNew(num,document.getData().get("name").toString());
-                                            Log.d("added_group", document.getId() + " => " + document.getData());
+                                            Log.d("added_group222", document.getId() + " => " + document.getData());
                                             num++;
                                         }
                                     } else {
-                                        Log.d("added_group", "Error getting documents: ", task.getException());
+                                        Log.d("added_group222", "Error getting documents: ", task.getException());
                                     }
                                 }
                             });
