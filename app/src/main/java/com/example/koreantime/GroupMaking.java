@@ -73,6 +73,8 @@ public class GroupMaking extends AppCompatActivity {
             public void onClick(View view) {
                 String search_nick = enterName.getText().toString();
                 listAdapter.clear();
+                searchList.clear();
+                memberemail.clear();
                 db.collection("user").whereEqualTo("nickname", search_nick)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

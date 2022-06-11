@@ -84,7 +84,6 @@ public class Meetingpage extends AppCompatActivity {
         geocoder = new Geocoder(this);
         kakaoMap = findViewById(R.id.kakaoMap);
         mapView = new MapView(Meetingpage.this);
-        mapView.setZoomLevel(3, true);
         kakaoMap.addView(mapView);
 
         if (!checkLocationServicesStatus()) {
@@ -108,7 +107,7 @@ public class Meetingpage extends AppCompatActivity {
                         date.setText(meetingclass.getDate());
                         time.setText(meetingclass.getTime());
                         GeoCoding(meetingclass.getLocation());
-                        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(initLat, initLon), true);
+                        Log.d("initlat, initlon", initLat+", "+initLon);
                     } else {
                         Log.d("inter meeing", "No such document");
                     }
@@ -126,6 +125,8 @@ public class Meetingpage extends AppCompatActivity {
         initMarker.setMapPoint(MARKER_POINT);
         initMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 기본으로 제공하는 BluePin 마커 모양.
         mapView.addPOIItem(initMarker);
+        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(initLat, initLon), true);
+        mapView.setZoomLevel(5, true);
 
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
