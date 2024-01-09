@@ -37,8 +37,5 @@ in CBNU Department of Computer Science
 
 <hr/>
 
-### AWARDS
-<img src="./img/award_op.jpg" width="70%">
-
 #
 
